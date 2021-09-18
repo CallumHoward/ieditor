@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useRef } from "react";
+import React, { FunctionComponent, useState, useRef, ReactNode } from "react";
 import {
   DragDropContext,
   Droppable,
@@ -6,48 +6,23 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import styled from "styled-components";
-import { QuestionT } from "../types/question";
 import { scrollToElement } from "../utils/scrollToElement";
-import { DraggableQuestion } from "./draggable-question";
 
 const DROPPABLE_CONTAINER_ID = "droppable";
 
-const initialQuestions = [
-  {
-    id: "0",
-    content: "foo 0",
-    type: "input",
-    answer: { content: "unanswered" },
-  },
-  {
-    id: "1",
-    content: "bar 1",
-    type: "input",
-    answer: { content: "unanswered" },
-  },
-  {
-    id: "2",
-    content: "baz 2",
-    type: "input",
-    answer: { content: "unanswered" },
-  },
-  {
-    id: "3",
-    content: "fizz 3",
-    type: "input",
-    answer: { content: "unanswered" },
-  },
-  {
-    id: "4",
-    content: "buzz 4",
-    type: "input",
-    answer: { content: "unanswered" },
-  },
-] as QuestionT[];
+type ListItemProps = {
+  isDragging?: boolean;
+};
+
+type ListItem = {
+  key: string;
+  node: (props: ListItemProps) => ReactNode;
+};
 
 type ScrollableDraggableListProps = {
   onNextControl?: (index: number) => void;
   onPrev?: (index: number) => void;
+  initialItems: ListItem[];
 };
 
 const ScrollableDraggableListContainer = styled.div`
@@ -68,19 +43,20 @@ const ScrollableItems = styled.div`
 `;
 
 const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
-  () => {
+  ({ initialItems }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const listContainerRef = useRef<HTMLDivElement | null>(null);
-    const [questions, setQuestions] = useState<QuestionT[]>(initialQuestions);
+    const [items, setItems] = useState<ListItem[]>(initialItems);
 
     const onDragEnd = (result: DropResult) => {
       if (!result.destination) {
         return;
       }
-      const newQuestions = [...questions];
-      const [removed] = newQuestions.splice(result.source.index, 1);
-      newQuestions.splice(result.destination.index, 0, removed);
-      setQuestions(newQuestions);
+      const newItems = [...items];
+      const [removed] = newItems.splice(result.source.index, 1);
+      newItems.splice(result.destination.index, 0, removed);
+      setItems(newItems);
+      setCurrentIndex(result.destination.index);
     };
 
     const getListItems = () => {
@@ -135,14 +111,16 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
             <Droppable droppableId={DROPPABLE_CONTAINER_ID}>
               {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
-                  {questions.map(({ id, content }, index) => (
-                    <Draggable key={id} draggableId={id} index={index}>
+                  {items.map(({ key, node }, index) => (
+                    <Draggable key={key} draggableId={key} index={index}>
                       {(provided, snapshot) => (
-                        <DraggableQuestion
-                          provided={provided}
-                          snapshot={snapshot}
-                          content={content}
-                        />
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          {node({ isDragging: snapshot.isDragging })}
+                        </div>
                       )}
                     </Draggable>
                   ))}
