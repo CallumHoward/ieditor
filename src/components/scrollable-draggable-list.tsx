@@ -139,7 +139,6 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
         element: itemRefs.current[newIndex] as HTMLElement,
         scrollableParent: listContainerRef.current,
         behavior: "smooth",
-        offsetPx: 50,
       });
       onChangeIndex(newIndex);
     };

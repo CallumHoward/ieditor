@@ -78,15 +78,15 @@ export const EditorPage: FunctionComponent = () => {
 
   return (
     <PageContainer>
+      <ControlsHolder>
+        <button type="button" onClick={scrollPrev}>
+          Previous
+        </button>
+        <button type="button" onClick={scrollNext}>
+          Next
+        </button>
+      </ControlsHolder>
       <ScrollListContainer>
-        <ControlsHolder>
-          <button type="button" onClick={scrollPrev}>
-            Previous
-          </button>
-          <button type="button" onClick={scrollNext}>
-            Next
-          </button>
-        </ControlsHolder>
         <ScrollableDraggableList
           currentIndex={currentIndex}
           onChangeIndex={(newValue) => {
