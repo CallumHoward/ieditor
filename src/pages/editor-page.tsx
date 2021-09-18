@@ -6,37 +6,37 @@ import {
   ListIndexData,
   ScrollableDraggableList,
 } from "../components/scrollable-draggable-list";
-import { QuestionT } from "../types/question";
+import { QuestionT, ResponseType } from "../types/question";
 
 const initialQuestions = [
   {
     id: "0",
     content: `Have you selected "Abercrombie Caves" for sites`,
-    type: "input",
+    type: ResponseType.Input,
     answer: { content: "unanswered" },
   },
   {
     id: "1",
     content: "Should be profiled and have current day and time.",
-    type: "input",
+    type: ResponseType.Radio,
     answer: { content: "unanswered" },
   },
   {
     id: "2",
     content: "Should be profiled and have current day and time.",
-    type: "input",
+    type: ResponseType.Input,
     answer: { content: "unanswered" },
   },
   {
     id: "3",
     content: "Should be profiled and have current day and time.",
-    type: "input",
+    type: ResponseType.Radio,
     answer: { content: "unanswered" },
   },
   {
     id: "4",
     content: "Should be profiled and have current day and time.",
-    type: "input",
+    type: ResponseType.Input,
     answer: { content: "unanswered" },
   },
 ] as QuestionT[];
@@ -92,13 +92,14 @@ export const EditorPage: FunctionComponent = () => {
           onChangeIndex={(newValue) => {
             setCurrentIndex({ value: newValue });
           }}
-          initialItems={initialQuestions.map(({ content, id }) => ({
+          initialItems={initialQuestions.map(({ content, id, type }) => ({
             key: id,
             node: ({ isDragging, index }) => (
               <Question
-                content={content}
                 isDragging={isDragging}
+                content={content}
                 index={index}
+                type={type}
               />
             ),
           }))}

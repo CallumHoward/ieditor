@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { ActionBoxSvg } from "../assets/action-svg";
 import { MediaSvg } from "../assets/media-svg";
+import { ResponseType } from "../types/question";
 import {
   AttachmentBar,
   InlineButton,
@@ -12,11 +13,6 @@ import {
   StyledButton,
   StyledInput,
 } from "./question-styled";
-
-enum ResponseType {
-  Radio,
-  Input,
-}
 
 const renderResponse = (type: ResponseType) => {
   switch (type) {
@@ -37,11 +33,13 @@ type QuestionProps = {
   content: string;
   index: number;
   isDragging?: boolean;
+  type: ResponseType;
 };
 
 export const Question: FunctionComponent<QuestionProps> = ({
   content,
   index,
+  type,
   isDragging = false,
 }) => {
   return (
@@ -50,7 +48,7 @@ export const Question: FunctionComponent<QuestionProps> = ({
         <InnerContainer>
           <Label>{`${index}. ${content}`}</Label>
           <ResponseContainer>
-            {renderResponse(ResponseType.Radio)}
+            {renderResponse(type)}
           </ResponseContainer>
           <AttachmentBar>
             <span style={{ flexGrow: 1 }}>
