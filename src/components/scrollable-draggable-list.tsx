@@ -53,7 +53,7 @@ const ScrollableItems = styled.div`
   // add empty space at the end so that the last item has room to scroll up
   &::after {
     display: inline-block;
-    height: 300px;
+    height: 500px;
     width: 100px;
     content: "";
   }
@@ -62,8 +62,9 @@ const ScrollableItems = styled.div`
 const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
   ({ initialItems, height }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const listContainerRef = useRef<HTMLDivElement | null>(null);
     const [items, setItems] = useState<ListItem[]>(initialItems);
+    const listContainerRef = useRef<HTMLDivElement | null>(null);
+    const itemRefs = useRef<HTMLDivElement[]>([]);
 
     const onDragEnd = (result: DropResult) => {
       if (!result.destination) {
@@ -76,29 +77,17 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
       setCurrentIndex(result.destination.index);
     };
 
-    const getListItems = () => {
-      if (!listContainerRef?.current) {
-        return;
-      }
-
-      return listContainerRef.current.children[0].children;
-    };
-
-    const getListItemsLength = () => {
-      if (!listContainerRef?.current) {
-        return 0;
-      }
-
-      return listContainerRef.current.children[0].children.length;
-    };
-
     const scrollToIndex = (newIndex: number) => {
-      if (newIndex >= getListItemsLength() || newIndex < 0) {
+      if (
+        !itemRefs.current ||
+        newIndex >= itemRefs.current.length ||
+        newIndex < 0
+      ) {
         return;
       }
 
       scrollToElement({
-        element: getListItems()?.[newIndex] as HTMLElement,
+        element: itemRefs.current[newIndex] as HTMLElement,
         scrollableParent: listContainerRef.current,
         behavior: "smooth",
       });
@@ -111,6 +100,18 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
 
     const scrollNext = () => {
       scrollToIndex(currentIndex + 1);
+    };
+
+    const updateItemRef = (newRef: HTMLDivElement | null, index: number) => {
+      if (!itemRefs.current || !newRef) {
+        return;
+      }
+
+      if (index === itemRefs.current.length) {
+        itemRefs.current.push(newRef);
+      } else {
+        itemRefs.current[index] = newRef;
+      }
     };
 
     return (
@@ -132,7 +133,12 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
                     <Draggable key={key} draggableId={key} index={index}>
                       {(provided, snapshot) => (
                         <div
-                          ref={provided.innerRef}
+                          ref={(ref) => {
+                            // TODO: ref gets called every re-render
+                            // investigate if this is a performance concern
+                            provided.innerRef(ref);
+                            updateItemRef(ref, index);
+                          }}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
