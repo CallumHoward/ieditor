@@ -20,6 +20,8 @@ const SwiperContainer = styled.div`
   backgroun: grey;
 `;
 
+const ListContainer = styled.div``;
+
 const initialQuestions = [
   {
     id: "0",
@@ -115,7 +117,7 @@ export const QuestionsList: FunctionComponent = () => {
         onSwiper={(swiper) => console.log(swiper)}
       >
         {questions.map(({ content }, index) => (
-          <SwiperSlide key={index} style={{height: "50%"}}>
+          <SwiperSlide key={index} style={{ height: "50%" }}>
             <Question content={content} />
           </SwiperSlide>
         ))}
@@ -124,9 +126,9 @@ export const QuestionsList: FunctionComponent = () => {
   );
 
   return (
-    <>
-      {renderSwiper()}
+    <ListContainer>
+      {renderDnd()}
       <button>toggle</button>
-    </>
+    </ListContainer>
   );
 };
