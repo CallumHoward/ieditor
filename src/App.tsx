@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
-import { EditorPage } from "./pages/editor-page";
+import { ScrollListTest } from "./pages/scroll-list-test";
 
 const StyledAppContainer = styled.div`
   padding: 1rem;
@@ -9,7 +9,8 @@ const StyledAppContainer = styled.div`
 export const App: FunctionComponent = () => {
   return (
     <StyledAppContainer>
-      <EditorPage />
+      {/* <EditorPage /> */}
+      <ScrollListTest />
     </StyledAppContainer>
   );
 };
