@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
 import styled from "styled-components";
+import PageContainer from "../components/page-container";
 import { Question } from "../components/question";
 import {
   ListIndexData,
@@ -40,24 +41,6 @@ const initialQuestions = [
   },
 ] as QuestionT[];
 
-const PageContainer = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-const NavBar = styled.header`
-  width: 100%;
-  height: 6vh;
-  padding: 0 1rem;
-  box-sizing: border-box;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  background-color: #ffffff;
-`;
-
 const ScrollListContainer = styled.div`
   box-sizing: border-box;
   height: 100%;
@@ -95,9 +78,6 @@ export const EditorPage: FunctionComponent = () => {
 
   return (
     <PageContainer>
-      <NavBar>
-        <button>Back</button>
-      </NavBar>
       <ScrollListContainer>
         <ControlsHolder>
           <button type="button" onClick={scrollPrev}>
