@@ -1,4 +1,10 @@
-import React, { FunctionComponent, useState, useRef, ReactNode } from "react";
+import React, {
+  FunctionComponent,
+  useState,
+  useRef,
+  ReactNode,
+  useEffect,
+} from "react";
 import {
   DragDropContext,
   Droppable,
@@ -65,6 +71,30 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
     const [items, setItems] = useState<ListItem[]>(initialItems);
     const listContainerRef = useRef<HTMLDivElement | null>(null);
     const itemRefs = useRef<HTMLDivElement[]>([]);
+
+    const intersectionCallback = (
+      observedItemRefs: IntersectionObserverEntry[]
+    ) => {
+      observedItemRefs.forEach((itemRef) => {
+        console.log(itemRef.target);
+      });
+    };
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(intersectionCallback, {
+        root: listContainerRef.current,
+        rootMargin: "0px",
+        threshold: 1.0,
+      });
+
+      itemRefs.current.forEach((ref) => {
+        observer.observe(ref);
+      });
+
+      return () => {
+        observer.disconnect();
+      };
+    }, []);
 
     const onDragEnd = (result: DropResult) => {
       if (!result.destination) {
