@@ -29,6 +29,10 @@ type ScrollableDraggableListProps = {
   onNextControl?: (index: number) => void;
   onPrev?: (index: number) => void;
   initialItems: ListItem[];
+  /**
+   * For this component height to work either set the height explicitly
+   * as a prop or set the height of the parent container it is in
+   */
   height?: number;
 };
 
@@ -73,18 +77,26 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
     const itemRefs = useRef<HTMLDivElement[]>([]);
 
     const intersectionCallback = (
-      observedItemRefs: IntersectionObserverEntry[]
+      intersectingItemRefs: IntersectionObserverEntry[]
     ) => {
-      observedItemRefs.forEach((itemRef) => {
-        console.log(itemRef.target);
+      intersectingItemRefs.forEach((itemRef) => {
+        if (itemRef.isIntersecting) {
+          const itemIndex = Number(
+            itemRef.target.getAttribute("list-item-index")
+          );
+          setCurrentIndex(itemIndex);
+        }
       });
     };
 
     useEffect(() => {
       const observer = new IntersectionObserver(intersectionCallback, {
         root: listContainerRef.current,
-        rootMargin: "0px",
         threshold: 1.0,
+        // shrink the observable area by 30% so that the item that is
+        // closer to the top of the viewport is treated as the current
+        // one the user is looking at
+        rootMargin: "0px 0px -30% 0px",
       });
 
       itemRefs.current.forEach((ref) => {
@@ -163,6 +175,7 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
                     <Draggable key={key} draggableId={key} index={index}>
                       {(provided, snapshot) => (
                         <div
+                          list-item-index={index}
                           ref={(ref) => {
                             // TODO: ref gets called every re-render
                             // investigate if this is a performance concern

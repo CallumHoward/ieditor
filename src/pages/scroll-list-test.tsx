@@ -38,7 +38,7 @@ const initialQuestions = [
 ] as QuestionT[];
 
 const ScrollListContainer = styled.div`
-  height: 100vh;
+  height: 90vh;
   width: 100%;
 `;
 
