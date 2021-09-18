@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
 import styled from "styled-components";
-import PageContainer from "../components/page-container";
+import { PageContainer } from "../components/page-container";
 import { Question } from "../components/question";
 import {
   ListIndexData,
