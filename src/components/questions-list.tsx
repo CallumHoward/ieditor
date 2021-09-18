@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore from "swiper";
+import SwiperCore, { Keyboard, Mousewheel, Navigation } from "swiper";
 
 import {
   DragDropContext,
@@ -54,6 +54,8 @@ const initialQuestions = [
 export const QuestionsList: FunctionComponent = () => {
   const [questions, setQuestions] = useState<QuestionT[]>(initialQuestions);
 
+  SwiperCore.use([Keyboard,Mousewheel,Navigation]);
+
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
       return;
@@ -89,21 +91,30 @@ export const QuestionsList: FunctionComponent = () => {
 
   const renderSwiper = () => (
     <SwiperContainer>
-    <Swiper
-      direction={"vertical"}
-      slidesPerView={2}
-      spaceBetween={50}
-      onSlideChange={() => console.log("slide change")}
-      onSwiper={(swiper) => console.log(swiper)}
-    >
-      {questions.map(({ content }, index) => (
-        <SwiperSlide key={index}>
-          <Question content={content} />
-        </SwiperSlide>
-      ))}
-    </Swiper>
+      <Swiper
+        direction={"vertical"}
+        centeredSlides={true}
+        freeMode={true}
+        keyboard={{ enabled: true }}
+        mousewheel={true}
+        slidesPerView={2}
+        spaceBetween={50}
+        onSlideChange={() => console.log("slide change")}
+        onSwiper={(swiper) => console.log(swiper)}
+      >
+        {questions.map(({ content }, index) => (
+          <SwiperSlide key={index}>
+            <Question content={content} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </SwiperContainer>
   );
 
-  return renderSwiper();
+  return (
+    <>
+      {renderSwiper()}
+      <button>toggle</button>
+    </>
+  );
 };
