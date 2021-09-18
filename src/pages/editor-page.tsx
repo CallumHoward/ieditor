@@ -94,8 +94,12 @@ export const EditorPage: FunctionComponent = () => {
           }}
           initialItems={initialQuestions.map(({ content, id }) => ({
             key: id,
-            node: ({ isDragging }) => (
-              <Question content={content} isDragging={isDragging} />
+            node: ({ isDragging, index }) => (
+              <Question
+                content={content}
+                isDragging={isDragging}
+                index={index}
+              />
             ),
           }))}
         />

@@ -18,6 +18,7 @@ const DROPPABLE_CONTAINER_ID = "droppable";
 
 type ListItemProps = {
   isDragging?: boolean;
+  index: number;
 };
 
 type ListItem = {
@@ -176,7 +177,7 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
-                          {node({ isDragging: snapshot.isDragging })}
+                          {node({ isDragging: snapshot.isDragging, index })}
                         </div>
                       )}
                     </Draggable>

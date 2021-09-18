@@ -35,18 +35,20 @@ const renderResponse = (type: ResponseType) => {
 
 type QuestionProps = {
   content: string;
+  index: number;
   isDragging?: boolean;
 };
 
 export const Question: FunctionComponent<QuestionProps> = ({
   content,
+  index,
   isDragging = false,
 }) => {
   return (
     <OuterContainer>
       <QuestionContainer isDragging={isDragging} mandatory={true}>
         <InnerContainer>
-          <Label>{content}</Label>
+          <Label>{`${index}. ${content}`}</Label>
           <ResponseContainer>
             {renderResponse(ResponseType.Radio)}
           </ResponseContainer>
@@ -54,12 +56,12 @@ export const Question: FunctionComponent<QuestionProps> = ({
             <span style={{ flexGrow: 1 }}>
               <InlineButton>Add note...</InlineButton>
             </span>
-            <InlineButton style={{marginRight: "1rem"}}>
-              <MediaSvg style={{marginRight: "0.5rem"}} />
+            <InlineButton style={{ marginRight: "1rem" }}>
+              <MediaSvg style={{ marginRight: "0.5rem" }} />
               Media
             </InlineButton>
             <InlineButton>
-              <ActionBoxSvg style={{marginRight: "0.5rem"}} />
+              <ActionBoxSvg style={{ marginRight: "0.5rem" }} />
               Action
             </InlineButton>
           </AttachmentBar>
