@@ -1,31 +1,40 @@
 import React, { FunctionComponent } from "react";
-import { Draggable } from "react-beautiful-dnd";
+import { DraggableProvided, DraggableStateSnapshot } from "react-beautiful-dnd";
 import styled from "styled-components";
 
-const QuestionContainer = styled.div`
-  width: 100%;
-  height: 100px;
-  background: #cc66ff;
-  margin: 10px;
+const QuestionContainer = styled.div<{ snapshot: DraggableStateSnapshot }>`
+  padding: 20px;
+  width: 50%;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  margin-bottom: 10px;
+  background: ${(p) => (p.snapshot.isDragging ? "#cc660f" : "#cc66ff")};
 `;
 
-type Props = {
-  index: number;
+type DndProps = {
+  snapshot: DraggableStateSnapshot;
+  provided: DraggableProvided;
+};
+
+type QuestionProps = {
   content: string;
 };
 
-export const Question: FunctionComponent<Props> = ({ index, content }) => {
+type Props = QuestionProps & DndProps;
+
+export const Question: FunctionComponent<Props> = ({
+  content,
+  provided,
+  snapshot,
+}) => {
   return (
-    <Draggable draggableId={index.toString()} index={index}>
-      {(provided) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <QuestionContainer>{content}</QuestionContainer>
-        </div>
-      )}
-    </Draggable>
+    <QuestionContainer
+      ref={provided.innerRef}
+      snapshot={snapshot}
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
+    >
+      {content}
+    </QuestionContainer>
   );
 };

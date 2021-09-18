@@ -1,5 +1,5 @@
 export type QuestionT = {
-  index: number;
+  id: string;
   content: string;
   type: string;
   answer: Answer;

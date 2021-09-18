@@ -1,35 +1,40 @@
 import React, { FunctionComponent, useState } from "react";
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+} from "react-beautiful-dnd";
 import { QuestionT } from "../types/question";
 import { Question } from "./question";
 
 const initialQuestions = [
   {
-    index: 0,
+    id: "0",
     content: "foo",
     type: "input",
     answer: { content: "unanswered" },
   },
   {
-    index: 1,
+    id: "1",
     content: "bar",
     type: "input",
     answer: { content: "unanswered" },
   },
   {
-    index: 2,
+    id: "2",
     content: "baz",
     type: "input",
     answer: { content: "unanswered" },
   },
   {
-    index: 3,
+    id: "3",
     content: "fizz",
     type: "input",
     answer: { content: "unanswered" },
   },
   {
-    index: 4,
+    id: "4",
     content: "buzz",
     type: "input",
     answer: { content: "unanswered" },
@@ -51,11 +56,23 @@ export const QuestionsList: FunctionComponent = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId={"droppable"} mode={"standard"}>
+      <Droppable droppableId={"droppable"}>
         {(provided) => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
-            {questions.map(({ index, content }) => (
-              <Question key={index} index={index} content={content} />
+          <div {...provided.droppableProps} ref={provided.innerRef}>
+            {questions.map(({ id, content }, index) => (
+              <Draggable
+                key={id}
+                draggableId={id}
+                index={index}
+              >
+                {(provided, snapshot) => (
+                  <Question
+                    provided={provided}
+                    snapshot={snapshot}
+                    content={content}
+                  />
+                )}
+              </Draggable>
             ))}
             {provided.placeholder}
           </div>
