@@ -62,8 +62,8 @@ const ScrollableItems = styled.div`
   // add empty space at the end so that the last item has room to scroll up
   &::after {
     display: inline-block;
-    height: 500px;
-    width: 100px;
+    height: 300px;
+    width: 100%;
     content: "";
   }
 `;
@@ -90,11 +90,12 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
     useEffect(() => {
       const observer = new IntersectionObserver(intersectionCallback, {
         root: listContainerRef.current,
-        threshold: 1.0,
-        // shrink the observable area by 50% so that the item that is
-        // closer to the top of the viewport is treated as the current
-        // one the user is looking at
-        rootMargin: "0px 0px -50% 0px",
+        // shrink the observable area by 99% so that the top item
+        // is treated as the current one the user is looking at
+        rootMargin: "0px 0px -99% 0px",
+        // 0.01 of the item needs to be within the observable area
+        // to trigger the intersectionCallback
+        threshold: 0.01,
       });
 
       itemRefs.current.forEach((ref) => {
@@ -138,6 +139,7 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
         element: itemRefs.current[newIndex] as HTMLElement,
         scrollableParent: listContainerRef.current,
         behavior: "smooth",
+        offsetPx: 50,
       });
       onChangeIndex(newIndex);
     };
