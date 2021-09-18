@@ -39,6 +39,7 @@ const initialQuestions = [
 const ScrollListTest: FunctionComponent = () => {
   return (
     <ScrollableDraggableList
+      height={800}
       initialItems={initialQuestions.map(({ content, id }) => ({
         key: id,
         node: ({ isDragging }) => (

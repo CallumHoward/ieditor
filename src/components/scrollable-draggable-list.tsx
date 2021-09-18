@@ -5,7 +5,7 @@ import {
   Draggable,
   DropResult,
 } from "react-beautiful-dnd";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { scrollToElement } from "../utils/scrollToElement";
 
 const DROPPABLE_CONTAINER_ID = "droppable";
@@ -23,13 +23,22 @@ type ScrollableDraggableListProps = {
   onNextControl?: (index: number) => void;
   onPrev?: (index: number) => void;
   initialItems: ListItem[];
+  height?: number;
 };
 
-const ScrollableDraggableListContainer = styled.div`
+const ComponentContainer = styled.div<{ $height?: number }>`
   width: 100%;
-  height: 500px;
   overflow: hidden;
   position: relative;
+
+  ${({ $height }) =>
+    $height
+      ? css`
+          height: ${$height}px;
+        `
+      : css`
+          height: 100%;
+        `}
 `;
 
 const ControlsHolder = styled.div`
@@ -40,10 +49,18 @@ const ControlsHolder = styled.div`
 const ScrollableItems = styled.div`
   height: 100%;
   overflow: scroll;
+
+  // add empty space at the end so that the last item has room to scroll up
+  &::after {
+    display: inline-block;
+    height: 300px;
+    width: 100px;
+    content: "";
+  }
 `;
 
 const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
-  ({ initialItems }) => {
+  ({ initialItems, height }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const listContainerRef = useRef<HTMLDivElement | null>(null);
     const [items, setItems] = useState<ListItem[]>(initialItems);
@@ -97,7 +114,7 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
     };
 
     return (
-      <ScrollableDraggableListContainer>
+      <ComponentContainer $height={height}>
         <ControlsHolder>
           <button type="button" onClick={scrollPrev}>
             Previous
@@ -130,7 +147,7 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
             </Droppable>
           </DragDropContext>
         </ScrollableItems>
-      </ScrollableDraggableListContainer>
+      </ComponentContainer>
     );
   };
 
