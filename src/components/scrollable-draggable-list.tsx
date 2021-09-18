@@ -59,6 +59,7 @@ const ComponentContainer = styled.div<{ $height?: number }>`
 const ScrollableItems = styled.div`
   height: 100%;
   overflow: scroll;
+  scroll-snap-type: y mandatory;
 
   // add empty space at the end so that the last item has room to scroll up
   &::after {
@@ -67,6 +68,10 @@ const ScrollableItems = styled.div`
     width: 100%;
     content: "";
   }
+`;
+
+const SnapScrollContainer = styled.div`
+  scroll-snap-align: start;
 `;
 
 const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
@@ -79,10 +84,11 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
       intersectingItemRefs: IntersectionObserverEntry[]
     ) => {
       intersectingItemRefs.forEach((itemRef) => {
+        const itemIndex = Number(
+          itemRef.target.getAttribute("list-item-index")
+        );
+
         if (itemRef.isIntersecting) {
-          const itemIndex = Number(
-            itemRef.target.getAttribute("list-item-index")
-          );
           onChangeIndex(itemIndex);
         }
       });
@@ -140,7 +146,6 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
         element: itemRefs.current[newIndex] as HTMLElement,
         scrollableParent: listContainerRef.current,
         behavior: "smooth",
-        offsetPx: 50,
       });
       onChangeIndex(newIndex);
     };
@@ -178,7 +183,9 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
-                          {node({ isDragging: snapshot.isDragging, index })}
+                          <SnapScrollContainer>
+                            {node({ isDragging: snapshot.isDragging, index })}
+                          </SnapScrollContainer>
                         </div>
                       )}
                     </Draggable>
