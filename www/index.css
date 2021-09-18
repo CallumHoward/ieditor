@@ -8,10 +8,11 @@ body {
 }
 
 body {
-  background: #eee;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  color: #000;
+  background: #fafafa;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #081833;
   margin: 0;
   padding: 0;
 }
@@ -19,4 +20,12 @@ body {
 .swiper {
   width: 100%;
   height: 100%;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus,
+div:focus {
+    outline: none;
 }

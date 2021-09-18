@@ -3,10 +3,8 @@ import styled from "styled-components";
 import { EditorPage } from "./pages/editor-page";
 
 const StyledAppContainer = styled.div`
-  font-family: sans-serif;
   text-align: center;
-  background: lightGrey;
-  padding: 30px;
+  padding: 1rem;
 `;
 
 export const App: FunctionComponent = () => {

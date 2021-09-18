@@ -25,31 +25,31 @@ const ListContainer = styled.div``;
 const initialQuestions = [
   {
     id: "0",
-    content: "foo",
+    content: `Have you selected "Abercrombie Caves" for sites`,
     type: "input",
     answer: { content: "unanswered" },
   },
   {
     id: "1",
-    content: "bar",
+    content: "Should be profiled and have current day and time.",
     type: "input",
     answer: { content: "unanswered" },
   },
   {
     id: "2",
-    content: "baz",
+    content: "Should be profiled and have current day and time.",
     type: "input",
     answer: { content: "unanswered" },
   },
   {
     id: "3",
-    content: "fizz",
+    content: "Should be profiled and have current day and time.",
     type: "input",
     answer: { content: "unanswered" },
   },
   {
     id: "4",
-    content: "buzz",
+    content: "Should be profiled and have current day and time.",
     type: "input",
     answer: { content: "unanswered" },
   },
