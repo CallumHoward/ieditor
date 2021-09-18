@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { EditorPage } from "./pages/editor-page";
 
 const StyledAppContainer = styled.div`
-  text-align: center;
   padding: 1rem;
 `;
 
