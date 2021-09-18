@@ -2,8 +2,8 @@ import React, { FunctionComponent, useState } from "react";
 import styled from "styled-components";
 import { Question } from "../components/question";
 import {
-    ListIndexData,
-    ScrollableDraggableList
+  ListIndexData,
+  ScrollableDraggableList,
 } from "../components/scrollable-draggable-list";
 import { QuestionT } from "../types/question";
 
@@ -40,32 +40,34 @@ const initialQuestions = [
   },
 ] as QuestionT[];
 
-const PageContainer = styled.div``;
+const PageContainer = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 const NavBar = styled.header`
   width: 100%;
-  min-height: 6vh;
+  height: 6vh;
   padding: 0 1rem;
+  box-sizing: border-box;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  position: fixed;
-  top: 0;
-  left: 0;
   background-color: #ffffff;
 `;
 
 const ScrollListContainer = styled.div`
-  height: 90vh;
+  box-sizing: border-box;
+  height: 100%;
   width: 100%;
   position: relative;
 `;
 
 const ControlsHolder = styled.div`
-  position: absolute;
-  right: 0;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 export const EditorPage: FunctionComponent = () => {
