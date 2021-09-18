@@ -19,13 +19,20 @@ const NavBar = styled.header`
   background-color: #ffffff;
 `;
 
+const PageBody = styled.div`
+  padding: 1rem;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+`;
+
 const PageContainer: FunctionComponent = ({ children }) => {
   return (
     <PageContainerWrapper>
       <NavBar>
         <button>Back</button>
       </NavBar>
-      {children}
+      <PageBody>{children}</PageBody>
     </PageContainerWrapper>
   );
 };
