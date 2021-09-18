@@ -1,4 +1,7 @@
 import React, { FunctionComponent, useState } from "react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+
 import {
   DragDropContext,
   Draggable,
@@ -54,8 +57,8 @@ export const QuestionsList: FunctionComponent = () => {
     setQuestions(newQuestions);
   };
 
-  return (
-    <DragDropContext onDragEnd={onDragEnd}>
+  const renderDnd = () => (
+     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId={"droppable"}>
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
@@ -79,5 +82,21 @@ export const QuestionsList: FunctionComponent = () => {
         )}
       </Droppable>
     </DragDropContext>
+ );
+
+  const renderSwiper = () => (
+    <Swiper
+      spaceBetween={50}
+      slidesPerView={3}
+      onSlideChange={() => console.log('slide change')}
+      onSwiper={(swiper) => console.log(swiper)}
+    >
+      <SwiperSlide>Slide 1</SwiperSlide>
+      <SwiperSlide>Slide 2</SwiperSlide>
+      <SwiperSlide>Slide 3</SwiperSlide>
+      <SwiperSlide>Slide 4</SwiperSlide>
+    </Swiper>
   );
+
+  return renderSwiper();
 };
