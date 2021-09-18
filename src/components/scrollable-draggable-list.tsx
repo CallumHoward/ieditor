@@ -25,21 +25,25 @@ type ListItem = {
   node: (props: ListItemProps) => ReactNode;
 };
 
+export type ListIndexData = {
+  value: number;
+  shouldAutoScroll?: boolean;
+};
+
 type ScrollableDraggableListProps = {
-  onNextControl?: (index: number) => void;
-  onPrev?: (index: number) => void;
   initialItems: ListItem[];
   /**
    * For this component height to work either set the height explicitly
    * as a prop or set the height of the parent container it is in
    */
   height?: number;
+  currentIndex: ListIndexData;
+  onChangeIndex: (newIndex: number) => void;
 };
 
 const ComponentContainer = styled.div<{ $height?: number }>`
   width: 100%;
   overflow: hidden;
-  position: relative;
 
   ${({ $height }) =>
     $height
@@ -49,11 +53,6 @@ const ComponentContainer = styled.div<{ $height?: number }>`
       : css`
           height: 100%;
         `}
-`;
-
-const ControlsHolder = styled.div`
-  position: absolute;
-  right: 0;
 `;
 
 const ScrollableItems = styled.div`
@@ -70,8 +69,7 @@ const ScrollableItems = styled.div`
 `;
 
 const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
-  ({ initialItems, height }) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
+  ({ initialItems, height, currentIndex, onChangeIndex }) => {
     const [items, setItems] = useState<ListItem[]>(initialItems);
     const listContainerRef = useRef<HTMLDivElement | null>(null);
     const itemRefs = useRef<HTMLDivElement[]>([]);
@@ -84,7 +82,7 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
           const itemIndex = Number(
             itemRef.target.getAttribute("list-item-index")
           );
-          setCurrentIndex(itemIndex);
+          onChangeIndex(itemIndex);
         }
       });
     };
@@ -93,10 +91,10 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
       const observer = new IntersectionObserver(intersectionCallback, {
         root: listContainerRef.current,
         threshold: 1.0,
-        // shrink the observable area by 30% so that the item that is
+        // shrink the observable area by 50% so that the item that is
         // closer to the top of the viewport is treated as the current
         // one the user is looking at
-        rootMargin: "0px 0px -30% 0px",
+        rootMargin: "0px 0px -50% 0px",
       });
 
       itemRefs.current.forEach((ref) => {
@@ -108,6 +106,14 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
       };
     }, []);
 
+    useEffect(() => {
+      if (currentIndex.shouldAutoScroll) {
+        scrollToIndex(currentIndex.value);
+      } else {
+        onChangeIndex(currentIndex.value);
+      }
+    }, [currentIndex.value]);
+
     const onDragEnd = (result: DropResult) => {
       if (!result.destination) {
         return;
@@ -116,7 +122,7 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
       const [removed] = newItems.splice(result.source.index, 1);
       newItems.splice(result.destination.index, 0, removed);
       setItems(newItems);
-      setCurrentIndex(result.destination.index);
+      onChangeIndex(result.destination.index);
     };
 
     const scrollToIndex = (newIndex: number) => {
@@ -133,15 +139,7 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
         scrollableParent: listContainerRef.current,
         behavior: "smooth",
       });
-      setCurrentIndex(newIndex);
-    };
-
-    const scrollPrev = () => {
-      scrollToIndex(currentIndex - 1);
-    };
-
-    const scrollNext = () => {
-      scrollToIndex(currentIndex + 1);
+      onChangeIndex(newIndex);
     };
 
     const updateItemRef = (newRef: HTMLDivElement | null, index: number) => {
@@ -158,14 +156,6 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
 
     return (
       <ComponentContainer $height={height}>
-        <ControlsHolder>
-          <button type="button" onClick={scrollPrev}>
-            Previous
-          </button>
-          <button type="button" onClick={scrollNext}>
-            Next
-          </button>
-        </ControlsHolder>
         <ScrollableItems ref={listContainerRef}>
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId={DROPPABLE_CONTAINER_ID}>
