@@ -5,7 +5,7 @@ const QuestionContainer = styled.div<{ isDragging: boolean, mandatory: boolean }
   // padding: 1.5rem 0 1.25rem;
   padding: 150px 20px;
   margin-bottom: 0.5rem;
-  width: 50%;
+  // width: 50%;
   // border: 1px solid #dee4ed;
   border-radius: 0.75rem;
   background: ${(p) => (p.isDragging ? "#dee4ed" : "#fff")};
