@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from "react";
+import React, { FunctionComponent } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 
@@ -23,9 +23,7 @@ export const Question: FunctionComponent<Props> = ({ index, content }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <QuestionContainer >
-            {content}
-          </QuestionContainer>
+          <QuestionContainer>{content}</QuestionContainer>
         </div>
       )}
     </Draggable>

@@ -1,12 +1,11 @@
-import React from "react";
-import { DragDropContext } from "react-beautiful-dnd";
+import React, { FunctionComponent } from "react";
 import "./App.css";
 import { EditorPage } from "./pages/editor-page";
 
-export function App() {
+export const App: FunctionComponent = () => {
   return (
     <div className="App">
       <EditorPage />
     </div>
   );
-}
+};
