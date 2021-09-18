@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import styled from "styled-components";
 import { Question } from "../components/question";
 import { ScrollableDraggableList } from "../components/scrollable-draggable-list";
 import { QuestionT } from "../types/question";
@@ -36,17 +37,23 @@ const initialQuestions = [
   },
 ] as QuestionT[];
 
+const ScrollListContainer = styled.div`
+  height: 100vh;
+  width: 100%;
+`;
+
 const ScrollListTest: FunctionComponent = () => {
   return (
-    <ScrollableDraggableList
-      height={800}
-      initialItems={initialQuestions.map(({ content, id }) => ({
-        key: id,
-        node: ({ isDragging }) => (
-          <Question content={content} isDragging={isDragging} />
-        ),
-      }))}
-    />
+    <ScrollListContainer>
+      <ScrollableDraggableList
+        initialItems={initialQuestions.map(({ content, id }) => ({
+          key: id,
+          node: ({ isDragging }) => (
+            <Question content={content} isDragging={isDragging} />
+          ),
+        }))}
+      />
+    </ScrollListContainer>
   );
 };
 
