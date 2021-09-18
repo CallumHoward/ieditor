@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore from "swiper";
 
 import {
   DragDropContext,
@@ -10,6 +10,13 @@ import {
 } from "react-beautiful-dnd";
 import { QuestionT } from "../types/question";
 import { Question } from "./question";
+import { DraggableQuestion } from "./draggable-question";
+import styled from "styled-components";
+
+const SwiperContainer = styled.div`
+  height: 800px;
+  backgroun: grey;
+`;
 
 const initialQuestions = [
   {
@@ -58,18 +65,14 @@ export const QuestionsList: FunctionComponent = () => {
   };
 
   const renderDnd = () => (
-     <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId={"droppable"}>
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
             {questions.map(({ id, content }, index) => (
-              <Draggable
-                key={id}
-                draggableId={id}
-                index={index}
-              >
+              <Draggable key={id} draggableId={id} index={index}>
                 {(provided, snapshot) => (
-                  <Question
+                  <DraggableQuestion
                     provided={provided}
                     snapshot={snapshot}
                     content={content}
@@ -82,20 +85,24 @@ export const QuestionsList: FunctionComponent = () => {
         )}
       </Droppable>
     </DragDropContext>
- );
+  );
 
   const renderSwiper = () => (
+    <SwiperContainer>
     <Swiper
+      direction={"vertical"}
+      slidesPerView={2}
       spaceBetween={50}
-      slidesPerView={3}
-      onSlideChange={() => console.log('slide change')}
+      onSlideChange={() => console.log("slide change")}
       onSwiper={(swiper) => console.log(swiper)}
     >
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
+      {questions.map(({ content }, index) => (
+        <SwiperSlide key={index}>
+          <Question content={content} />
+        </SwiperSlide>
+      ))}
     </Swiper>
+    </SwiperContainer>
   );
 
   return renderSwiper();

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, StrictMode } from "react";
+import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { EditorPage } from "./pages/editor-page";
 
@@ -7,15 +7,12 @@ const StyledAppContainer = styled.div`
   text-align: center;
   background: lightGrey;
   padding: 30px;
-  height: 1000px;
 `;
 
 export const App: FunctionComponent = () => {
   return (
-    <StrictMode>
-      <StyledAppContainer>
-        <EditorPage />
-      </StyledAppContainer>
-    </StrictMode>
+    <StyledAppContainer>
+      <EditorPage />
+    </StyledAppContainer>
   );
 };
