@@ -1,40 +1,43 @@
 import React, { FunctionComponent } from "react";
-import { DraggableProvided, DraggableStateSnapshot } from "react-beautiful-dnd";
 import styled from "styled-components";
 
-const QuestionContainer = styled.div<{ snapshot: DraggableStateSnapshot }>`
-  padding: 20px;
+const QuestionContainer = styled.div<{ isDragging: boolean, mandatory: boolean }>`
+  // padding: 1.5rem 0 1.25rem;
+  padding: 150px 20px;
+  margin-bottom: 0.5rem;
   width: 50%;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  margin-bottom: 10px;
-  background: ${(p) => (p.snapshot.isDragging ? "#cc660f" : "#cc66ff")};
+  // border: 1px solid #dee4ed;
+  border-radius: 0.75rem;
+  background: ${(p) => (p.isDragging ? "#dee4ed" : "#fff")};
+  // :before {
+  //   border-left: 0.3rem solid #ff656c;
+  //   content: "";
+  //   transition: all 0.3s ease 0s;
+  //   position: absolute;
+  //   height: calc(100% - 0.25rem);
+  //   top: 0.125rem;
+  //   left: -0.0625rem;
+  //   border-top-left-radius: 0.75rem;
+  //   border-bottom-left-radius: 0.75rem;
+  // }
 `;
 
-type DndProps = {
-  snapshot: DraggableStateSnapshot;
-  provided: DraggableProvided;
-};
+const OuterContainer = styled.div`
+  padding: 0;
+  margin: 0;
+  border: 0;
+`;
 
 type QuestionProps = {
   content: string;
+  isDragging?: boolean;
 };
 
-type Props = QuestionProps & DndProps;
-
-export const Question: FunctionComponent<Props> = ({
+export const Question: FunctionComponent<QuestionProps> = ({
   content,
-  provided,
-  snapshot,
+  isDragging = false,
 }) => {
   return (
-    <QuestionContainer
-      ref={provided.innerRef}
-      snapshot={snapshot}
-      {...provided.draggableProps}
-      {...provided.dragHandleProps}
-    >
-      {content}
-    </QuestionContainer>
+      <QuestionContainer isDragging={isDragging} mandatory={true}>{content}</QuestionContainer>
   );
 };
