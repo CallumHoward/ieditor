@@ -76,7 +76,7 @@ const ScrollableItems = styled.div`
   // add empty space at the end so that the last item has room to scroll up
   &::after {
     display: inline-block;
-    height: 300px;
+    height: 100vh;
     width: 100%;
     content: "";
   }

@@ -1,8 +1,9 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const QuestionContainer = styled.div<{
   isDragging: boolean;
   mandatory: boolean;
+  focused: boolean;
 }>`
   padding: 1.5rem 0 1.25rem;
   border: 1px solid #dee4ed;
@@ -12,6 +13,8 @@ export const QuestionContainer = styled.div<{
   &:focus {
     border-color: #6559ff;
   }
+
+  ${p => p.focused && `border-color: #6559ff;`}
 
   box-shadow: ${(p) =>
     p.isDragging
@@ -25,7 +28,7 @@ export const OuterContainer = styled.div`
     outline: 0px;
   }
   user-select: none;
-  padding: 0 0 0.5rem 0;
+  padding: 25% 0;
   margin: 0;
   border: 0;
 `;
@@ -51,7 +54,10 @@ export const ResponseContainer = styled.div`
   }
 `;
 
-export const StyledButton = styled.button<{active: boolean, activeColor?: string}>`
+export const StyledButton = styled.button<{
+  active: boolean;
+  activeColor?: string;
+}>`
   background: #f3f6fb;
   margin: 0 0 0 0.5rem;
   flex: 1;
@@ -71,18 +77,18 @@ export const StyledButton = styled.button<{active: boolean, activeColor?: string
   word-break: normal;
 
   &:hover {
-    ${p => !p.active && `background: #f3f6fb;`}
+    ${(p) => !p.active && `background: #f3f6fb;`}
   }
 
   &:active {
-    ${p => !p.active && `border: 1px solid #6559ff;`}
+    ${(p) => !p.active && `border: 1px solid #6559ff;`}
   }
 
-  background: ${p => p.active ? p.activeColor || `#6559ff`: "#f9fbfe"};
-  color: ${p => p.active ? `#f3f6fb`: "#344563"};
+  background: ${(p) => (p.active ? p.activeColor || `#6559ff` : "#f9fbfe")};
+  color: ${(p) => (p.active ? `#f3f6fb` : "#344563")};
 
   &:focus {
-    ${p => !p.active && `border: 1px solid #6559ff;`}
+    ${(p) => !p.active && `border: 1px solid #6559ff;`}
   }
 
   display: inline-flex;
