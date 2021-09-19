@@ -13,6 +13,7 @@ import {
 } from "react-beautiful-dnd";
 import styled, { css } from "styled-components";
 import { scrollToElement } from "../utils/scrollToElement";
+import deepEqual from "fast-deep-equal/react";
 
 const DROPPABLE_CONTAINER_ID = "droppable";
 
@@ -249,15 +250,7 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
 
 const ScrollableDraggableList = React.memo(
   ScrollableDraggableListBase,
-  (prevProps, nextProps) =>
-    prevProps.meta.editing === nextProps.meta.editing &&
-    prevProps.currentIndex.value === nextProps.currentIndex.value &&
-    prevProps.currentIndex.shouldAutoScroll ===
-      nextProps.currentIndex.shouldAutoScroll &&
-    prevProps.initialItems === nextProps.initialItems &&
-    prevProps.height === nextProps.height &&
-    prevProps.onChangeIndex === nextProps.onChangeIndex &&
-    prevProps.children === nextProps.children
+  (prevProps, nextProps) => deepEqual(prevProps, nextProps)
 );
 
 export { ScrollableDraggableList };
