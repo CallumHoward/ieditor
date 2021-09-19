@@ -18,6 +18,9 @@ import deepEqual from "fast-deep-equal/react";
 const DROPPABLE_CONTAINER_ID = "droppable";
 
 // TODO: Make ListMeta generic to make this component more reusable
+// ListMeta contains stateful props that need to be passed down to
+// the list item render function. Put any data that should not be
+// associated with the List implementation here
 export type ListMeta = {
   editing: boolean;
   focusMode: boolean;
@@ -70,7 +73,7 @@ const ComponentContainer = styled.div<{ $height?: number }>`
         `}
 `;
 
-const ScrollableItems = styled.div<{ focusMode: boolean }>`
+const ScrollableItems = styled.div<{ hasStartBuffer: boolean }>`
   height: 100%;
   overflow: scroll;
   scroll-snap-type: y mandatory;
@@ -89,7 +92,7 @@ const ScrollableItems = styled.div<{ focusMode: boolean }>`
     transition: height 500ms ease;
     width: 100%;
     content: "";
-    ${({ focusMode }) => (focusMode ? "height: 25vh" : "height: 0")};
+    ${({ hasStartBuffer }) => (hasStartBuffer ? "height: 25vh" : "height: 0")};
   }
 `;
 
@@ -223,7 +226,10 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
 
     return (
       <ComponentContainer $height={height}>
-        <ScrollableItems ref={listContainerRef} focusMode={meta.focusMode}>
+        <ScrollableItems
+          ref={listContainerRef}
+          hasStartBuffer={scrollAlignmentMode === "center"}
+        >
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId={DROPPABLE_CONTAINER_ID}>
               {(provided) => (
