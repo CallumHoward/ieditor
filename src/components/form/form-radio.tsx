@@ -10,6 +10,7 @@ export type Option = {
 
 type Props = {
   name: string;
+  onChange: (value: string) => void;
   options?: Array<Option>;
 } & React.HTMLProps<HTMLInputElement>;
 
@@ -21,6 +22,7 @@ const defaultOptions: Array<Option> = [
 
 export const FormRadio: FunctionComponent<Props> = ({
   name,
+  onChange,
   options = defaultOptions,
 }) => {
   const { input } = useField(name, { type: "radio" });
@@ -33,6 +35,7 @@ export const FormRadio: FunctionComponent<Props> = ({
         <Button
           key={index}
           {...input}
+          onChange={(value) => {input.onChange(value); onChange(value)}}
           value={option.value}
           active={currentValue === option.value}
           option={option}
