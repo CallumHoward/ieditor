@@ -13,6 +13,7 @@ const PageBody = styled.div`
   box-sizing: border-box;
   width: 100%;
   height: calc(100% - ${NAVBAR_HEIGHT});
+  position: relative;
 `;
 
 type Props = {

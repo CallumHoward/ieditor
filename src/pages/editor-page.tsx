@@ -2,6 +2,7 @@ import React, { FunctionComponent, useCallback, useRef, useState } from "react";
 import { Form, FormSpy } from "react-final-form";
 import styled from "styled-components";
 import { PageContainer } from "../components/page-container";
+import { ProgressBar } from "../components/progress-bar";
 import { Question } from "../components/question";
 import {
   ListIndexData,
@@ -104,6 +105,10 @@ export const EditorPage: FunctionComponent = () => {
       focusMode={focusMode}
       setFocusMode={setFocusMode}
     >
+      <ProgressBar
+        totalSteps={initialItems.current.length}
+        myIndex={currentIndexState.value}
+      />
       <ScrollListContainer>
         <Form
           onSubmit={() => {
