@@ -18,10 +18,10 @@ import {
   ResponseContainer,
 } from "./question-styled";
 
-const renderResponse = (question: QuestionT) => {
+const renderResponse = (question: QuestionT, scrollNext: () => void) => {
   switch (question.type) {
     case ResponseType.Radio:
-      return <FormRadio name={`qr${question.id}`} />;
+      return <FormRadio name={`qr${question.id}`} onChange={scrollNext} />;
     case ResponseType.Input:
       return <FormInput name={`qi${question.id}`} />;
   }
@@ -61,7 +61,7 @@ export const Question: FunctionComponent<QuestionProps> = ({
           <Label>{`${index}. ${question.content} ${
             editing ? "(isEdit: true)" : "(isEdit: false)"
           }`}</Label>
-          <ResponseContainer>{renderResponse(question)}</ResponseContainer>
+          <ResponseContainer>{renderResponse(question, scrollNext)}</ResponseContainer>
           {!editing && (
             <AttachmentBar>
               <span style={{ flexGrow: 1 }}>
