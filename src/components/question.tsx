@@ -38,6 +38,7 @@ export const Question: FunctionComponent<QuestionProps> = ({
   editing = false,
   isDragging = false,
 }) => {
+  console.log("LOG focused: ", focused);
   return (
     <OuterContainer>
       <QuestionContainer

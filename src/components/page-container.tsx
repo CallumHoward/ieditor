@@ -18,16 +18,25 @@ const PageBody = styled.div`
 type Props = {
   editing: boolean;
   setEditing: (value: boolean) => void;
+  focusMode: boolean;
+  setFocusMode: (value: boolean) => void;
 };
 
 export const PageContainer: FunctionComponent<Props> = ({
   editing,
   setEditing,
+  focusMode,
+  setFocusMode,
   children,
 }) => {
   return (
     <PageContainerWrapper>
-      <NavBar editing={editing} setEditing={setEditing}/>
+      <NavBar
+        editing={editing}
+        setEditing={setEditing}
+        focusMode={focusMode}
+        setFocusMode={setFocusMode}
+      />
       <PageBody>{children}</PageBody>
     </PageContainerWrapper>
   );

@@ -64,6 +64,7 @@ export const EditorPage: FunctionComponent = () => {
     currentIndexRef.current
   );
   const [editing, setEditing] = useState<boolean>(false);
+  const [focusMode, setFocusMode] = useState<boolean>(false);
 
   const renderInitialQuestions = () =>
     initialQuestionsData.map((question) => ({
@@ -80,7 +81,6 @@ export const EditorPage: FunctionComponent = () => {
     }));
 
   const initialItems = useRef<ListItem[]>(renderInitialQuestions());
-  const [isEditing, setIsEditing] = useState(false);
 
   const scrollPrev = () => {
     if (currentIndexRef.current.value - 1 >= 0) {
@@ -110,7 +110,12 @@ export const EditorPage: FunctionComponent = () => {
   }, []);
 
   return (
-    <PageContainer editing={editing} setEditing={setEditing}>
+    <PageContainer
+      editing={editing}
+      setEditing={setEditing}
+      focusMode={focusMode}
+      setFocusMode={setFocusMode}
+    >
       <ControlsHolder>
         <button type="button" onClick={scrollPrev}>
           Previous
@@ -133,14 +138,6 @@ export const EditorPage: FunctionComponent = () => {
                 onSubmit={handleSubmit}
                 style={{ height: "100%", width: "100%" }}
               >
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsEditing(!isEditing);
-                  }}
-                >
-                  toggle edit: {isEditing ? "true" : "false"}
-                </button>
                 <FormSpy subscription={{ values: true }}>
                   {({ values }) => {
                     console.log("form values:", values);
@@ -151,8 +148,8 @@ export const EditorPage: FunctionComponent = () => {
                   currentIndex={currentIndexState}
                   onChangeIndex={handleOnChange}
                   initialItems={initialItems.current}
-                  scrollAlignmentMode={"start"}
-                  meta={{ editing: isEditing }}
+                  scrollAlignmentMode={focusMode ? "center" : "start"}
+                  meta={{ editing }}
                 />
                 <button type={"button"} onSubmit={handleSubmit}>
                   Submit

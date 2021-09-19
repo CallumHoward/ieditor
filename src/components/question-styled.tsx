@@ -5,7 +5,7 @@ export const QuestionContainer = styled.div<{
   mandatory: boolean;
   focused: boolean;
 }>`
-  padding: 1.5rem 0 1.25rem;
+  padding: 1rem 0 1rem;
   border: 1px solid #dee4ed;
   border-radius: 0.75rem;
 
@@ -117,7 +117,7 @@ export const StyledInput = styled.input`
 export const AttachmentBar = styled.div`
   display: flex;
   justify-content: flex-end;
-  padding: 0.75rem 0 0;
+  padding: 1rem 0 0;
 
   font-size: 12px;
 `;
