@@ -79,8 +79,8 @@ const ScrollableItems = styled.div<{ focusMode: boolean }>`
     display: inline-block;
     transition: height 500ms ease;
     width: 100%;
+    height: 100vh;
     content: "";
-    ${({ focusMode }) => (focusMode ? "height: 25vh" : "height: 0")};
   }
 
   &::before {
