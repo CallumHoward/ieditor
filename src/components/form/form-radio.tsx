@@ -1,12 +1,18 @@
 import React, { FunctionComponent } from "react";
+import { useField } from "react-final-form";
 import { StyledButton } from "../question-styled";
 
-export const FormRadio: FunctionComponent = () => {
+type Props = {
+  name: string;
+} & React.HTMLProps<HTMLInputElement>;
+
+export const FormRadio: FunctionComponent<Props> = ({ name }) => {
+  const { radio } = useField(name, {});
   return (
     <>
-      <StyledButton>Yes</StyledButton>
-      <StyledButton>No</StyledButton>
-      <StyledButton>N/A</StyledButton>
+      <StyledButton {...radio}>Yes</StyledButton>
+      <StyledButton {...radio}>No</StyledButton>
+      <StyledButton {...radio}>N/A</StyledButton>
     </>
   );
 };

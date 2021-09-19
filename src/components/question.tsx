@@ -17,7 +17,7 @@ import {
 const renderResponse = (question: QuestionT) => {
   switch (question.type) {
     case ResponseType.Radio:
-      return <FormRadio />;
+      return <FormRadio name={`q${question.id}`} />;
     case ResponseType.Input:
       return <FormInput name={`q${question.id}`} />;
   }
