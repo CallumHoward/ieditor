@@ -14,7 +14,7 @@ export const QuestionContainer = styled.div<{
     border-color: #6559ff;
   }
 
-  ${p => p.focused && `border-color: #6559ff;`}
+  ${(p) => p.focused && `border-color: #6559ff;`}
 
   box-shadow: ${(p) =>
     p.isDragging
@@ -23,12 +23,13 @@ export const QuestionContainer = styled.div<{
   background: ${(p) => (p.isDragging ? "#fafafa" : "#ffffff")};
 `;
 
-export const OuterContainer = styled.div<{focusMode: boolean}>`
+export const OuterContainer = styled.div<{ focusMode: boolean }>`
   &::focus {
     outline: 0px;
   }
   user-select: none;
-  padding: ${p => p.focusMode ? "25%" : "0.5rem"} 0;
+  padding: ${(p) => (p.focusMode ? "25%" : "0.5rem")} 0;
+  transition: padding 500ms ease;
   margin: 0;
   border: 0;
 `;
