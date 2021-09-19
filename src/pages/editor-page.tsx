@@ -57,12 +57,9 @@ const ControlsHolder = styled.div`
 `;
 
 export const EditorPage: FunctionComponent = () => {
-  const currentIndexRef = useRef<ListIndexData>({
+  const [currentIndexState, setCurrentIndexState] = useState<ListIndexData>({
     value: 0,
   });
-  const [currentIndexState, setCurrentIndexState] = useState<ListIndexData>(
-    currentIndexRef.current
-  );
   const [editing, setEditing] = useState<boolean>(false);
   const [focusMode, setFocusMode] = useState<boolean>(false);
 
@@ -84,30 +81,27 @@ export const EditorPage: FunctionComponent = () => {
   const initialItems = useRef<ListItem[]>(renderInitialQuestions());
 
   const scrollPrev = () => {
-    if (currentIndexRef.current.value - 1 >= 0) {
+    if (currentIndexState.value - 1 >= 0) {
       const newIndex = {
-        value: currentIndexRef.current.value - 1,
+        value: currentIndexState.value - 1,
         shouldAutoScroll: true,
       };
-      currentIndexRef.current = newIndex;
       setCurrentIndexState(newIndex);
     }
   };
 
   const scrollNext = () => {
-    if (currentIndexRef.current.value + 1 < initialQuestionsData.length) {
+    if (currentIndexState.value + 1 < initialQuestionsData.length) {
       const newIndex = {
-        value: currentIndexRef.current.value + 1,
+        value: currentIndexState.value + 1,
         shouldAutoScroll: true,
       };
-      currentIndexRef.current = newIndex;
       setCurrentIndexState(newIndex);
     }
   };
 
   const handleOnChange = useCallback((newValue: number) => {
-    currentIndexRef.current = { value: newValue };
-    // Do not call setCurrentIndexState here to avoid re-rendering on scroll
+    setCurrentIndexState({ value: newValue });
   }, []);
 
   return (
@@ -141,7 +135,7 @@ export const EditorPage: FunctionComponent = () => {
               >
                 <FormSpy subscription={{ values: true }}>
                   {({ values }) => {
-                    console.log("form values:", values);
+                    // console.log("form values:", values);
                     return <pre>{JSON.stringify(values)}</pre>;
                   }}
                 </FormSpy>

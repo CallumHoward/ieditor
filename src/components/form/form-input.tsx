@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { useField, useForm } from "react-final-form";
+import { useField } from "react-final-form";
 import { StyledInput } from "../question-styled";
 
 type Props = {
@@ -8,7 +8,5 @@ type Props = {
 
 export const FormInput: FunctionComponent<Props> = ({ name }) => {
   const { input } = useField(name, {});
-  const form = useForm();
-  console.log("getRegisteredFields", form.getState().values);
   return <StyledInput {...input} />;
 };
