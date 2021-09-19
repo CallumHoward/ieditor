@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const QuestionContainer = styled.div<{
   isDragging: boolean;
@@ -28,7 +28,7 @@ export const OuterContainer = styled.div<{ focusMode: boolean }>`
     outline: 0px;
   }
   user-select: none;
-  padding: ${(p) => (p.focusMode ? "25%" : "0.5rem")} 0;
+  padding: ${(p) => (p.focusMode ? "15%" : "0.5rem")} 0;
   transition: padding 500ms ease;
   margin: 0;
   border: 0;
@@ -135,7 +135,6 @@ export const InlineButton = styled.button`
   letter-spacing: 0.025rem;
   line-height: 1.25rem;
   cursor: pointer;
-  opacity: 1;
   outline: 0px;
   text-align: center;
   text-overflow: ellipsis;
@@ -155,9 +154,18 @@ export const InlineButton = styled.button`
   }
 `;
 
-export const ControlsContainer = styled.div<{visible: boolean}>`
-  transition: opacity 2000ms ease 500ms;
-  opacity: ${p => p.visible ? '1' : '0'};
+export const ControlsContainer = styled.div<{ visible: boolean }>`
+  transition: opacity 500ms ease 200ms;
+  ${({ visible }) =>
+    visible
+      ? css`
+          opacity: 1;
+          pointer-events: all;
+        `
+      : css`
+          opacity: 0;
+          pointer-events: none;
+        `};
   display: flex;
   align-items: center;
   justify-content: center;

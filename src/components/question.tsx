@@ -61,7 +61,9 @@ export const Question: FunctionComponent<QuestionProps> = ({
           <Label>{`${index}. ${question.content} ${
             editing ? "(isEdit: true)" : "(isEdit: false)"
           }`}</Label>
-          <ResponseContainer>{renderResponse(question, scrollNext)}</ResponseContainer>
+          <ResponseContainer>
+            {renderResponse(question, scrollNext)}
+          </ResponseContainer>
           {!editing && (
             <AttachmentBar>
               <span style={{ flexGrow: 1 }}>
@@ -84,18 +86,16 @@ export const Question: FunctionComponent<QuestionProps> = ({
           )}
         </InnerContainer>
       </QuestionContainer>
-      {focusMode && focused && (
-        <ControlsContainer visible={focusMode && focused}>
-          {index !== 0 && (
-            <StyledNavButton style={{ flexGrow: 1 }} onClick={scrollPrev}>
-              <ArrowUpSvg />
-            </StyledNavButton>
-          )}
-          <StyledNavButton style={{ flexGrow: 1 }} onClick={scrollNext}>
-            {isLast ? "Finish" : <ArrowDownSvg />}
+      <ControlsContainer visible={focusMode && focused}>
+        {index !== 0 && (
+          <StyledNavButton style={{ flexGrow: 1 }} onClick={scrollPrev}>
+            <ArrowUpSvg />
           </StyledNavButton>
-        </ControlsContainer>
-      )}
+        )}
+        <StyledNavButton style={{ flexGrow: 1 }} onClick={scrollNext}>
+          {isLast ? "Finish" : <ArrowDownSvg />}
+        </StyledNavButton>
+      </ControlsContainer>
     </OuterContainer>
   );
 };
