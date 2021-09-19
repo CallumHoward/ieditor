@@ -1,18 +1,45 @@
 import React, { FunctionComponent } from "react";
-import { useField } from "react-final-form";
-import { StyledButton } from "../question-styled";
+import { useField, useForm } from "react-final-form";
+import { Button } from "./button";
+
+export type Option = {
+  label: string;
+  value: string;
+  meta?: Record<string, string>;
+};
 
 type Props = {
   name: string;
+  options?: Array<Option>;
 } & React.HTMLProps<HTMLInputElement>;
 
-export const FormRadio: FunctionComponent<Props> = ({ name }) => {
-  const { radio } = useField(name, {});
+const defaultOptions: Array<Option> = [
+  { label: "Yes", value: "yes", meta: { color: "#13855f" } },
+  { label: "No", value: "no", meta: { color: "#c60022" } },
+  { label: "N/A", value: "na", meta: { color: "#707070" } },
+];
+
+export const FormRadio: FunctionComponent<Props> = ({
+  name,
+  options = defaultOptions,
+}) => {
+  const { input } = useField(name, { type: "radio" });
+  const form = useForm();
+  const currentValue = form.getState().values[name];
+
   return (
     <>
-      <StyledButton {...radio}>Yes</StyledButton>
-      <StyledButton {...radio}>No</StyledButton>
-      <StyledButton {...radio}>N/A</StyledButton>
+      {options.map((option, index) => (
+        <Button
+          key={index}
+          {...input}
+          value={option.value}
+          active={currentValue === option.value}
+          option={option}
+        >
+          {option.label}
+        </Button>
+      ))}
     </>
   );
 };

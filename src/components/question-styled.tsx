@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const QuestionContainer = styled.div<{
   isDragging: boolean;
@@ -51,7 +51,7 @@ export const ResponseContainer = styled.div`
   }
 `;
 
-export const StyledButton = styled.button`
+export const StyledButton = styled.button<{active: boolean, activeColor?: string}>`
   background: #f3f6fb;
   margin: 0 0 0 0.5rem;
   flex: 1;
@@ -60,7 +60,6 @@ export const StyledButton = styled.button`
   background-color: #f9fbfe;
   border: 1px solid #dee4ed;
   border-radius: 0.5rem;
-  color: #344563;
   font-size: 0.875rem;
   font-weight: 400;
   cursor: pointer;
@@ -71,12 +70,19 @@ export const StyledButton = styled.button`
   user-select: none;
   word-break: normal;
 
-  &:active {
-    background: #f3f6fb;
+  &:hover {
+    ${p => !p.active && `background: #f3f6fb;`}
   }
 
+  &:active {
+    ${p => !p.active && `border: 1px solid #6559ff;`}
+  }
+
+  background: ${p => p.active ? p.activeColor || `#6559ff`: "#f9fbfe"};
+  color: ${p => p.active ? `#f3f6fb`: "#344563"};
+
   &:focus {
-    border: 1px solid #6559ff;
+    ${p => !p.active && `border: 1px solid #6559ff;`}
   }
 
   display: inline-flex;

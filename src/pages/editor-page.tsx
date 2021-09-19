@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useRef } from "react";
+import React, { FunctionComponent, useCallback, useRef, useState, useEffect } from "react";
 import { Form, FormSpy } from "react-final-form";
 import styled from "styled-components";
 import { PageContainer } from "../components/page-container";
@@ -60,12 +60,18 @@ export const EditorPage: FunctionComponent = () => {
   const currentIndex = useRef<ListIndexData>({
     value: 0,
   });
+  const [editing, setEditing] = useState<boolean>(false);
 
   const renderInitialQuestions = () =>
     initialQuestionsData.map((question) => ({
       key: question.id,
-      node: ({ isDragging, index }: ListItemProps) => (
-        <Question index={index} question={question} isDragging={isDragging} />
+      node: ({ isDragging, index, editing }: ListItemProps) => (
+        <Question
+          index={index}
+          question={question}
+          isDragging={isDragging}
+          editing={editing}
+        />
       ),
     }));
 
@@ -94,7 +100,7 @@ export const EditorPage: FunctionComponent = () => {
   }, []);
 
   return (
-    <PageContainer>
+    <PageContainer editing={editing} setEditing={setEditing}>
       <ControlsHolder>
         <button type="button" onClick={scrollPrev}>
           Previous
@@ -113,6 +119,7 @@ export const EditorPage: FunctionComponent = () => {
           {({ handleSubmit }) => {
             return (
               <form
+                autoComplete={"off"}
                 onSubmit={handleSubmit}
                 style={{ height: "100%", width: "100%" }}
               >
@@ -126,6 +133,7 @@ export const EditorPage: FunctionComponent = () => {
                   currentIndex={currentIndex.current}
                   onChangeIndex={handleOnChange}
                   initialItems={initialItems.current}
+                  editing={editing}
                 />
                 <button type={"button"} onSubmit={handleSubmit}>
                   Submit

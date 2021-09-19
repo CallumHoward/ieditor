@@ -18,6 +18,7 @@ const DROPPABLE_CONTAINER_ID = "droppable";
 
 export type ListItemProps = {
   isDragging?: boolean;
+  editing?: boolean;
   index: number;
 };
 
@@ -40,6 +41,7 @@ type ScrollableDraggableListProps = {
   height?: number;
   currentIndex: ListIndexData;
   onChangeIndex: (newIndex: number) => void;
+  editing: boolean;
 };
 
 const ComponentContainer = styled.div<{ $height?: number }>`
@@ -75,7 +77,7 @@ const SnapScrollContainer = styled.div`
 `;
 
 const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProps> =
-  ({ initialItems, height, currentIndex, onChangeIndex }) => {
+  ({ initialItems, height, currentIndex, onChangeIndex, editing }) => {
     const [items, setItems] = useState<ListItem[]>(initialItems);
     const listContainerRef = useRef<HTMLDivElement | null>(null);
     const itemRefs = useRef<HTMLDivElement[]>([]);
@@ -184,7 +186,11 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
                           {...provided.dragHandleProps}
                         >
                           <SnapScrollContainer>
-                            {node({ isDragging: snapshot.isDragging, index })}
+                            {node({
+                              isDragging: snapshot.isDragging,
+                              index,
+                              editing,
+                            })}
                           </SnapScrollContainer>
                         </div>
                       )}
@@ -203,6 +209,7 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
 const ScrollableDraggableList = React.memo(
   ScrollableDraggableListBase,
   (prevProps, nextProps) =>
+    prevProps.editing === nextProps.editing &&
     prevProps.initialItems === nextProps.initialItems &&
     prevProps.height === nextProps.height &&
     prevProps.onChangeIndex === nextProps.onChangeIndex &&
