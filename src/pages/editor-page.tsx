@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useRef, useState, useEffect } from "react";
+import React, { FunctionComponent, useCallback, useRef, useState } from "react";
 import { Form, FormSpy } from "react-final-form";
 import styled from "styled-components";
 import { PageContainer } from "../components/page-container";
@@ -57,9 +57,12 @@ const ControlsHolder = styled.div`
 `;
 
 export const EditorPage: FunctionComponent = () => {
-  const currentIndex = useRef<ListIndexData>({
+  const currentIndexRef = useRef<ListIndexData>({
     value: 0,
   });
+  const [currentIndexState, setCurrentIndexState] = useState<ListIndexData>(
+    currentIndexRef.current
+  );
   const [editing, setEditing] = useState<boolean>(false);
 
   const renderInitialQuestions = () =>
@@ -78,25 +81,30 @@ export const EditorPage: FunctionComponent = () => {
   const initialItems = useRef<ListItem[]>(renderInitialQuestions());
 
   const scrollPrev = () => {
-    if (currentIndex.current.value - 1 >= 0) {
-      currentIndex.current = {
-        value: currentIndex.current.value - 1,
+    if (currentIndexRef.current.value - 1 >= 0) {
+      const newIndex = {
+        value: currentIndexRef.current.value - 1,
         shouldAutoScroll: true,
       };
+      currentIndexRef.current = newIndex;
+      setCurrentIndexState(newIndex);
     }
   };
 
   const scrollNext = () => {
-    if (currentIndex.current.value + 1 < initialQuestionsData.length) {
-      currentIndex.current = {
-        value: currentIndex.current.value + 1,
+    if (currentIndexRef.current.value + 1 < initialQuestionsData.length) {
+      const newIndex = {
+        value: currentIndexRef.current.value + 1,
         shouldAutoScroll: true,
       };
+      currentIndexRef.current = newIndex;
+      setCurrentIndexState(newIndex);
     }
   };
 
   const handleOnChange = useCallback((newValue: number) => {
-    currentIndex.current = { value: newValue };
+    currentIndexRef.current = { value: newValue };
+    // Do not call setCurrentIndexState here to avoid re-rendering on scroll
   }, []);
 
   return (
@@ -125,12 +133,12 @@ export const EditorPage: FunctionComponent = () => {
               >
                 <FormSpy subscription={{ values: true }}>
                   {({ values }) => {
-                    console.log(values);
+                    console.log("form values:", values);
                     return <pre>{JSON.stringify(values)}</pre>;
                   }}
                 </FormSpy>
                 <ScrollableDraggableList
-                  currentIndex={currentIndex.current}
+                  currentIndex={currentIndexState}
                   onChangeIndex={handleOnChange}
                   initialItems={initialItems.current}
                   editing={editing}
