@@ -92,6 +92,19 @@ const SnapScrollContainer = styled.div<{
     `}
 `;
 
+const intersectionCallback =
+  (onChangeIndex: (newIndex: number) => void) =>
+  (intersectingItemRefs: IntersectionObserverEntry[]) => {
+    intersectingItemRefs.forEach((itemRef) => {
+      const itemIndex = Number(itemRef.target.getAttribute("list-item-index"));
+
+      if (itemRef.isIntersecting) {
+        console.log(itemIndex);
+        onChangeIndex(itemIndex);
+      }
+    });
+  };
+
 const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProps> =
   ({
     initialItems,
@@ -105,27 +118,9 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
     const listContainerRef = useRef<HTMLDivElement | null>(null);
     const itemRefs = useRef<HTMLDivElement[]>([]);
 
-    const intersectionCallback =
-      (observerAlignment: ScrollAlignmentMode) =>
-      (intersectingItemRefs: IntersectionObserverEntry[]) => {
-        intersectingItemRefs.forEach((itemRef) => {
-          const itemIndex = Number(
-            itemRef.target.getAttribute("list-item-index")
-          );
-
-          if (
-            itemRef.isIntersecting &&
-            observerAlignment === scrollAlignmentMode
-          ) {
-            console.log(itemIndex);
-            onChangeIndex(itemIndex);
-          }
-        });
-      };
-
     useEffect(() => {
       const startAlignmentObserver = new IntersectionObserver(
-        intersectionCallback("start"),
+        intersectionCallback(onChangeIndex),
         {
           root: listContainerRef.current,
           // shrink the observable area by 99% so that the top item
@@ -138,7 +133,7 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
       );
 
       const centerAlignmentObserver = new IntersectionObserver(
-        intersectionCallback("center"),
+        intersectionCallback(onChangeIndex),
         {
           root: listContainerRef.current,
           rootMargin: "-49% 0px -49% 0px",
@@ -146,16 +141,21 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
         }
       );
 
-      itemRefs.current.forEach((ref) => {
-        startAlignmentObserver.observe(ref);
-        centerAlignmentObserver.observe(ref);
-      });
+      if (scrollAlignmentMode === "start") {
+        itemRefs.current.forEach((ref) => {
+          startAlignmentObserver.observe(ref);
+        });
+      } else {
+        itemRefs.current.forEach((ref) => {
+          centerAlignmentObserver.observe(ref);
+        });
+      }
 
       return () => {
         startAlignmentObserver.disconnect();
         centerAlignmentObserver.disconnect();
       };
-    }, []);
+    }, [onChangeIndex, scrollAlignmentMode]);
 
     useEffect(() => {
       if (currentIndex.shouldAutoScroll) {
