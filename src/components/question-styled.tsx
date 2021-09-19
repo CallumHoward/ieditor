@@ -8,6 +8,11 @@ export const QuestionContainer = styled.div<{
   border: 1px solid #dee4ed;
   border-radius: 0.75rem;
 
+  // not working
+  &:focus {
+    border-color: #6559ff;
+  }
+
   box-shadow: ${(p) =>
     p.isDragging
       ? "0 0px 7px rgba(66,66,66,0.08), 0 8px 10px rgba(66,66,66,0.1)"
@@ -70,6 +75,10 @@ export const StyledButton = styled.button`
     background: #f3f6fb;
   }
 
+  &:focus {
+    border: 1px solid #6559ff;
+  }
+
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -105,7 +114,7 @@ export const InlineButton = styled.button`
   margin: 0px;
   padding: 0.25rem;
   background-color: #f3f6fb;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 0.5rem;
   color: rgb(52, 69, 99);
   font-size: 0.75rem;
@@ -126,5 +135,9 @@ export const InlineButton = styled.button`
 
   &:active &:hover {
     background-color: #f3f6fb;
+  }
+
+  &:focus {
+    border: 1px solid #6559ff;
   }
 `;

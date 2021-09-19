@@ -42,13 +42,13 @@ export const Question: FunctionComponent<QuestionProps> = ({
           <ResponseContainer>{renderResponse(question)}</ResponseContainer>
           <AttachmentBar>
             <span style={{ flexGrow: 1 }}>
-              <InlineButton>Add note...</InlineButton>
+              <InlineButton tabIndex={index * 100 + 1}>Add note...</InlineButton>
             </span>
-            <InlineButton style={{ marginRight: "1rem" }}>
+            <InlineButton tabIndex={index * 100 + 2} style={{ marginRight: "1rem" }}>
               <MediaSvg style={{ marginRight: "0.5rem" }} />
               Media
             </InlineButton>
-            <InlineButton>
+            <InlineButton tabIndex={index * 100 + 3}>
               <ActionBoxSvg style={{ marginRight: "0.5rem" }} />
               Action
             </InlineButton>
