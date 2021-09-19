@@ -74,7 +74,7 @@ const SnapScrollContainer = styled.div`
   scroll-snap-align: start;
 `;
 
-const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProps> =
+const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
   ({ initialItems, height, currentIndex, onChangeIndex }) => {
     const [items, setItems] = useState<ListItem[]>(initialItems);
     const listContainerRef = useRef<HTMLDivElement | null>(null);
@@ -199,17 +199,5 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
       </ComponentContainer>
     );
   };
-
-const ScrollableDraggableList = React.memo(
-  ScrollableDraggableListBase,
-  (prevProps, nextProps) =>
-    prevProps.currentIndex.value === nextProps.currentIndex.value &&
-    prevProps.currentIndex.shouldAutoScroll ===
-      nextProps.currentIndex.shouldAutoScroll &&
-    prevProps.initialItems === nextProps.initialItems &&
-    prevProps.height === nextProps.height &&
-    prevProps.onChangeIndex === nextProps.onChangeIndex &&
-    prevProps.children === nextProps.children
-);
 
 export { ScrollableDraggableList };
