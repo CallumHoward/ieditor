@@ -37,16 +37,17 @@ export const NavBar: FunctionComponent<Props> = ({
             setFocusMode(!focusMode);
           }}
         >
-          {focusMode ? "Normal" : "Focus"}
+          {!editing && !focusMode && "Focus"}
         </StyledNavButton>
       </StyledButtonContainer>
       <StyledButtonContainer style={{ flexDirection: "row-reverse" }}>
         <StyledNavButton
           onClick={() => {
-            setEditing(!editing);
+            setEditing(!editing && !focusMode);
+            setFocusMode(false);
           }}
         >
-          {editing ? "Done" : <EditSvg />}
+          {editing || focusMode ? "Done" : <EditSvg />}
         </StyledNavButton>
       </StyledButtonContainer>
     </NavBarContainer>

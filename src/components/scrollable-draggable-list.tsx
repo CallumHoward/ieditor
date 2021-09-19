@@ -26,6 +26,8 @@ export type ListMeta = {
 export type ListItemProps = {
   isDragging?: boolean;
   currentIndex: number;
+  scrollPrev: () => void;
+  scrollNext: () => void;
   index: number;
   meta: ListMeta;
 };
@@ -50,6 +52,8 @@ type ScrollableDraggableListProps = {
    */
   height?: number;
   currentIndex: ListIndexData;
+  scrollPrev: () => void;
+  scrollNext: () => void;
   onChangeIndex: (newIndex: number) => void;
   scrollAlignmentMode: ScrollAlignmentMode;
   meta: ListMeta;
@@ -119,6 +123,8 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
     initialItems,
     height,
     currentIndex,
+    scrollPrev,
+    scrollNext,
     onChangeIndex,
     meta,
     scrollAlignmentMode,
@@ -242,6 +248,8 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
                               isDragging: snapshot.isDragging,
                               index,
                               currentIndex: currentIndex.value,
+                              scrollPrev,
+                              scrollNext,
                               meta,
                             })}
                           </SnapScrollContainer>

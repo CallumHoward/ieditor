@@ -51,11 +51,6 @@ const ScrollListContainer = styled.div`
   position: relative;
 `;
 
-const ControlsHolder = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
 export const EditorPage: FunctionComponent = () => {
   const [currentIndexState, setCurrentIndexState] = useState<ListIndexData>({
     value: 0,
@@ -66,10 +61,19 @@ export const EditorPage: FunctionComponent = () => {
   const renderInitialQuestions = () =>
     initialQuestionsData.map((question) => ({
       key: question.id,
-      node: ({ isDragging, index, currentIndex, meta }: ListItemProps) => (
+      node: ({
+        isDragging,
+        index,
+        currentIndex,
+        scrollPrev,
+        scrollNext,
+        meta,
+      }: ListItemProps) => (
         <Question
           index={index}
           isLast={index === initialQuestionsData.length - 1}
+          scrollPrev={scrollPrev}
+          scrollNext={scrollNext}
           question={question}
           focused={index === currentIndex}
           focusMode={meta.focusMode}
@@ -112,14 +116,6 @@ export const EditorPage: FunctionComponent = () => {
       focusMode={focusMode}
       setFocusMode={setFocusMode}
     >
-      <ControlsHolder>
-        <button type="button" onClick={scrollPrev}>
-          Previous
-        </button>
-        <button type="button" onClick={scrollNext}>
-          Next
-        </button>
-      </ControlsHolder>
       <ScrollListContainer>
         <Form
           onSubmit={() => {
@@ -134,14 +130,16 @@ export const EditorPage: FunctionComponent = () => {
                 onSubmit={handleSubmit}
                 style={{ height: "100%", width: "100%" }}
               >
-                <FormSpy subscription={{ values: true }}>
-                  {({ values }) => {
-                    // console.log("form values:", values);
-                    return <pre>{JSON.stringify(values)}</pre>;
-                  }}
-                </FormSpy>
+                {/* <FormSpy subscription={{ values: true }}> */}
+                {/*   {({ values }) => { */}
+                {/*     // console.log("form values:", values); */}
+                {/*     return <pre>{JSON.stringify(values)}</pre>; */}
+                {/*   }} */}
+                {/* </FormSpy> */}
                 <ScrollableDraggableList
                   currentIndex={currentIndexState}
+                  scrollPrev={scrollPrev}
+                  scrollNext={scrollNext}
                   onChangeIndex={handleOnChange}
                   initialItems={initialItems.current}
                   scrollAlignmentMode={focusMode ? "center" : "start"}
