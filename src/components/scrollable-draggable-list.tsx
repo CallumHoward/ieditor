@@ -170,13 +170,15 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
         startAlignmentObserver.disconnect();
         centerAlignmentObserver.disconnect();
       };
-    }, [onChangeIndex, scrollAlignmentMode]);
+    }, [scrollAlignmentMode]);
 
     useEffect(() => {
       if (currentIndex.shouldAutoScroll) {
-        scrollToIndex(currentIndex.value);
-      } else {
-        onChangeIndex(currentIndex.value);
+        if (scrollAlignmentMode === "start") {
+          scrollToIndex(currentIndex.value, false);
+        } else if (scrollAlignmentMode === "center") {
+          scrollToIndex(currentIndex.value, true);
+        }
       }
     }, [currentIndex.value]);
 
@@ -191,7 +193,7 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
       onChangeIndex(result.destination.index);
     };
 
-    const scrollToIndex = (newIndex: number) => {
+    const scrollToIndex = (newIndex: number, centerAlign: boolean) => {
       if (
         !itemRefs.current ||
         newIndex >= itemRefs.current.length ||
@@ -200,10 +202,14 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
         return;
       }
 
+      const currentItemRef = itemRefs.current[newIndex] as HTMLElement;
       scrollToElement({
-        element: itemRefs.current[newIndex] as HTMLElement,
+        element: currentItemRef,
         scrollableParent: listContainerRef.current,
         behavior: "smooth",
+        offsetPx: centerAlign
+          ? currentItemRef.getBoundingClientRect().height / 2
+          : 0,
       });
       onChangeIndex(newIndex);
     };
