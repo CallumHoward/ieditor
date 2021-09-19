@@ -203,6 +203,9 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
 const ScrollableDraggableList = React.memo(
   ScrollableDraggableListBase,
   (prevProps, nextProps) =>
+    prevProps.currentIndex.value === nextProps.currentIndex.value &&
+    prevProps.currentIndex.shouldAutoScroll ===
+      nextProps.currentIndex.shouldAutoScroll &&
     prevProps.initialItems === nextProps.initialItems &&
     prevProps.height === nextProps.height &&
     prevProps.onChangeIndex === nextProps.onChangeIndex &&
