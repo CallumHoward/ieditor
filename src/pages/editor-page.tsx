@@ -63,12 +63,18 @@ export const EditorPage: FunctionComponent = () => {
   const [currentIndexState, setCurrentIndexState] = useState<ListIndexData>(
     currentIndexRef.current
   );
+  const [editing, setEditing] = useState<boolean>(false);
 
   const renderInitialQuestions = () =>
     initialQuestionsData.map((question) => ({
       key: question.id,
-      node: ({ isDragging, index }: ListItemProps) => (
-        <Question index={index} question={question} isDragging={isDragging} />
+      node: ({ isDragging, index, editing }: ListItemProps) => (
+        <Question
+          index={index}
+          question={question}
+          isDragging={isDragging}
+          editing={editing}
+        />
       ),
     }));
 
@@ -102,7 +108,7 @@ export const EditorPage: FunctionComponent = () => {
   }, []);
 
   return (
-    <PageContainer>
+    <PageContainer editing={editing} setEditing={setEditing}>
       <ControlsHolder>
         <button type="button" onClick={scrollPrev}>
           Previous
@@ -121,6 +127,7 @@ export const EditorPage: FunctionComponent = () => {
           {({ handleSubmit }) => {
             return (
               <form
+                autoComplete={"off"}
                 onSubmit={handleSubmit}
                 style={{ height: "100%", width: "100%" }}
               >
@@ -135,6 +142,7 @@ export const EditorPage: FunctionComponent = () => {
                   onChangeIndex={handleOnChange}
                   initialItems={initialItems.current}
                   scrollAlignmentMode={"start"}
+                  editing={editing}
                 />
                 <button type={"button"} onSubmit={handleSubmit}>
                   Submit

@@ -17,21 +17,23 @@ import {
 const renderResponse = (question: QuestionT) => {
   switch (question.type) {
     case ResponseType.Radio:
-      return <FormRadio />;
+      return <FormRadio name={`qr${question.id}`} />;
     case ResponseType.Input:
-      return <FormInput name={`q${question.id}`} />;
+      return <FormInput name={`qi${question.id}`} />;
   }
 };
 
 type QuestionProps = {
   index: number;
   question: QuestionT;
+  editing?: boolean;
   isDragging?: boolean;
 };
 
 export const Question: FunctionComponent<QuestionProps> = ({
   index,
   question,
+  editing = false,
   isDragging = false,
 }) => {
   return (
@@ -40,19 +42,26 @@ export const Question: FunctionComponent<QuestionProps> = ({
         <InnerContainer>
           <Label>{`${index}. ${question.content}`}</Label>
           <ResponseContainer>{renderResponse(question)}</ResponseContainer>
-          <AttachmentBar>
-            <span style={{ flexGrow: 1 }}>
-              <InlineButton>Add note...</InlineButton>
-            </span>
-            <InlineButton style={{ marginRight: "1rem" }}>
-              <MediaSvg style={{ marginRight: "0.5rem" }} />
-              Media
-            </InlineButton>
-            <InlineButton>
-              <ActionBoxSvg style={{ marginRight: "0.5rem" }} />
-              Action
-            </InlineButton>
-          </AttachmentBar>
+          {!editing && (
+            <AttachmentBar>
+              <span style={{ flexGrow: 1 }}>
+                <InlineButton tabIndex={index * 100 + 1}>
+                  Add note...
+                </InlineButton>
+              </span>
+              <InlineButton
+                tabIndex={index * 100 + 2}
+                style={{ marginRight: "1rem" }}
+              >
+                <MediaSvg style={{ marginRight: "0.5rem" }} />
+                Media
+              </InlineButton>
+              <InlineButton tabIndex={index * 100 + 3}>
+                <ActionBoxSvg style={{ marginRight: "0.5rem" }} />
+                Action
+              </InlineButton>
+            </AttachmentBar>
+          )}
         </InnerContainer>
       </QuestionContainer>
     </OuterContainer>

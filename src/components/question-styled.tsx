@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const QuestionContainer = styled.div<{
   isDragging: boolean;
@@ -7,6 +7,11 @@ export const QuestionContainer = styled.div<{
   padding: 1.5rem 0 1.25rem;
   border: 1px solid #dee4ed;
   border-radius: 0.75rem;
+
+  // not working
+  &:focus {
+    border-color: #6559ff;
+  }
 
   box-shadow: ${(p) =>
     p.isDragging
@@ -46,7 +51,7 @@ export const ResponseContainer = styled.div`
   }
 `;
 
-export const StyledButton = styled.button`
+export const StyledButton = styled.button<{active: boolean, activeColor?: string}>`
   background: #f3f6fb;
   margin: 0 0 0 0.5rem;
   flex: 1;
@@ -55,7 +60,6 @@ export const StyledButton = styled.button`
   background-color: #f9fbfe;
   border: 1px solid #dee4ed;
   border-radius: 0.5rem;
-  color: #344563;
   font-size: 0.875rem;
   font-weight: 400;
   cursor: pointer;
@@ -66,8 +70,19 @@ export const StyledButton = styled.button`
   user-select: none;
   word-break: normal;
 
+  &:hover {
+    ${p => !p.active && `background: #f3f6fb;`}
+  }
+
   &:active {
-    background: #f3f6fb;
+    ${p => !p.active && `border: 1px solid #6559ff;`}
+  }
+
+  background: ${p => p.active ? p.activeColor || `#6559ff`: "#f9fbfe"};
+  color: ${p => p.active ? `#f3f6fb`: "#344563"};
+
+  &:focus {
+    ${p => !p.active && `border: 1px solid #6559ff;`}
   }
 
   display: inline-flex;
@@ -105,7 +120,7 @@ export const InlineButton = styled.button`
   margin: 0px;
   padding: 0.25rem;
   background-color: #f3f6fb;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 0.5rem;
   color: rgb(52, 69, 99);
   font-size: 0.75rem;
@@ -126,5 +141,9 @@ export const InlineButton = styled.button`
 
   &:active &:hover {
     background-color: #f3f6fb;
+  }
+
+  &:focus {
+    border: 1px solid #6559ff;
   }
 `;

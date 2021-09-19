@@ -15,10 +15,19 @@ const PageBody = styled.div`
   height: calc(100% - ${NAVBAR_HEIGHT});
 `;
 
-export const PageContainer: FunctionComponent = ({ children }) => {
+type Props = {
+  editing: boolean;
+  setEditing: (value: boolean) => void;
+};
+
+export const PageContainer: FunctionComponent<Props> = ({
+  editing,
+  setEditing,
+  children,
+}) => {
   return (
     <PageContainerWrapper>
-      <NavBar />
+      <NavBar editing={editing} setEditing={setEditing}/>
       <PageBody>{children}</PageBody>
     </PageContainerWrapper>
   );

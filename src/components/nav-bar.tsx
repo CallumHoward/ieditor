@@ -3,8 +3,12 @@ import { ArrowLeftSvg } from "../assets/arrow-left-svg";
 import { EditSvg } from "../assets/edit-svg";
 import { NavBarContainer, StyledButtonContainer, StyledH1, StyledNavButton } from "./nav-bar-styled";
 
-export const NavBar: FunctionComponent = () => {
-  const [editing, setEditing] = useState<boolean>(false);
+type Props = {
+  editing: boolean;
+  setEditing: (value: boolean) => void;
+};
+
+export const NavBar: FunctionComponent<Props> = ({editing, setEditing}) => {
   return (
     <NavBarContainer>
       <StyledButtonContainer>
