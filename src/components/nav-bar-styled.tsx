@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
+export const NAVBAR_HEIGHT = "3rem";
+
 export const NavBarContainer = styled.header`
   width: 100%;
-  height: 6vh;
+  height: ${NAVBAR_HEIGHT};
   padding: 0 1rem;
   box-sizing: border-box;
 

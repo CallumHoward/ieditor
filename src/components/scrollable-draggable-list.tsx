@@ -32,6 +32,8 @@ export type ListIndexData = {
   shouldAutoScroll?: boolean;
 };
 
+type ScrollAlignmentMode = "center" | "start";
+
 type ScrollableDraggableListProps = {
   initialItems: ListItem[];
   /**
@@ -41,6 +43,7 @@ type ScrollableDraggableListProps = {
   height?: number;
   currentIndex: ListIndexData;
   onChangeIndex: (newIndex: number) => void;
+  scrollAlignmentMode: ScrollAlignmentMode;
   editing: boolean;
 };
 
@@ -72,47 +75,77 @@ const ScrollableItems = styled.div`
   }
 `;
 
-const SnapScrollContainer = styled.div`
-  scroll-snap-align: center;
+const SnapScrollContainer = styled.div<{
+  scrollAlignment: ScrollAlignmentMode;
+}>`
+  ${({ scrollAlignment }) =>
+    css`
+      scroll-snap-align: ${scrollAlignment};
+    `}
 `;
 
 const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProps> =
-  ({ initialItems, height, currentIndex, onChangeIndex, editing }) => {
+  ({
+    initialItems,
+    height,
+    currentIndex,
+    onChangeIndex,
+    editing,
+    scrollAlignmentMode,
+  }) => {
     const [items, setItems] = useState<ListItem[]>(initialItems);
     const listContainerRef = useRef<HTMLDivElement | null>(null);
     const itemRefs = useRef<HTMLDivElement[]>([]);
 
-    const intersectionCallback = (
-      intersectingItemRefs: IntersectionObserverEntry[]
-    ) => {
-      intersectingItemRefs.forEach((itemRef) => {
-        const itemIndex = Number(
-          itemRef.target.getAttribute("list-item-index")
-        );
+    const intersectionCallback =
+      (observerAlignment: ScrollAlignmentMode) =>
+      (intersectingItemRefs: IntersectionObserverEntry[]) => {
+        intersectingItemRefs.forEach((itemRef) => {
+          const itemIndex = Number(
+            itemRef.target.getAttribute("list-item-index")
+          );
 
-        if (itemRef.isIntersecting) {
-          onChangeIndex(itemIndex);
-        }
-      });
-    };
+          if (
+            itemRef.isIntersecting &&
+            observerAlignment === scrollAlignmentMode
+          ) {
+            console.log(itemIndex);
+            onChangeIndex(itemIndex);
+          }
+        });
+      };
 
     useEffect(() => {
-      const observer = new IntersectionObserver(intersectionCallback, {
-        root: listContainerRef.current,
-        // shrink the observable area by 99% so that the top item
-        // is treated as the current one the user is looking at
-        rootMargin: "0px 0px -99% 0px",
-        // 0.01 of the item needs to be within the observable area
-        // to trigger the intersectionCallback
-        threshold: 0.01,
-      });
+      const startAlignmentObserver = new IntersectionObserver(
+        intersectionCallback("start"),
+        {
+          root: listContainerRef.current,
+          // shrink the observable area by 99% so that the top item
+          // is treated as the current one the user is looking at
+          rootMargin: "0px 0px -99% 0px",
+          // 0.01 of the item needs to be within the observable area
+          // to trigger the intersectionCallback
+          threshold: 0.01,
+        }
+      );
+
+      const centerAlignmentObserver = new IntersectionObserver(
+        intersectionCallback("center"),
+        {
+          root: listContainerRef.current,
+          rootMargin: "-49% 0px -49% 0px",
+          threshold: 0.01,
+        }
+      );
 
       itemRefs.current.forEach((ref) => {
-        observer.observe(ref);
+        startAlignmentObserver.observe(ref);
+        centerAlignmentObserver.observe(ref);
       });
 
       return () => {
-        observer.disconnect();
+        startAlignmentObserver.disconnect();
+        centerAlignmentObserver.disconnect();
       };
     }, []);
 
@@ -185,7 +218,9 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
-                          <SnapScrollContainer>
+                          <SnapScrollContainer
+                            scrollAlignment={scrollAlignmentMode}
+                          >
                             {node({
                               isDragging: snapshot.isDragging,
                               index,
