@@ -57,9 +57,6 @@ const ControlsHolder = styled.div`
 `;
 
 export const EditorPage: FunctionComponent = () => {
-  // to remove unnecessary renders store the current index in a ref
-  // and only call setCurrentIndexState if we want the prop to trigger
-  // a re-render in the ScrollableDraggableList
   const currentIndexRef = useRef<ListIndexData>({
     value: 0,
   });
