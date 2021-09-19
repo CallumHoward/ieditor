@@ -65,15 +65,21 @@ export const EditorPage: FunctionComponent = () => {
         isDragging,
         index,
         currentIndex,
-        handleScrollToIndex,
+        changeIndex,
         meta,
       }: ListItemProps) => (
         <Question
           index={index}
           isLast={index === initialQuestionsData.length - 1}
-          scrollPrev={() => handleScrollToIndex(currentIndex - 1)}
-          scrollNext={() => handleScrollToIndex(currentIndex + 1)}
-          scrollToMe={() => handleScrollToIndex(index)}
+          scrollPrev={() =>
+            changeIndex({ value: currentIndex - 1, shouldAutoScroll: true })
+          }
+          scrollNext={() =>
+            changeIndex({ value: currentIndex + 1, shouldAutoScroll: true })
+          }
+          scrollToMe={() =>
+            changeIndex({ value: index, shouldAutoScroll: true })
+          }
           question={question}
           focused={index === currentIndex}
           focusMode={meta.focusMode}
@@ -85,17 +91,10 @@ export const EditorPage: FunctionComponent = () => {
 
   const initialItems = useRef<ListItem[]>(renderInitialQuestions());
 
-  const handleScrollToIndex = (newIndex: number) => {
-    if (newIndex >= 0 && newIndex < initialQuestionsData.length) {
-      setCurrentIndexState({
-        value: newIndex,
-        shouldAutoScroll: true,
-      });
+  const handleOnChange = useCallback((newValue: ListIndexData) => {
+    if (newValue.value >= 0 && newValue.value < initialQuestionsData.length) {
+      setCurrentIndexState(newValue);
     }
-  };
-
-  const handleOnChange = useCallback((newValue: number) => {
-    setCurrentIndexState({ value: newValue });
   }, []);
 
   return (
@@ -127,7 +126,6 @@ export const EditorPage: FunctionComponent = () => {
                 {/* </FormSpy> */}
                 <ScrollableDraggableList
                   currentIndex={currentIndexState}
-                  handleScrollToIndex={handleScrollToIndex}
                   onChangeIndex={handleOnChange}
                   initialItems={initialItems.current}
                   scrollAlignmentMode={focusMode ? "center" : "start"}

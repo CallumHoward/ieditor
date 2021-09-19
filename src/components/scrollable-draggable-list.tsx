@@ -26,7 +26,7 @@ export type ListMeta = {
 export type ListItemProps = {
   isDragging?: boolean;
   currentIndex: number;
-  handleScrollToIndex: (newIndex: number) => void;
+  changeIndex: (newIndex: ListIndexData) => void;
   index: number;
   meta: ListMeta;
 };
@@ -51,8 +51,7 @@ type ScrollableDraggableListProps = {
    */
   height?: number;
   currentIndex: ListIndexData;
-  handleScrollToIndex: (newIndex: number) => void;
-  onChangeIndex: (newIndex: number) => void;
+  onChangeIndex: (newIndex: ListIndexData) => void;
   scrollAlignmentMode: ScrollAlignmentMode;
   meta: ListMeta;
 };
@@ -104,14 +103,14 @@ const SnapScrollContainer = styled.div<{
 `;
 
 const intersectionCallback =
-  (onChangeIndex: (newIndex: number) => void) =>
+  (onChangeIndex: (newIndex: ListIndexData) => void) =>
   (intersectingItemRefs: IntersectionObserverEntry[]) => {
     intersectingItemRefs.forEach((itemRef) => {
       const itemIndex = Number(itemRef.target.getAttribute("list-item-index"));
 
       if (itemRef.isIntersecting) {
         console.log(itemIndex);
-        onChangeIndex(itemIndex);
+        onChangeIndex({ value: itemIndex });
       }
     });
   };
@@ -121,7 +120,6 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
     initialItems,
     height,
     currentIndex,
-    handleScrollToIndex,
     onChangeIndex,
     meta,
     scrollAlignmentMode,
@@ -187,7 +185,7 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
       const [removed] = newItems.splice(result.source.index, 1);
       newItems.splice(result.destination.index, 0, removed);
       setItems(newItems);
-      onChangeIndex(result.destination.index);
+      onChangeIndex({ value: result.destination.index });
     };
 
     const scrollToIndex = (newIndex: number, centerAlign: boolean) => {
@@ -208,7 +206,7 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
           ? currentItemRef.getBoundingClientRect().height / 2
           : 0,
       });
-      onChangeIndex(newIndex);
+      onChangeIndex({ value: newIndex });
     };
 
     const updateItemRef = (newRef: HTMLDivElement | null, index: number) => {
@@ -251,7 +249,7 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
                               isDragging: snapshot.isDragging,
                               index,
                               currentIndex: currentIndex.value,
-                              handleScrollToIndex,
+                              changeIndex: onChangeIndex,
                               meta,
                             })}
                           </SnapScrollContainer>
