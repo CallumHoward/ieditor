@@ -26,6 +26,7 @@ const renderResponse = (question: QuestionT) => {
 type QuestionProps = {
   index: number;
   question: QuestionT;
+  focused: boolean;
   editing?: boolean;
   isDragging?: boolean;
 };
@@ -33,12 +34,17 @@ type QuestionProps = {
 export const Question: FunctionComponent<QuestionProps> = ({
   index,
   question,
+  focused,
   editing = false,
   isDragging = false,
 }) => {
   return (
     <OuterContainer>
-      <QuestionContainer isDragging={isDragging} mandatory={true}>
+      <QuestionContainer
+        isDragging={isDragging}
+        mandatory={true}
+        focused={focused}
+      >
         <InnerContainer>
           <Label>{`${index}. ${question.content}`}</Label>
           <ResponseContainer>{renderResponse(question)}</ResponseContainer>

@@ -72,6 +72,7 @@ export const EditorPage: FunctionComponent = () => {
         <Question
           index={index}
           question={question}
+          focused={index === currentIndexState.value}
           isDragging={isDragging}
           editing={editing}
         />
