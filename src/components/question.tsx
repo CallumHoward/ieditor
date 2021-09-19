@@ -27,6 +27,7 @@ type QuestionProps = {
   index: number;
   question: QuestionT;
   focused: boolean;
+  focusMode: boolean;
   editing?: boolean;
   isDragging?: boolean;
 };
@@ -35,12 +36,12 @@ export const Question: FunctionComponent<QuestionProps> = ({
   index,
   question,
   focused,
+  focusMode = false,
   editing = false,
   isDragging = false,
 }) => {
-  console.log("LOG focused: ", focused);
   return (
-    <OuterContainer>
+    <OuterContainer focusMode={focusMode}>
       <QuestionContainer
         isDragging={isDragging}
         mandatory={true}

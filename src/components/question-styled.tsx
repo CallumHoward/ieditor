@@ -23,12 +23,12 @@ export const QuestionContainer = styled.div<{
   background: ${(p) => (p.isDragging ? "#fafafa" : "#ffffff")};
 `;
 
-export const OuterContainer = styled.div`
+export const OuterContainer = styled.div<{focusMode: boolean}>`
   &::focus {
     outline: 0px;
   }
   user-select: none;
-  padding: 25% 0;
+  padding: ${p => p.focusMode ? "25%" : "0.5rem"} 0;
   margin: 0;
   border: 0;
 `;

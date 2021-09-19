@@ -69,11 +69,12 @@ export const EditorPage: FunctionComponent = () => {
   const renderInitialQuestions = () =>
     initialQuestionsData.map((question) => ({
       key: question.id,
-      node: ({ isDragging, index, meta }: ListItemProps) => (
+      node: ({ isDragging, index, currentIndex, meta }: ListItemProps) => (
         <Question
           index={index}
           question={question}
-          focused={index === currentIndexState.value}
+          focused={index === currentIndex}
+          focusMode={meta.focusMode}
           isDragging={isDragging}
           editing={meta.editing}
         />
@@ -149,7 +150,7 @@ export const EditorPage: FunctionComponent = () => {
                   onChangeIndex={handleOnChange}
                   initialItems={initialItems.current}
                   scrollAlignmentMode={focusMode ? "center" : "start"}
-                  meta={{ editing }}
+                  meta={{ editing, focusMode }}
                 />
                 <button type={"button"} onSubmit={handleSubmit}>
                   Submit

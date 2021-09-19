@@ -20,11 +20,12 @@ const DROPPABLE_CONTAINER_ID = "droppable";
 // TODO: Make ListMeta generic to make this component more reusable
 export type ListMeta = {
   editing: boolean;
+  focusMode: boolean;
 };
 
 export type ListItemProps = {
   isDragging?: boolean;
-  editing?: boolean;
+  currentIndex: number;
   index: number;
   meta: ListMeta;
 };
@@ -231,6 +232,7 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
                             {node({
                               isDragging: snapshot.isDragging,
                               index,
+                              currentIndex: currentIndex.value,
                               meta,
                             })}
                           </SnapScrollContainer>
