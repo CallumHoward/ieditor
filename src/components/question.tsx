@@ -36,6 +36,7 @@ type QuestionProps = {
   isLast: boolean;
   scrollPrev: () => void;
   scrollNext: () => void;
+  scrollToMe: () => void;
   isDragging?: boolean;
 };
 
@@ -48,6 +49,7 @@ export const Question: FunctionComponent<QuestionProps> = ({
   isLast,
   scrollPrev,
   scrollNext,
+  scrollToMe,
   isDragging = false,
 }) => {
   return (
@@ -57,7 +59,11 @@ export const Question: FunctionComponent<QuestionProps> = ({
         mandatory={true}
         focused={focused}
       >
-        <InnerContainer>
+        <InnerContainer
+          onClick={() => {
+            scrollToMe();
+          }}
+        >
           <Label>{`${index}. ${question.content} ${
             editing ? "(isEdit: true)" : "(isEdit: false)"
           }`}</Label>
