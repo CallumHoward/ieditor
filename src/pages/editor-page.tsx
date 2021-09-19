@@ -69,6 +69,7 @@ export const EditorPage: FunctionComponent = () => {
       node: ({ isDragging, index, currentIndex, meta }: ListItemProps) => (
         <Question
           index={index}
+          isLast={index === initialQuestionsData.length - 1}
           question={question}
           focused={index === currentIndex}
           focusMode={meta.focusMode}

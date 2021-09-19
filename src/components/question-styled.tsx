@@ -14,7 +14,7 @@ export const QuestionContainer = styled.div<{
     border-color: #6559ff;
   }
 
-  ${p => p.focused && `border-color: #6559ff;`}
+  ${(p) => p.focused && `border-color: #6559ff;`}
 
   box-shadow: ${(p) =>
     p.isDragging
@@ -23,13 +23,13 @@ export const QuestionContainer = styled.div<{
   background: ${(p) => (p.isDragging ? "#fafafa" : "#ffffff")};
 `;
 
-export const OuterContainer = styled.div<{focusMode: boolean}>`
+export const OuterContainer = styled.div<{ focusMode: boolean }>`
   &::focus {
     outline: 0px;
   }
   user-select: none;
-  padding: ${p => p.focusMode ? "25%" : "0.5rem"} 0;
-  transition: padding 500ms ease 500ms;
+  padding: ${(p) => (p.focusMode ? "25%" : "0.5rem")} 0;
+  transition: padding 500ms ease;
   margin: 0;
   border: 0;
 `;
@@ -155,9 +155,12 @@ export const InlineButton = styled.button`
   }
 `;
 
-export const ControlsContainer = styled.div`
+export const ControlsContainer = styled.div<{visible: boolean}>`
+  transition: opacity 2000ms ease 500ms;
+  opacity: ${p => p.visible ? '1' : '0'};
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2.5rem;
+  height: 5rem;
+  margin-bottom: -5rem;
 `;

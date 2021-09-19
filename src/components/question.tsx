@@ -33,6 +33,7 @@ type QuestionProps = {
   focused: boolean;
   focusMode: boolean;
   editing?: boolean;
+  isLast: boolean;
   isDragging?: boolean;
 };
 
@@ -42,6 +43,7 @@ export const Question: FunctionComponent<QuestionProps> = ({
   focused,
   focusMode = false,
   editing = false,
+  isLast,
   isDragging = false,
 }) => {
   return (
@@ -79,9 +81,15 @@ export const Question: FunctionComponent<QuestionProps> = ({
         </InnerContainer>
       </QuestionContainer>
       {focusMode && focused && (
-        <ControlsContainer>
-          <StyledNavButton style={{flexGrow: 1}}><ArrowUpSvg /></StyledNavButton>
-          <StyledNavButton style={{flexGrow: 1}}><ArrowDownSvg /></StyledNavButton>
+        <ControlsContainer visible={focusMode && focused}>
+          {index !== 0 && (
+            <StyledNavButton style={{ flexGrow: 1 }}>
+              <ArrowUpSvg />
+            </StyledNavButton>
+          )}
+          <StyledNavButton style={{ flexGrow: 1 }}>
+            {isLast ? "Finish" : <ArrowDownSvg />}
+          </StyledNavButton>
         </ControlsContainer>
       )}
     </OuterContainer>

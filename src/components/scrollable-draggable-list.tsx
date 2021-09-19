@@ -69,7 +69,7 @@ const ComponentContainer = styled.div<{ $height?: number }>`
         `}
 `;
 
-const ScrollableItems = styled.div`
+const ScrollableItems = styled.div<{ focusMode: boolean }>`
   height: 100%;
   overflow: scroll;
   scroll-snap-type: y mandatory;
@@ -77,9 +77,18 @@ const ScrollableItems = styled.div`
   // add empty space at the end so that the last item has room to scroll up
   &::after {
     display: inline-block;
+    transition: height 500ms ease;
+    width: 100%;
     height: 100vh;
+    content: "";
+  }
+
+  &::before {
+    display: inline-block;
+    transition: height 500ms ease;
     width: 100%;
     content: "";
+    ${({ focusMode }) => (focusMode ? "height: 25vh" : "height: 0")};
   }
 `;
 
@@ -207,7 +216,7 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
 
     return (
       <ComponentContainer $height={height}>
-        <ScrollableItems ref={listContainerRef}>
+        <ScrollableItems ref={listContainerRef} focusMode={meta.focusMode}>
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId={DROPPABLE_CONTAINER_ID}>
               {(provided) => (
