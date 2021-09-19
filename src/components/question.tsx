@@ -1,7 +1,9 @@
 import React, { FunctionComponent } from "react";
 import { ActionBoxSvg } from "../assets/action-svg";
 import { MediaSvg } from "../assets/media-svg";
-import { ResponseType } from "../types/question";
+import { QuestionT, ResponseType } from "../types/question";
+import { FormInput } from "./form/form-input";
+import { FormRadio } from "./form/form-radio";
 import {
   AttachmentBar,
   InlineButton,
@@ -10,46 +12,34 @@ import {
   OuterContainer,
   QuestionContainer,
   ResponseContainer,
-  StyledButton,
-  StyledInput,
 } from "./question-styled";
 
-const renderResponse = (type: ResponseType) => {
-  switch (type) {
-    case ResponseType.Input:
-      return (
-        <>
-          <StyledButton>Yes</StyledButton>
-          <StyledButton>No</StyledButton>
-          <StyledButton>N/A</StyledButton>
-        </>
-      );
+const renderResponse = (question: QuestionT) => {
+  switch (question.type) {
     case ResponseType.Radio:
-      return <StyledInput />;
+      return <FormRadio />;
+    case ResponseType.Input:
+      return <FormInput name={`q${question.id}`} />;
   }
 };
 
 type QuestionProps = {
-  content: string;
   index: number;
+  question: QuestionT;
   isDragging?: boolean;
-  type: ResponseType;
 };
 
 export const Question: FunctionComponent<QuestionProps> = ({
-  content,
   index,
-  type,
+  question,
   isDragging = false,
 }) => {
   return (
     <OuterContainer>
       <QuestionContainer isDragging={isDragging} mandatory={true}>
         <InnerContainer>
-          <Label>{`${index}. ${content}`}</Label>
-          <ResponseContainer>
-            {renderResponse(type)}
-          </ResponseContainer>
+          <Label>{`${index}. ${question.content}`}</Label>
+          <ResponseContainer>{renderResponse(question)}</ResponseContainer>
           <AttachmentBar>
             <span style={{ flexGrow: 1 }}>
               <InlineButton>Add note...</InlineButton>

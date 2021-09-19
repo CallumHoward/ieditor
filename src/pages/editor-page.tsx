@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useState } from "react";
+import { Form, Field } from "react-final-form";
 import styled from "styled-components";
 import { PageContainer } from "../components/page-container";
 import { Question } from "../components/question";
@@ -87,23 +88,41 @@ export const EditorPage: FunctionComponent = () => {
         </button>
       </ControlsHolder>
       <ScrollListContainer>
-        <ScrollableDraggableList
-          currentIndex={currentIndex}
-          onChangeIndex={(newValue) => {
-            setCurrentIndex({ value: newValue });
+        <Form
+          onSubmit={(formData) => {
+            // console.log(formData);
           }}
-          initialItems={initialQuestions.map(({ content, id, type }) => ({
-            key: id,
-            node: ({ isDragging, index }) => (
-              <Question
-                isDragging={isDragging}
-                content={content}
-                index={index}
-                type={type}
-              />
-            ),
-          }))}
-        />
+        >
+          {({ handleSubmit, values }) => {
+            console.log(values);
+            return (
+              <form
+                onSubmit={handleSubmit}
+                style={{ height: "100%", width: "100%" }}
+              >
+                <ScrollableDraggableList
+                  currentIndex={currentIndex}
+                  onChangeIndex={(newValue) => {
+                    setCurrentIndex({ value: newValue });
+                  }}
+                  initialItems={initialQuestions.map((question) => ({
+                    key: question.id,
+                    node: ({ isDragging, index }) => (
+                      <Question
+                        index={index}
+                        question={question}
+                        isDragging={isDragging}
+                      />
+                    ),
+                  }))}
+                />
+                <button type={"button"} onSubmit={handleSubmit}>
+                  Submit
+                </button>
+              </form>
+            );
+          }}
+        </Form>
       </ScrollListContainer>
     </PageContainer>
   );
