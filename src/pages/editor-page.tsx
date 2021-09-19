@@ -134,6 +134,7 @@ export const EditorPage: FunctionComponent = () => {
                   currentIndex={currentIndexState}
                   onChangeIndex={handleOnChange}
                   initialItems={initialItems.current}
+                  scrollAlignmentMode={"start"}
                 />
                 <button type={"button"} onSubmit={handleSubmit}>
                   Submit
