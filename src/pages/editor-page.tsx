@@ -68,17 +68,18 @@ export const EditorPage: FunctionComponent = () => {
   const renderInitialQuestions = () =>
     initialQuestionsData.map((question) => ({
       key: question.id,
-      node: ({ isDragging, index, editing }: ListItemProps) => (
+      node: ({ isDragging, index, meta }: ListItemProps) => (
         <Question
           index={index}
           question={question}
           isDragging={isDragging}
-          editing={editing}
+          editing={meta.editing}
         />
       ),
     }));
 
   const initialItems = useRef<ListItem[]>(renderInitialQuestions());
+  const [isEditing, setIsEditing] = useState(false);
 
   const scrollPrev = () => {
     if (currentIndexRef.current.value - 1 >= 0) {
@@ -131,6 +132,14 @@ export const EditorPage: FunctionComponent = () => {
                 onSubmit={handleSubmit}
                 style={{ height: "100%", width: "100%" }}
               >
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsEditing(!isEditing);
+                  }}
+                >
+                  toggle edit: {isEditing ? "true" : "false"}
+                </button>
                 <FormSpy subscription={{ values: true }}>
                   {({ values }) => {
                     console.log("form values:", values);
@@ -142,7 +151,7 @@ export const EditorPage: FunctionComponent = () => {
                   onChangeIndex={handleOnChange}
                   initialItems={initialItems.current}
                   scrollAlignmentMode={"start"}
-                  editing={editing}
+                  meta={{ editing: isEditing }}
                 />
                 <button type={"button"} onSubmit={handleSubmit}>
                   Submit

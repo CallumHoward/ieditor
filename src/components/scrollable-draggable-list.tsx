@@ -16,10 +16,16 @@ import { scrollToElement } from "../utils/scrollToElement";
 
 const DROPPABLE_CONTAINER_ID = "droppable";
 
+// TODO: Make ListMeta generic to make this component more reusable
+export type ListMeta = {
+  editing: boolean;
+};
+
 export type ListItemProps = {
   isDragging?: boolean;
   editing?: boolean;
   index: number;
+  meta: ListMeta;
 };
 
 export type ListItem = {
@@ -44,7 +50,7 @@ type ScrollableDraggableListProps = {
   currentIndex: ListIndexData;
   onChangeIndex: (newIndex: number) => void;
   scrollAlignmentMode: ScrollAlignmentMode;
-  editing: boolean;
+  meta: ListMeta;
 };
 
 const ComponentContainer = styled.div<{ $height?: number }>`
@@ -90,7 +96,7 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
     height,
     currentIndex,
     onChangeIndex,
-    editing,
+    meta,
     scrollAlignmentMode,
   }) => {
     const [items, setItems] = useState<ListItem[]>(initialItems);
@@ -224,7 +230,7 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
                             {node({
                               isDragging: snapshot.isDragging,
                               index,
-                              editing,
+                              meta,
                             })}
                           </SnapScrollContainer>
                         </div>
@@ -244,7 +250,7 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
 const ScrollableDraggableList = React.memo(
   ScrollableDraggableListBase,
   (prevProps, nextProps) =>
-    prevProps.editing === nextProps.editing &&
+    prevProps.meta.editing === nextProps.meta.editing &&
     prevProps.currentIndex.value === nextProps.currentIndex.value &&
     prevProps.currentIndex.shouldAutoScroll ===
       nextProps.currentIndex.shouldAutoScroll &&

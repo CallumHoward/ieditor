@@ -40,7 +40,9 @@ export const Question: FunctionComponent<QuestionProps> = ({
     <OuterContainer>
       <QuestionContainer isDragging={isDragging} mandatory={true}>
         <InnerContainer>
-          <Label>{`${index}. ${question.content}`}</Label>
+          <Label>{`${index}. ${question.content} ${
+            editing ? "(isEdit: true)" : "(isEdit: false)"
+          }`}</Label>
           <ResponseContainer>{renderResponse(question)}</ResponseContainer>
           {!editing && (
             <AttachmentBar>
