@@ -16,12 +16,12 @@ import { scrollToElement } from "../utils/scrollToElement";
 
 const DROPPABLE_CONTAINER_ID = "droppable";
 
-type ListItemProps = {
+export type ListItemProps = {
   isDragging?: boolean;
   index: number;
 };
 
-type ListItem = {
+export type ListItem = {
   key: string;
   node: (props: ListItemProps) => ReactNode;
 };
@@ -74,7 +74,7 @@ const SnapScrollContainer = styled.div`
   scroll-snap-align: start;
 `;
 
-const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
+const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProps> =
   ({ initialItems, height, currentIndex, onChangeIndex }) => {
     const [items, setItems] = useState<ListItem[]>(initialItems);
     const listContainerRef = useRef<HTMLDivElement | null>(null);
@@ -199,5 +199,14 @@ const ScrollableDraggableList: FunctionComponent<ScrollableDraggableListProps> =
       </ComponentContainer>
     );
   };
+
+const ScrollableDraggableList = React.memo(
+  ScrollableDraggableListBase,
+  (prevProps, nextProps) =>
+    prevProps.initialItems === nextProps.initialItems &&
+    prevProps.height === nextProps.height &&
+    prevProps.onChangeIndex === nextProps.onChangeIndex &&
+    prevProps.children === nextProps.children
+);
 
 export { ScrollableDraggableList };

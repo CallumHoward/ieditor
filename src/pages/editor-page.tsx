@@ -1,15 +1,17 @@
-import React, { FunctionComponent, useState } from "react";
-import { Form, Field } from "react-final-form";
+import React, { FunctionComponent, useCallback, useRef } from "react";
+import { Form, FormSpy } from "react-final-form";
 import styled from "styled-components";
 import { PageContainer } from "../components/page-container";
 import { Question } from "../components/question";
 import {
   ListIndexData,
+  ListItem,
+  ListItemProps,
   ScrollableDraggableList,
 } from "../components/scrollable-draggable-list";
 import { QuestionT, ResponseType } from "../types/question";
 
-const initialQuestions = [
+const initialQuestionsData = [
   {
     id: "0",
     content: `Have you selected "Abercrombie Caves" for sites`,
@@ -55,27 +57,41 @@ const ControlsHolder = styled.div`
 `;
 
 export const EditorPage: FunctionComponent = () => {
-  const [currentIndex, setCurrentIndex] = useState<ListIndexData>({
+  const currentIndex = useRef<ListIndexData>({
     value: 0,
   });
 
+  const renderInitialQuestions = () =>
+    initialQuestionsData.map((question) => ({
+      key: question.id,
+      node: ({ isDragging, index }: ListItemProps) => (
+        <Question index={index} question={question} isDragging={isDragging} />
+      ),
+    }));
+
+  const initialItems = useRef<ListItem[]>(renderInitialQuestions());
+
   const scrollPrev = () => {
-    if (currentIndex.value - 1 >= 0) {
-      setCurrentIndex({
-        value: currentIndex.value - 1,
+    if (currentIndex.current.value - 1 >= 0) {
+      currentIndex.current = {
+        value: currentIndex.current.value - 1,
         shouldAutoScroll: true,
-      });
+      };
     }
   };
 
   const scrollNext = () => {
-    if (currentIndex.value + 1 < initialQuestions.length) {
-      setCurrentIndex({
-        value: currentIndex.value + 1,
+    if (currentIndex.current.value + 1 < initialQuestionsData.length) {
+      currentIndex.current = {
+        value: currentIndex.current.value + 1,
         shouldAutoScroll: true,
-      });
+      };
     }
   };
+
+  const handleOnChange = useCallback((newValue: number) => {
+    currentIndex.current = { value: newValue };
+  }, []);
 
   return (
     <PageContainer>
@@ -89,32 +105,27 @@ export const EditorPage: FunctionComponent = () => {
       </ControlsHolder>
       <ScrollListContainer>
         <Form
-          onSubmit={(formData) => {
-            // console.log(formData);
+          onSubmit={() => {
+            // console.log(values);
           }}
+          subscription={{ submitting: true, pristine: true }}
         >
-          {({ handleSubmit, values }) => {
-            console.log(values);
+          {({ handleSubmit }) => {
             return (
               <form
                 onSubmit={handleSubmit}
                 style={{ height: "100%", width: "100%" }}
               >
-                <ScrollableDraggableList
-                  currentIndex={currentIndex}
-                  onChangeIndex={(newValue) => {
-                    setCurrentIndex({ value: newValue });
+                <FormSpy subscription={{ values: true }}>
+                  {({ values }) => {
+                    console.log(values);
+                    return <pre>{JSON.stringify(values)}</pre>;
                   }}
-                  initialItems={initialQuestions.map((question) => ({
-                    key: question.id,
-                    node: ({ isDragging, index }) => (
-                      <Question
-                        index={index}
-                        question={question}
-                        isDragging={isDragging}
-                      />
-                    ),
-                  }))}
+                </FormSpy>
+                <ScrollableDraggableList
+                  currentIndex={currentIndex.current}
+                  onChangeIndex={handleOnChange}
+                  initialItems={initialItems.current}
                 />
                 <button type={"button"} onSubmit={handleSubmit}>
                   Submit
