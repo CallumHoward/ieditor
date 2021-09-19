@@ -29,6 +29,7 @@ export const OuterContainer = styled.div<{focusMode: boolean}>`
   }
   user-select: none;
   padding: ${p => p.focusMode ? "25%" : "0.5rem"} 0;
+  transition: padding 500ms ease 500ms;
   margin: 0;
   border: 0;
 `;
@@ -152,4 +153,11 @@ export const InlineButton = styled.button`
   &:focus {
     border: 1px solid #6559ff;
   }
+`;
+
+export const ControlsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem;
 `;

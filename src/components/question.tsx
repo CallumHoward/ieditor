@@ -1,11 +1,15 @@
 import React, { FunctionComponent } from "react";
 import { ActionBoxSvg } from "../assets/action-svg";
+import { ArrowDownSvg } from "../assets/arrow-down-svg";
+import { ArrowUpSvg } from "../assets/arrow-up-svg";
 import { MediaSvg } from "../assets/media-svg";
 import { QuestionT, ResponseType } from "../types/question";
 import { FormInput } from "./form/form-input";
 import { FormRadio } from "./form/form-radio";
+import { StyledNavButton } from "./nav-bar-styled";
 import {
   AttachmentBar,
+  ControlsContainer,
   InlineButton,
   InnerContainer,
   Label,
@@ -40,7 +44,6 @@ export const Question: FunctionComponent<QuestionProps> = ({
   editing = false,
   isDragging = false,
 }) => {
-  console.log("LOG focusMode: ", focusMode);
   return (
     <OuterContainer focusMode={focusMode}>
       <QuestionContainer
@@ -75,6 +78,12 @@ export const Question: FunctionComponent<QuestionProps> = ({
           )}
         </InnerContainer>
       </QuestionContainer>
+      {focusMode && focused && (
+        <ControlsContainer>
+          <StyledNavButton style={{flexGrow: 1}}><ArrowUpSvg /></StyledNavButton>
+          <StyledNavButton style={{flexGrow: 1}}><ArrowDownSvg /></StyledNavButton>
+        </ControlsContainer>
+      )}
     </OuterContainer>
   );
 };
