@@ -10,41 +10,8 @@ import {
   ListItemProps,
   ScrollableDraggableList,
 } from "../components/scrollable-draggable-list";
-import { QuestionT, ResponseType } from "../types/question";
 import { mapFieldStateToStepStatus } from "../utils/mapFieldStateToStepStatus";
-
-const initialQuestionsData = [
-  {
-    id: "0",
-    content: `Have you selected "Abercrombie Caves" for sites`,
-    type: ResponseType.Input,
-    answer: { content: "unanswered" },
-  },
-  {
-    id: "1",
-    content: "Should be profiled and have current day and time.",
-    type: ResponseType.Radio,
-    answer: { content: "unanswered" },
-  },
-  {
-    id: "2",
-    content: "Should be profiled and have current day and time.",
-    type: ResponseType.Input,
-    answer: { content: "unanswered" },
-  },
-  {
-    id: "3",
-    content: "Should be profiled and have current day and time.",
-    type: ResponseType.Radio,
-    answer: { content: "unanswered" },
-  },
-  {
-    id: "4",
-    content: "Should be profiled and have current day and time.",
-    type: ResponseType.Input,
-    answer: { content: "unanswered" },
-  },
-] as QuestionT[];
+import { initialQuestionsData } from "../fixtures/questions-data";
 
 const ScrollListContainer = styled.div`
   box-sizing: border-box;
@@ -137,6 +104,7 @@ export const EditorPage: FunctionComponent = () => {
                 <ScrollableDraggableList
                   currentIndex={currentIndexState}
                   onChangeIndex={handleOnChange}
+                  isDragDisabled={!editing}
                   initialItems={initialItems.current}
                   scrollAlignmentMode={focusMode ? "center" : "start"}
                   meta={{ editing, focusMode }}
