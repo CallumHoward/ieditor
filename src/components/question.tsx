@@ -60,31 +60,42 @@ export const Question: FunctionComponent<QuestionProps> = ({
         focused={focused}
       >
         <InnerContainer
-          onClick={() => {
-            scrollToMe();
+          onClick={(e) => {
+            const target = e.target as Element;
+
+            // To prevent this click event being triggered by the buttons as well,
+            // restrict the event to elements that contain question-clickable
+            if (target.classList.contains("allow-click-to-scroll")) {
+              scrollToMe();
+            }
           }}
         >
-          <Label>{`${index}. ${question.content} ${
-            editing ? "(isEdit: true)" : "(isEdit: false)"
-          }`}</Label>
+          <Label className="allow-click-to-scroll">{`${index}. ${question.content}`}</Label>
           <ResponseContainer>
             {renderResponse(question, scrollNext)}
           </ResponseContainer>
           {!editing && (
             <AttachmentBar>
-              <span style={{ flexGrow: 1 }}>
-                <InlineButton tabIndex={index * 100 + 1}>
+              <span style={{ flexGrow: 1 }} className="allow-click-to-scroll">
+                <InlineButton
+                  tabIndex={index * 100 + 1}
+                  className="allow-click-to-scroll"
+                >
                   Add note...
                 </InlineButton>
               </span>
               <InlineButton
                 tabIndex={index * 100 + 2}
                 style={{ marginRight: "1rem" }}
+                className="allow-click-to-scroll"
               >
                 <MediaSvg style={{ marginRight: "0.5rem" }} />
                 Media
               </InlineButton>
-              <InlineButton tabIndex={index * 100 + 3}>
+              <InlineButton
+                tabIndex={index * 100 + 3}
+                className="allow-click-to-scroll"
+              >
                 <ActionBoxSvg style={{ marginRight: "0.5rem" }} />
                 Action
               </InlineButton>
