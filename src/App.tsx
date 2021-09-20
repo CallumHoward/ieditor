@@ -14,8 +14,8 @@ export const App: FunctionComponent = () => {
   return (
     <YProvider>
       <StyledAppContainer>
-        {/* <EditorPage /> */}
-        <ListPage />
+        <EditorPage />
+        {/* <ListPage /> */}
       </StyledAppContainer>
     </YProvider>
   );

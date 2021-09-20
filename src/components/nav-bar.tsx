@@ -1,6 +1,8 @@
 import React, { FunctionComponent } from "React";
 import { ArrowLeftSvg } from "../assets/arrow-left-svg";
 import { EditSvg } from "../assets/edit-svg";
+import { UndoSvg } from "../assets/undo-svg";
+import { RedoSvg } from "../assets/redo-svg";
 import {
   NavBarContainer,
   StyledButtonContainer,
@@ -23,13 +25,26 @@ export const NavBar: FunctionComponent<Props> = ({
 }) => {
   return (
     <NavBarContainer>
-      <StyledButtonContainer>
-        {!editing && (
+      {editing ? (
+        <>
+          <StyledButtonContainer>
+            <StyledNavButton>
+              <UndoSvg />
+            </StyledNavButton>
+          </StyledButtonContainer>
+          <StyledButtonContainer>
+            <StyledNavButton>
+              <RedoSvg />
+            </StyledNavButton>
+          </StyledButtonContainer>
+        </>
+      ) : (
+        <StyledButtonContainer>
           <StyledNavButton>
             <ArrowLeftSvg />
           </StyledNavButton>
-        )}
-      </StyledButtonContainer>
+        </StyledButtonContainer>
+      )}
       <StyledH1>{editing ? "Edit Template" : "Conduct Inspection"}</StyledH1>
       <StyledButtonContainer style={{ flexDirection: "row-reverse" }}>
         <StyledNavButton
