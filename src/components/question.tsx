@@ -65,7 +65,10 @@ export const Question: FunctionComponent<QuestionProps> = ({
 
             // To prevent this click event being triggered by the buttons as well,
             // restrict the event to elements that contain question-clickable
-            if (target.classList.contains("allow-click-to-scroll")) {
+            if (
+              !editing &&
+              target.classList.contains("allow-click-to-scroll")
+            ) {
               scrollToMe();
             }
           }}
