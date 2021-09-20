@@ -1,6 +1,4 @@
-import React, { FunctionComponent, useState, useEffect, useRef } from "react";
-import * as Y from "yjs";
-import { WebsocketProvider } from "y-websocket";
+import React, { FunctionComponent, useState, useEffect } from "react";
 import { useYProvider } from "../contexts/yjs-context";
 
 const initialState = [
@@ -16,12 +14,13 @@ export const ListPage: FunctionComponent = () => {
 
   useEffect(() => {
     // Initialise Yjs ymap
-    ymap?.observe((event) => {
-      // Update with changes
-      setState(state.map((button) => {
-        const newActive = ymap?.get(button.value);
-        return {value: button.value, active: newActive};
-      }));
+    ymap.observe(() => {
+      setState(
+        state.map((button) => {
+          const newActive = ymap.get(button.value);
+          return { value: button.value, active: newActive };
+        })
+      );
     });
   }, []);
 
@@ -35,7 +34,7 @@ export const ListPage: FunctionComponent = () => {
             const newActive = !b.active;
             newState[index] = { value: b.value, active: newActive };
             setState(newState);
-            ymap?.set(b.value, newActive);
+            ymap.set(b.value, newActive);
           }}
           style={{ background: b.active ? "green" : "grey" }}
         >
