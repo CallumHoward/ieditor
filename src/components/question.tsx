@@ -60,13 +60,17 @@ export const Question: FunctionComponent<QuestionProps> = ({
         focused={focused}
       >
         <InnerContainer
-          onClick={() => {
-            scrollToMe();
+          onClick={(e) => {
+            const target = e.target as Element;
+
+            // To prevent this click event being triggered by the buttons as well,
+            // restrict the event to elements that contain question-clickable
+            if (target.classList.contains("question-clickable")) {
+              scrollToMe();
+            }
           }}
         >
-          <Label>{`${index}. ${question.content} ${
-            editing ? "(isEdit: true)" : "(isEdit: false)"
-          }`}</Label>
+          <Label className="question-clickable">{`${index}. ${question.content}`}</Label>
           <ResponseContainer>
             {renderResponse(question, scrollNext)}
           </ResponseContainer>
@@ -94,11 +98,19 @@ export const Question: FunctionComponent<QuestionProps> = ({
       </QuestionContainer>
       <ControlsContainer visible={focusMode && focused}>
         {index !== 0 && (
-          <StyledNavButton style={{ flexGrow: 1 }} onClick={scrollPrev}>
+          <StyledNavButton
+            style={{ flexGrow: 1 }}
+            onClick={scrollPrev}
+            question-interactive
+          >
             <ArrowUpSvg />
           </StyledNavButton>
         )}
-        <StyledNavButton style={{ flexGrow: 1 }} onClick={scrollNext}>
+        <StyledNavButton
+          style={{ flexGrow: 1 }}
+          onClick={scrollNext}
+          question-interactive
+        >
           {isLast ? "Finish" : <ArrowDownSvg />}
         </StyledNavButton>
       </ControlsContainer>
