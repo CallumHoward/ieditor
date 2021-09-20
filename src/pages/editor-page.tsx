@@ -11,6 +11,7 @@ import {
   ScrollableDraggableList,
 } from "../components/scrollable-draggable-list";
 import { QuestionT, ResponseType } from "../types/question";
+import { mapFieldStateToStepStatus } from "../utils/mapFieldStateToStepStatus";
 
 const initialQuestionsData = [
   {
@@ -105,30 +106,34 @@ export const EditorPage: FunctionComponent = () => {
       focusMode={focusMode}
       setFocusMode={setFocusMode}
     >
-      <ProgressBar
-        totalSteps={initialItems.current.length}
-        myIndex={currentIndexState.value}
-      />
       <ScrollListContainer>
-        <Form
-          onSubmit={() => {
-            // console.log(values);
-          }}
-          subscription={{ submitting: true, pristine: true }}
-        >
-          {({ handleSubmit }) => {
+        <Form onSubmit={() => undefined} subscription={{ active: true }}>
+          {({ handleSubmit, form: { getFieldState, getRegisteredFields } }) => {
             return (
               <form
                 autoComplete={"off"}
                 onSubmit={handleSubmit}
                 style={{ height: "100%", width: "100%" }}
               >
-                {/* <FormSpy subscription={{ values: true }}> */}
-                {/*   {({ values }) => { */}
-                {/*     // console.log("form values:", values); */}
-                {/*     return <pre>{JSON.stringify(values)}</pre>; */}
-                {/*   }} */}
-                {/* </FormSpy> */}
+                <FormSpy subscription={{ values: true }}>
+                  {({ values }) => {
+                    return (
+                      <>
+                        <ProgressBar
+                          totalSteps={initialItems.current.length}
+                          myIndex={currentIndexState.value}
+                          // TODO: This rebuilds the step status array on keypress
+                          // and scroll which is a performance concern
+                          stepStatus={getRegisteredFields().map((fieldName) =>
+                            mapFieldStateToStepStatus(getFieldState(fieldName))
+                          )}
+                        />
+                        <pre>{JSON.stringify(values)}</pre>
+                      </>
+                    );
+                  }}
+                </FormSpy>
+
                 <ScrollableDraggableList
                   currentIndex={currentIndexState}
                   onChangeIndex={handleOnChange}

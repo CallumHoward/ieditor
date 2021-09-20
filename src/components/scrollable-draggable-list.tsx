@@ -112,7 +112,6 @@ const intersectionCallback =
       const itemIndex = Number(itemRef.target.getAttribute("list-item-index"));
 
       if (itemRef.isIntersecting) {
-        console.log(itemIndex);
         onChangeIndex({ value: itemIndex });
       }
     });
