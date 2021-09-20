@@ -1,6 +1,4 @@
-import React, { FunctionComponent, useState, useEffect, useRef } from "react";
-import * as Y from "yjs";
-import { WebsocketProvider } from "y-websocket";
+import React, { FunctionComponent, useState, useEffect } from "react";
 import { useYProvider } from "../contexts/yjs-context";
 
 const initialState = [
@@ -19,16 +17,18 @@ export const ListPage: FunctionComponent = () => {
   // const ymap = useRef(ydoc.current.getMap("buttons"));
   // const undoManager = useRef(new Y.UndoManager(ymap.current));
 
-  const {provider, ymap, undoManager} = useYProvider();
+  const { provider, ymap, undoManager } = useYProvider();
 
   useEffect(() => {
     // Initialise Yjs ymap
-    ymap?.observe((event) => {
+    ymap.observe((event) => {
       // Update with changes
-      setState(state.map((button) => {
-        const newActive = ymap?.get(button.value);
-        return {value: button.value, active: newActive};
-      }));
+      setState(
+        state.map((button) => {
+          const newActive = ymap.get(button.value);
+          return { value: button.value, active: newActive };
+        })
+      );
     });
   }, []);
 
@@ -42,7 +42,7 @@ export const ListPage: FunctionComponent = () => {
             const newActive = !b.active;
             newState[index] = { value: b.value, active: newActive };
             setState(newState);
-            ymap?.set(b.value, newActive);
+            ymap.set(b.value, newActive);
           }}
           style={{ background: b.active ? "green" : "grey" }}
         >

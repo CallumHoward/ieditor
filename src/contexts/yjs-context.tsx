@@ -8,15 +8,15 @@ import * as Y from "yjs";
 import { WebsocketProvider } from "y-websocket";
 
 type YContextProps = {
-  ydoc?: Y.Doc;
-  provider?: WebsocketProvider;
-  ymap?: Y.Map<any>;
-  undoManager?: Y.UndoManager;
+  ydoc: Y.Doc;
+  provider: WebsocketProvider;
+  ymap: Y.Map<any>;
+  undoManager: Y.UndoManager;
 };
 
-const YContext = createContext<YContextProps>({});
+const YContext = createContext<YContextProps | undefined>(undefined);
 
-export const YProvider: FunctionComponent<YContextProps> = ({ children }) => {
+export const YProvider: FunctionComponent = ({ children }) => {
   const ydoc = useRef(new Y.Doc());
   const provider = useRef(
     new WebsocketProvider(`wss:yjs-demos.now.sh`, "buttons", ydoc.current)
@@ -38,5 +38,9 @@ export const YProvider: FunctionComponent<YContextProps> = ({ children }) => {
 };
 
 export const useYProvider = (): YContextProps => {
-  return useContext(YContext);
+  const context = useContext(YContext);
+  if (context === undefined) {
+    throw new Error("useYProvider must be used within a YProvider");
+  }
+  return context;
 };
