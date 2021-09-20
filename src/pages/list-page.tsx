@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState, useEffect, useRef } from "react";
 import * as Y from "yjs";
 import { WebsocketProvider } from "y-websocket";
+import { useYProvider } from "../contexts/yjs-context";
 
 const initialState = [
   { value: "hello", active: true },
@@ -10,19 +11,22 @@ const initialState = [
 
 export const ListPage: FunctionComponent = () => {
   const [state, setState] = useState(initialState);
-  const ydoc = useRef(new Y.Doc());
-  const provider = useRef(
-    new WebsocketProvider(`wss:yjs-demos.now.sh`, "buttons", ydoc.current)
-  );
-  const ymap = useRef(ydoc.current.getMap("buttons"));
+
+  // const ydoc = useRef(new Y.Doc());
+  // const provider = useRef(
+  //   new WebsocketProvider(`wss:yjs-demos.now.sh`, "buttons", ydoc.current)
+  // );
+  // const ymap = useRef(ydoc.current.getMap("buttons"));
   // const undoManager = useRef(new Y.UndoManager(ymap.current));
+
+  const {provider, ymap, undoManager} = useYProvider();
 
   useEffect(() => {
     // Initialise Yjs ymap
-    ymap.current.observe((event) => {
+    ymap?.observe((event) => {
       // Update with changes
       setState(state.map((button) => {
-        const newActive = ymap.current.get(button.value);
+        const newActive = ymap?.get(button.value);
         return {value: button.value, active: newActive};
       }));
     });
@@ -38,7 +42,7 @@ export const ListPage: FunctionComponent = () => {
             const newActive = !b.active;
             newState[index] = { value: b.value, active: newActive };
             setState(newState);
-            ymap.current.set(b.value, newActive);
+            ymap?.set(b.value, newActive);
           }}
           style={{ background: b.active ? "green" : "grey" }}
         >

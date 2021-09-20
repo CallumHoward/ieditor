@@ -1,4 +1,6 @@
+/* eslint-disable react/jsx-no-undef */
 import React, { FunctionComponent } from "react";
+import { YProvider } from "./contexts/yjs-context";
 import styled from "styled-components";
 import { EditorPage } from "./pages/editor-page";
 import { ListPage } from "./pages/list-page";
@@ -10,9 +12,11 @@ const StyledAppContainer = styled.div`
 
 export const App: FunctionComponent = () => {
   return (
-    <StyledAppContainer>
-      {/* <EditorPage /> */}
-      <ListPage />
-    </StyledAppContainer>
+    <YProvider>
+      <StyledAppContainer>
+        {/* <EditorPage /> */}
+        <ListPage />
+      </StyledAppContainer>
+    </YProvider>
   );
 };
