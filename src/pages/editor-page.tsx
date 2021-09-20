@@ -116,7 +116,7 @@ export const EditorPage: FunctionComponent = () => {
                 style={{ height: "100%", width: "100%" }}
               >
                 <FormSpy subscription={{ values: true }}>
-                  {({ values }) => {
+                  {() => {
                     return (
                       <>
                         <ProgressBar
@@ -128,7 +128,7 @@ export const EditorPage: FunctionComponent = () => {
                             mapFieldStateToStepStatus(getFieldState(fieldName))
                           )}
                         />
-                        <pre>{JSON.stringify(values)}</pre>
+                        {/* <pre>{JSON.stringify(values)}</pre> */}
                       </>
                     );
                   }}
@@ -141,9 +141,6 @@ export const EditorPage: FunctionComponent = () => {
                   scrollAlignmentMode={focusMode ? "center" : "start"}
                   meta={{ editing, focusMode }}
                 />
-                <button type={"button"} onSubmit={handleSubmit}>
-                  Submit
-                </button>
               </form>
             );
           }}
