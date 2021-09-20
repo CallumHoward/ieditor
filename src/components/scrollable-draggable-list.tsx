@@ -55,6 +55,7 @@ type ScrollableDraggableListProps = {
   height?: number;
   currentIndex: ListIndexData;
   onChangeIndex: (newIndex: ListIndexData) => void;
+  isDragDisabled: boolean;
   scrollAlignmentMode: ScrollAlignmentMode;
   meta: ListMeta;
 };
@@ -123,6 +124,7 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
     height,
     currentIndex,
     onChangeIndex,
+    isDragDisabled,
     meta,
     scrollAlignmentMode,
   }) => {
@@ -234,7 +236,12 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
               {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
                   {items.map(({ key, node }, index) => (
-                    <Draggable key={key} draggableId={key} index={index}>
+                    <Draggable
+                      key={key}
+                      draggableId={key}
+                      index={index}
+                      isDragDisabled={isDragDisabled}
+                    >
                       {(provided, snapshot) => (
                         <div
                           list-item-index={index}
