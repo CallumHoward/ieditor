@@ -65,30 +65,37 @@ export const Question: FunctionComponent<QuestionProps> = ({
 
             // To prevent this click event being triggered by the buttons as well,
             // restrict the event to elements that contain question-clickable
-            if (target.classList.contains("question-clickable")) {
+            if (target.classList.contains("allow-click-to-scroll")) {
               scrollToMe();
             }
           }}
         >
-          <Label className="question-clickable">{`${index}. ${question.content}`}</Label>
+          <Label className="allow-click-to-scroll">{`${index}. ${question.content}`}</Label>
           <ResponseContainer>
             {renderResponse(question, scrollNext)}
           </ResponseContainer>
           {!editing && (
             <AttachmentBar>
-              <span style={{ flexGrow: 1 }}>
-                <InlineButton tabIndex={index * 100 + 1}>
+              <span style={{ flexGrow: 1 }} className="allow-click-to-scroll">
+                <InlineButton
+                  tabIndex={index * 100 + 1}
+                  className="allow-click-to-scroll"
+                >
                   Add note...
                 </InlineButton>
               </span>
               <InlineButton
                 tabIndex={index * 100 + 2}
                 style={{ marginRight: "1rem" }}
+                className="allow-click-to-scroll"
               >
                 <MediaSvg style={{ marginRight: "0.5rem" }} />
                 Media
               </InlineButton>
-              <InlineButton tabIndex={index * 100 + 3}>
+              <InlineButton
+                tabIndex={index * 100 + 3}
+                className="allow-click-to-scroll"
+              >
                 <ActionBoxSvg style={{ marginRight: "0.5rem" }} />
                 Action
               </InlineButton>
@@ -98,19 +105,11 @@ export const Question: FunctionComponent<QuestionProps> = ({
       </QuestionContainer>
       <ControlsContainer visible={focusMode && focused}>
         {index !== 0 && (
-          <StyledNavButton
-            style={{ flexGrow: 1 }}
-            onClick={scrollPrev}
-            question-interactive
-          >
+          <StyledNavButton style={{ flexGrow: 1 }} onClick={scrollPrev}>
             <ArrowUpSvg />
           </StyledNavButton>
         )}
-        <StyledNavButton
-          style={{ flexGrow: 1 }}
-          onClick={scrollNext}
-          question-interactive
-        >
+        <StyledNavButton style={{ flexGrow: 1 }} onClick={scrollNext}>
           {isLast ? "Finish" : <ArrowDownSvg />}
         </StyledNavButton>
       </ControlsContainer>
