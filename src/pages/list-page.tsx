@@ -12,13 +12,6 @@ const initialState = [
 export const ListPage: FunctionComponent = () => {
   const [state, setState] = useState(initialState);
 
-  // const ydoc = useRef(new Y.Doc());
-  // const provider = useRef(
-  //   new WebsocketProvider(`wss:yjs-demos.now.sh`, "buttons", ydoc.current)
-  // );
-  // const ymap = useRef(ydoc.current.getMap("buttons"));
-  // const undoManager = useRef(new Y.UndoManager(ymap.current));
-
   const {provider, ymap, undoManager} = useYProvider();
 
   useEffect(() => {
