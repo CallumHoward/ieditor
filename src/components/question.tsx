@@ -8,15 +8,16 @@ import { MediaSvg } from "../assets/media-svg";
 import { QuestionT, ResponseType } from "../types/question";
 import { FormInput } from "./form/form-input";
 import { FormRadio } from "./form/form-radio";
+import { FormTextArea } from "./form/form-text-area";
 import { StyledNavButton } from "./nav-bar-styled";
 import {
   AttachmentBar,
   ControlsContainer,
   InlineButton,
   InnerContainer,
-  QuestionLabel,
   OuterContainer,
   QuestionContainer,
+  QuestionLabel,
   ResponseContainer,
 } from "./question-styled";
 
@@ -54,7 +55,6 @@ export const Question: FunctionComponent<QuestionProps> = ({
   scrollToMe,
   isDragging = false,
 }) => {
-  // const { input } = useField(question.id, {});
   return (
     <OuterContainer focusMode={focusMode}>
       <QuestionContainer
@@ -76,16 +76,21 @@ export const Question: FunctionComponent<QuestionProps> = ({
             }
           }}
         >
-          <QuestionLabel
-            className="allow-click-to-scroll"
-            contentEditable={editing}
-            editMode={editing}
-            editing={editing && focused}
-            suppressContentEditableWarning={true}
-            //{...input}
-          >
-            {question.content}
-          </QuestionLabel>
+          {editing ? (
+            <FormTextArea
+              className="allow-click-to-scroll"
+              value={""}
+              name={`ql${question.id}`}
+            />
+          ) : (
+            <QuestionLabel
+              className="allow-click-to-scroll"
+              editMode={editing}
+              editing={editing && focused}
+            >
+              {question.content}
+            </QuestionLabel>
+          )}
           <ResponseContainer>
             {renderResponse(question, scrollNext)}
           </ResponseContainer>

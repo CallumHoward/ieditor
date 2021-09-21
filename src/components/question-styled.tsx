@@ -113,6 +113,7 @@ export const StyledButton = styled.button<{
 `;
 
 export const StyledInput = styled.input`
+  box-sizing: border-box;
   width: 100%;
   padding: 0.5rem 1rem;
   background-color: #ffffff;
@@ -121,6 +122,27 @@ export const StyledInput = styled.input`
   color: #344563;
   font-size: 0.875rem;
   font-weight: 400;
+  outline: 0px;
+  line-height: 1.5rem;
+
+  &:focus {
+    outline: none;
+    border-color: #6559ff;
+  }
+`;
+
+export const StyledTextArea = styled.textarea`
+  resize: vertical;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: #ffffff;
+  border: 1px solid #dee4ed;
+  border-radius: 0.3rem;
+  color: #344563;
+  font-size: 0.875rem;
+  font-weight: 400;
+  font-family: "Roboto", san-serif;
   outline: 0px;
   line-height: 1.5rem;
 

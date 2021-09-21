@@ -70,6 +70,16 @@ export const EditorPage: FunctionComponent = () => {
     }
   }, []);
 
+  const createInitialFormData = () => {
+    const initialFormData: Record<string, any> = ymap.toJSON();
+
+    initialQuestionsData.forEach((q) => {
+      initialFormData[`ql${q.id}`] = q.content;
+    });
+
+    return initialFormData;
+  };
+
   return (
     <PageContainer
       editing={editing}
@@ -84,7 +94,7 @@ export const EditorPage: FunctionComponent = () => {
           mutators={{
             setValue,
           }}
-          initialValues={ymap.toJSON()}
+          initialValues={createInitialFormData()}
         >
           {({ handleSubmit, form: { getFieldState, getRegisteredFields } }) => {
             return (
