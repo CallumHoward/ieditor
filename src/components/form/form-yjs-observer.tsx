@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-final-form";
 import { useYProvider } from "../../contexts/yjs-context";
 
-const FormYJSObserver = () => {
+const FormYJSObserver = (): null => {
   const { ymap } = useYProvider();
   const form = useForm();
 

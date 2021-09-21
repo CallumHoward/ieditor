@@ -4,6 +4,7 @@ import { AvatarChooser } from "../components/avatar-chooser";
 import { AvatarContainer, avatars } from "../components/avatar-chooser-styled";
 import { PageContainerWrapper } from "../components/page-container";
 import { StyledButton, StyledInput } from "../components/question-styled";
+import { useUserProvider } from "../contexts/user-context";
 
 const StyledForm = styled.div`
   display: flex;
@@ -33,14 +34,19 @@ export const StyledH1 = styled.h1`
 `;
 
 export const LoginPage: FunctionComponent = () => {
-  const [avatarIndex, setAvatarIndex] = useState<number>(0);
+  const { setName, setPhone, avatarIndex, setAvatarIndex } = useUserProvider();
   return (
     <PageContainerWrapper>
       <PageBody>
         <StyledForm>
-          <AvatarContainer size={5} style={{
-            boxShadow: "0 0px 7px rgba(66, 66, 66, 0.08), 0 3px 4px rgba(66, 66, 66, 0.1)"
-          }}>
+          <AvatarContainer
+            size={5}
+            style={{
+              borderColor: "#6559ff",
+              boxShadow:
+                "0 0px 7px #dee4ed, 0 3px 4px #dee4ed",
+            }}
+          >
             {avatars[avatarIndex]}
           </AvatarContainer>
           <StyledH1>Choose Avatar</StyledH1>
@@ -50,9 +56,18 @@ export const LoginPage: FunctionComponent = () => {
             }}
           />
           <StyledH1>Name</StyledH1>
-          <StyledInput />
+          <StyledInput
+            onBlur={(e) => {
+              setName(e.target.value);
+            }}
+          />
           <StyledH1>Phone Number</StyledH1>
-          <StyledInput />
+          <StyledInput
+            type={"number"}
+            onBlur={(e) => {
+              setPhone(e.target.value);
+            }}
+          />
           <StyledButton
             active={true}
             activeColor={"#6559ff"}
