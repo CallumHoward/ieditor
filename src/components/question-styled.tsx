@@ -76,6 +76,7 @@ export const StyledButton = styled.button<{
   text-overflow: ellipsis;
   user-select: none;
   word-break: normal;
+  text-decoration: none;
 
   &:hover {
     ${(p) => !p.active && `background: #f3f6fb;`}

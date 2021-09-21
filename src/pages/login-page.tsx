@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AvatarChooser } from "../components/avatar-chooser";
 import { AvatarContainer, avatars } from "../components/avatar-chooser-styled";
@@ -30,7 +31,7 @@ export const StyledH1 = styled.h1`
   font-weight: 400;
   color: #6559ff;
   line-height: 1.5rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
 `;
 
 export const LoginPage: FunctionComponent = () => {
@@ -43,8 +44,7 @@ export const LoginPage: FunctionComponent = () => {
             size={5}
             style={{
               borderColor: "#6559ff",
-              boxShadow:
-                "0 0px 7px #dee4ed, 0 3px 4px #dee4ed",
+              boxShadow: "0 0px 7px #dee4ed, 0 3px 4px #dee4ed",
             }}
           >
             {avatars[avatarIndex]}
@@ -61,20 +61,22 @@ export const LoginPage: FunctionComponent = () => {
               setName(e.target.value);
             }}
           />
-          <StyledH1>Phone Number</StyledH1>
+          <StyledH1>Phone</StyledH1>
           <StyledInput
             type={"number"}
             onBlur={(e) => {
               setPhone(e.target.value);
             }}
           />
-          <StyledButton
-            active={true}
-            activeColor={"#6559ff"}
-            style={{ margin: "2.5rem" }}
-          >
-            Next
-          </StyledButton>
+          <Link to={"/edit"} style={{ textDecoration: "none" }}>
+            <StyledButton
+              active={true}
+              activeColor={"#6559ff"}
+              style={{ marginTop: "2rem" }}
+            >
+              Next
+            </StyledButton>
+          </Link>
         </StyledForm>
       </PageBody>
     </PageContainerWrapper>
