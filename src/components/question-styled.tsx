@@ -124,8 +124,8 @@ export const StyledTextArea = styled.textarea`
   background-color: #ffffff;
   border: 1px solid #dee4ed;
   border-radius: 0.3rem;
-  color: #344563;
-  font-size: 0.875rem;
+  color: #081833;
+  font-size: 1rem;
   font-weight: 400;
   font-family: "Roboto", san-serif;
   outline: 0px;
