@@ -12,6 +12,9 @@ import {
 } from "../components/scrollable-draggable-list";
 import { mapFieldStateToStepStatus } from "../utils/mapFieldStateToStepStatus";
 import { initialQuestionsData } from "../fixtures/questions-data";
+import { FormYJSObserver } from "../components/form/form-yjs-observer";
+import { setValue } from "../components/form/mutatators";
+import { useYProvider } from "../contexts/yjs-context";
 
 const ScrollListContainer = styled.div`
   box-sizing: border-box;
@@ -26,6 +29,7 @@ export const EditorPage: FunctionComponent = () => {
   });
   const [editing, setEditing] = useState<boolean>(false);
   const [focusMode, setFocusMode] = useState<boolean>(false);
+  const { ymap } = useYProvider();
 
   const renderInitialQuestions = () =>
     initialQuestionsData.map((question) => ({
@@ -74,7 +78,14 @@ export const EditorPage: FunctionComponent = () => {
       setFocusMode={setFocusMode}
     >
       <ScrollListContainer>
-        <Form onSubmit={() => undefined} subscription={{ active: true }}>
+        <Form
+          onSubmit={() => undefined}
+          subscription={{ active: true }}
+          mutators={{
+            setValue,
+          }}
+          initialValues={ymap.toJSON()}
+        >
           {({ handleSubmit, form: { getFieldState, getRegisteredFields } }) => {
             return (
               <form
@@ -82,6 +93,7 @@ export const EditorPage: FunctionComponent = () => {
                 onSubmit={handleSubmit}
                 style={{ height: "100%", width: "100%" }}
               >
+                <FormYJSObserver />
                 <FormSpy subscription={{ values: true }}>
                   {() => {
                     return (

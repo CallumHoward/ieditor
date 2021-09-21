@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { useField, useForm } from "react-final-form";
+import { useYProvider } from "../../contexts/yjs-context";
 import { Button } from "./button";
 
 export type Option = {
@@ -27,7 +28,14 @@ export const FormRadio: FunctionComponent<Props> = ({
 }) => {
   const { input } = useField(name, { type: "radio" });
   const form = useForm();
+  const { ymap } = useYProvider();
   const currentValue = form.getState().values[name];
+
+  const handleOnChange = (newValue: string) => {
+    input.onChange(newValue);
+    ymap.set(name, newValue);
+    onChange(newValue);
+  };
 
   return (
     <>
@@ -35,7 +43,7 @@ export const FormRadio: FunctionComponent<Props> = ({
         <Button
           key={index}
           {...input}
-          onChange={(value) => {input.onChange(value); onChange(value)}}
+          onChange={handleOnChange}
           value={option.value}
           active={currentValue === option.value}
           option={option}
