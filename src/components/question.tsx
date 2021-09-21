@@ -1,4 +1,6 @@
 import React, { FunctionComponent } from "react";
+import { useField } from "react-final-form";
+
 import { ActionBoxSvg } from "../assets/action-svg";
 import { ArrowDownSvg } from "../assets/arrow-down-svg";
 import { ArrowUpSvg } from "../assets/arrow-up-svg";
@@ -12,7 +14,7 @@ import {
   ControlsContainer,
   InlineButton,
   InnerContainer,
-  Label,
+  QuestionLabel,
   OuterContainer,
   QuestionContainer,
   ResponseContainer,
@@ -52,6 +54,7 @@ export const Question: FunctionComponent<QuestionProps> = ({
   scrollToMe,
   isDragging = false,
 }) => {
+  // const { input } = useField(question.id, {});
   return (
     <OuterContainer focusMode={focusMode}>
       <QuestionContainer
@@ -73,7 +76,16 @@ export const Question: FunctionComponent<QuestionProps> = ({
             }
           }}
         >
-          <Label className="allow-click-to-scroll">{`${index}. ${question.content}`}</Label>
+          <QuestionLabel
+            className="allow-click-to-scroll"
+            contentEditable={editing}
+            editMode={editing}
+            editing={editing && focused}
+            suppressContentEditableWarning={true}
+            //{...input}
+          >
+            {question.content}
+          </QuestionLabel>
           <ResponseContainer>
             {renderResponse(question, scrollNext)}
           </ResponseContainer>
