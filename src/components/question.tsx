@@ -5,6 +5,7 @@ import { ActionBoxSvg } from "../assets/action-svg";
 import { ArrowDownSvg } from "../assets/arrow-down-svg";
 import { ArrowUpSvg } from "../assets/arrow-up-svg";
 import { MediaSvg } from "../assets/media-svg";
+import { QUESTION_INPUT_NAME_PREFIX } from "../pages/editor-page";
 import { QuestionT, ResponseType } from "../types/question";
 import { FormInput } from "./form/form-input";
 import { FormQuestionLabel } from "./form/form-question-label";
@@ -80,12 +81,12 @@ export const Question: FunctionComponent<QuestionProps> = ({
             <FormTextArea
               className="allow-click-to-scroll"
               value={""}
-              name={`ql${question.id}`}
+              name={`${QUESTION_INPUT_NAME_PREFIX}${question.id}`}
             />
           ) : (
             <FormQuestionLabel
               className="allow-click-to-scroll"
-              name={`ql${question.id}`}
+              name={`${QUESTION_INPUT_NAME_PREFIX}${question.id}`}
             >
               {question.content}
             </FormQuestionLabel>

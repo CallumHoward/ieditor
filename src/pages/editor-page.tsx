@@ -2,7 +2,7 @@ import React, { FunctionComponent, useCallback, useRef, useState } from "react";
 import { Form, FormSpy } from "react-final-form";
 import styled from "styled-components";
 import { PageContainer } from "../components/page-container";
-import { ProgressBar } from "../components/progress-bar";
+import { ProgressBar, StepStatus } from "../components/progress-bar";
 import { Question } from "../components/question";
 import {
   ListIndexData,
@@ -15,6 +15,8 @@ import { initialQuestionsData } from "../fixtures/questions-data";
 import { FormYJSObserver } from "../components/form/form-yjs-observer";
 import { setValue } from "../components/form/mutatators";
 import { useYProvider } from "../contexts/yjs-context";
+
+export const QUESTION_INPUT_NAME_PREFIX = "ql";
 
 const ScrollListContainer = styled.div`
   box-sizing: border-box;
@@ -74,7 +76,7 @@ export const EditorPage: FunctionComponent = () => {
     const initialFormData: Record<string, any> = ymap.toJSON();
 
     initialQuestionsData.forEach((q) => {
-      initialFormData[`ql${q.id}`] = q.content;
+      initialFormData[`${QUESTION_INPUT_NAME_PREFIX}${q.id}`] = q.content;
     });
 
     return initialFormData;
@@ -111,17 +113,19 @@ export const EditorPage: FunctionComponent = () => {
                         <ProgressBar
                           totalSteps={initialItems.current.length}
                           myIndex={currentIndexState.value}
-                          // there's twice as many inputs in edit mode so we need to
-                          // increase the step size to progress correctly
-                          stepSize={editing ? 2 : 1}
                           // TODO: This rebuilds the step status array on keypress
                           // and scroll which is a performance concern
-                          stepStatus={getRegisteredFields().map((fieldName) =>
-                            mapFieldStateToStepStatus(
-                              editing,
-                              getFieldState(fieldName as never)
-                            )
-                          )}
+                          stepStatus={
+                            getRegisteredFields()
+                              .map((fieldName) =>
+                                mapFieldStateToStepStatus(
+                                  editing,
+                                  fieldName,
+                                  getFieldState(fieldName as never)
+                                )
+                              )
+                              .filter((v) => v !== null) as StepStatus[]
+                          }
                         />
                         {/* <pre>{JSON.stringify(values)}</pre> */}
                       </>
