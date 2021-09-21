@@ -38,26 +38,11 @@ export const InnerContainer = styled.div`
   padding: 0 1rem;
 `;
 
-export const QuestionLabel = styled.div<{
-  editMode: boolean;
-  editing: boolean;
-}>`
+export const QuestionLabel = styled.div`
   // padding-bottom: 1rem;
   margin: 0 0.5rem 1rem;
   text-align: left;
   line-height: 1.5rem;
-  ${(p) => p.editMode && `cursor: text;`}
-  ${(p) =>
-    p.editing &&
-    `
-    background-color: #ffffff;
-    border: 1px solid #dee4ed;
-    border-radius: 0.3rem;
-    &:focus {
-      outline: none;
-      border-color: #6559ff;
-    }
-  `}
 `;
 
 export const ResponseContainer = styled.div`
@@ -113,6 +98,7 @@ export const StyledButton = styled.button<{
 `;
 
 export const StyledInput = styled.input`
+  box-sizing: border-box;
   width: 100%;
   padding: 0.5rem 1rem;
   background-color: #ffffff;
@@ -121,6 +107,27 @@ export const StyledInput = styled.input`
   color: #344563;
   font-size: 0.875rem;
   font-weight: 400;
+  outline: 0px;
+  line-height: 1.5rem;
+
+  &:focus {
+    outline: none;
+    border-color: #6559ff;
+  }
+`;
+
+export const StyledTextArea = styled.textarea`
+  resize: vertical;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: #ffffff;
+  border: 1px solid #dee4ed;
+  border-radius: 0.3rem;
+  color: #081833;
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: "Roboto", san-serif;
   outline: 0px;
   line-height: 1.5rem;
 

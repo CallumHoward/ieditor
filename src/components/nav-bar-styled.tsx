@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const NAVBAR_HEIGHT = "3rem";
 
 export const NavBarContainer = styled.header`
+  user-select: none;
   width: 100%;
   height: ${NAVBAR_HEIGHT};
   padding: 0 1rem;
@@ -21,6 +22,7 @@ export const StyledNavButton = styled.div`
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const StyledButtonContainer = styled.div`

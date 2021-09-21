@@ -5,16 +5,18 @@ import { ActionBoxSvg } from "../assets/action-svg";
 import { ArrowDownSvg } from "../assets/arrow-down-svg";
 import { ArrowUpSvg } from "../assets/arrow-up-svg";
 import { MediaSvg } from "../assets/media-svg";
+import { QUESTION_INPUT_NAME_PREFIX } from "../pages/editor-page";
 import { QuestionT, ResponseType } from "../types/question";
 import { FormInput } from "./form/form-input";
+import { FormQuestionLabel } from "./form/form-question-label";
 import { FormRadio } from "./form/form-radio";
+import { FormTextArea } from "./form/form-text-area";
 import { StyledNavButton } from "./nav-bar-styled";
 import {
   AttachmentBar,
   ControlsContainer,
   InlineButton,
   InnerContainer,
-  QuestionLabel,
   OuterContainer,
   QuestionContainer,
   ResponseContainer,
@@ -54,7 +56,6 @@ export const Question: FunctionComponent<QuestionProps> = ({
   scrollToMe,
   isDragging = false,
 }) => {
-  // const { input } = useField(question.id, {});
   return (
     <OuterContainer focusMode={focusMode}>
       <QuestionContainer
@@ -76,16 +77,20 @@ export const Question: FunctionComponent<QuestionProps> = ({
             }
           }}
         >
-          <QuestionLabel
-            className="allow-click-to-scroll"
-            contentEditable={editing}
-            editMode={editing}
-            editing={editing && focused}
-            suppressContentEditableWarning={true}
-            //{...input}
-          >
-            {question.content}
-          </QuestionLabel>
+          {editing ? (
+            <FormTextArea
+              className="allow-click-to-scroll"
+              value={""}
+              name={`${QUESTION_INPUT_NAME_PREFIX}${question.id}`}
+            />
+          ) : (
+            <FormQuestionLabel
+              className="allow-click-to-scroll"
+              name={`${QUESTION_INPUT_NAME_PREFIX}${question.id}`}
+            >
+              {question.content}
+            </FormQuestionLabel>
+          )}
           <ResponseContainer>
             {renderResponse(question, scrollNext)}
           </ResponseContainer>
