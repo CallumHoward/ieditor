@@ -11,7 +11,7 @@ export const EditSvg: FunctionComponent<Props> = ({
   style,
 }) => {
   const size = "16px";
-  const className = "media-svg";
+  const className = "edit-svg";
   return (
     <svg
       width={size}

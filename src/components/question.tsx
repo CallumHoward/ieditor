@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from "react";
-import { useField } from "react-final-form";
 
-import { ActionBoxSvg } from "../assets/action-svg";
+import { ActionBoxSvg } from "../assets/action-box-svg";
 import { ArrowDownSvg } from "../assets/arrow-down-svg";
 import { ArrowUpSvg } from "../assets/arrow-up-svg";
 import { MediaSvg } from "../assets/media-svg";

@@ -12,7 +12,7 @@ export const ArrowLeftSvg: FunctionComponent<Props> = ({
   onClick,
 }) => {
   const size = "16px";
-  const className = "media-svg";
+  const className = "arrow-left-svg";
   return (
     <svg
       viewBox="0 0 24 24"

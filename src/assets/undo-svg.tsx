@@ -11,7 +11,7 @@ export const UndoSvg: FunctionComponent<Props> = ({
   style,
 }) => {
   const size = "16px";
-  const className = "media-svg";
+  const className = "undo-svg";
   return (
     <svg
       viewBox="0 0 16 14"
