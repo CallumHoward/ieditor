@@ -6,23 +6,15 @@ const FormYJSObserver = () => {
   const { ymap } = useYProvider();
   const form = useForm();
 
-  const updateFormValuesFromYJS = () => {
-    const fieldsIterator = ymap.entries();
-
-    let yMapEntries = fieldsIterator.next();
-    while (!yMapEntries.done) {
-      const fieldName = yMapEntries.value[0];
-      const fieldValue = yMapEntries.value[1];
-
-      form.mutators.setValue(fieldName, fieldValue);
-
-      yMapEntries = fieldsIterator.next();
-    }
+  const updateFormValuesFromYJS = (keysChanged: Set<string>) => {
+    keysChanged.forEach((key) => {
+      form.mutators.setValue(key, ymap.get(key));
+    });
   };
 
   useEffect(() => {
-    ymap.observe(() => {
-      updateFormValuesFromYJS();
+    ymap.observe((event) => {
+      updateFormValuesFromYJS(event.keysChanged);
     });
   }, []);
 
