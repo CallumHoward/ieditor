@@ -11,17 +11,20 @@ type YContextProps = {
   ydoc: Y.Doc;
   provider: WebsocketProvider;
   ymap: Y.Map<any>;
+  users: Y.Map<any>;
   undoManager: Y.UndoManager;
 };
 
 const YContext = createContext<YContextProps | undefined>(undefined);
 
 export const YProvider: FunctionComponent = ({ children }) => {
+  const instanceName = "ieditor01";
   const ydoc = useRef(new Y.Doc());
   const provider = useRef(
-    new WebsocketProvider(`wss:yjs-demos.now.sh`, "buttons", ydoc.current)
+    new WebsocketProvider(`wss:yjs-demos.now.sh`, instanceName, ydoc.current)
   );
-  const ymap = useRef(ydoc.current.getMap("buttons"));
+  const ymap = useRef(ydoc.current.getMap(instanceName));
+  const users = useRef(ydoc.current.getMap(instanceName));
   const undoManager = useRef(new Y.UndoManager(ymap.current));
   return (
     <YContext.Provider
@@ -29,6 +32,7 @@ export const YProvider: FunctionComponent = ({ children }) => {
         ydoc: ydoc.current,
         provider: provider.current,
         ymap: ymap.current,
+        users: users.current,
         undoManager: undoManager.current,
       }}
     >
