@@ -6,6 +6,7 @@ type ProgressBarProps = {
   totalSteps: number;
   stepStatus: StepStatus[];
   myIndex: number;
+  stepSize?: number;
 };
 
 export enum StepStatus {
@@ -32,6 +33,7 @@ const Track = styled.div<{ totalSteps: number }>`
   background: #ddd;
   height: 0.5rem;
   width: 100%;
+  grid-template-rows: 100%;
 
   ${({ totalSteps }) =>
     css`
@@ -41,7 +43,6 @@ const Track = styled.div<{ totalSteps: number }>`
 
 const Step = styled.div<{ colour: string; isEmptyStep: boolean }>`
   height: 100%;
-  transition: width 500ms ease;
 
   ${({ colour, isEmptyStep }) => css`
     background-color: ${colour};
@@ -63,6 +64,7 @@ const MyThumb = styled.div<{ position: number }>`
 export const ProgressBar: FunctionComponent<ProgressBarProps> = ({
   myIndex,
   stepStatus,
+  stepSize = 1,
 }) => {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [thumbPosition, setThumbPosition] = useState(0);
@@ -70,7 +72,9 @@ export const ProgressBar: FunctionComponent<ProgressBarProps> = ({
   useEffect(() => {
     const trackWidth = trackRef.current?.getBoundingClientRect().width;
     if (trackWidth) {
-      setThumbPosition(((myIndex + 1) / stepStatus.length) * trackWidth);
+      setThumbPosition(
+        (((myIndex + 1) * stepSize) / stepStatus.length) * trackWidth
+      );
     }
   }, [myIndex, stepStatus]);
 
@@ -88,7 +92,10 @@ export const ProgressBar: FunctionComponent<ProgressBarProps> = ({
 
   return (
     <ProgressBarWrapper>
-      <Track ref={trackRef} totalSteps={stepStatus.length}>
+      <Track
+        ref={trackRef}
+        totalSteps={Math.floor(stepStatus.length / stepSize)}
+      >
         <MyThumb position={thumbPosition} />
         {stepStatus.map((status, index) => (
           <Step

@@ -111,10 +111,14 @@ export const EditorPage: FunctionComponent = () => {
                         <ProgressBar
                           totalSteps={initialItems.current.length}
                           myIndex={currentIndexState.value}
+                          // there's twice as many inputs in edit mode so we need to
+                          // increase the step size to progress correctly
+                          stepSize={editing ? 2 : 1}
                           // TODO: This rebuilds the step status array on keypress
                           // and scroll which is a performance concern
                           stepStatus={getRegisteredFields().map((fieldName) =>
                             mapFieldStateToStepStatus(
+                              editing,
                               getFieldState(fieldName as never)
                             )
                           )}
