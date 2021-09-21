@@ -10,12 +10,14 @@ import {
   StyledNavButton,
 } from "./nav-bar-styled";
 import { useYProvider } from "../contexts/yjs-context";
+import { Link } from "react-router-dom";
 
 type Props = {
   editing: boolean;
   setEditing: (value: boolean) => void;
   focusMode: boolean;
   setFocusMode: (value: boolean) => void;
+  openDrawer: () => void;
 };
 
 export const NavBar: FunctionComponent<Props> = ({
@@ -23,6 +25,7 @@ export const NavBar: FunctionComponent<Props> = ({
   setEditing,
   focusMode,
   setFocusMode,
+  openDrawer,
 }) => {
   const { undoManager } = useYProvider();
   return (
@@ -51,7 +54,9 @@ export const NavBar: FunctionComponent<Props> = ({
       ) : (
         <StyledButtonContainer>
           <StyledNavButton>
-            <ArrowLeftSvg />
+            <Link to={"/"}>
+              <ArrowLeftSvg />
+            </Link>
           </StyledNavButton>
         </StyledButtonContainer>
       )}
@@ -68,8 +73,9 @@ export const NavBar: FunctionComponent<Props> = ({
       <StyledButtonContainer style={{ flexDirection: "row-reverse" }}>
         <StyledNavButton
           onClick={() => {
-            setEditing(!editing && !focusMode);
-            setFocusMode(false);
+            // setEditing(!editing && !focusMode);
+            // setFocusMode(false);
+            openDrawer();
           }}
         >
           {editing || focusMode ? "Done" : <EditSvg />}

@@ -21,6 +21,7 @@ type Props = {
   setEditing: (value: boolean) => void;
   focusMode: boolean;
   setFocusMode: (value: boolean) => void;
+  openDrawer: () => void;
 };
 
 export const PageContainer: FunctionComponent<Props> = ({
@@ -28,6 +29,7 @@ export const PageContainer: FunctionComponent<Props> = ({
   setEditing,
   focusMode,
   setFocusMode,
+  openDrawer,
   children,
 }) => {
   return (
@@ -37,6 +39,7 @@ export const PageContainer: FunctionComponent<Props> = ({
         setEditing={setEditing}
         focusMode={focusMode}
         setFocusMode={setFocusMode}
+        openDrawer={openDrawer}
       />
       <PageBody>{children}</PageBody>
     </PageContainerWrapper>
