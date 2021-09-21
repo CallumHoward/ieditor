@@ -9,6 +9,7 @@ import {
   StyledH1,
   StyledNavButton,
 } from "./nav-bar-styled";
+import { useYProvider } from "../contexts/yjs-context";
 
 type Props = {
   editing: boolean;
@@ -23,17 +24,26 @@ export const NavBar: FunctionComponent<Props> = ({
   focusMode,
   setFocusMode,
 }) => {
+  const { undoManager } = useYProvider();
   return (
     <NavBarContainer>
       {editing ? (
         <>
           <StyledButtonContainer>
-            <StyledNavButton>
+            <StyledNavButton
+              onClick={() => {
+                undoManager.undo();
+              }}
+            >
               <UndoSvg />
             </StyledNavButton>
           </StyledButtonContainer>
           <StyledButtonContainer>
-            <StyledNavButton>
+            <StyledNavButton
+              onClick={() => {
+                undoManager.redo();
+              }}
+            >
               <RedoSvg />
             </StyledNavButton>
           </StyledButtonContainer>
