@@ -7,6 +7,7 @@ import { ArrowUpSvg } from "../assets/arrow-up-svg";
 import { MediaSvg } from "../assets/media-svg";
 import { QuestionT, ResponseType } from "../types/question";
 import { FormInput } from "./form/form-input";
+import { FormQuestionLabel } from "./form/form-question-label";
 import { FormRadio } from "./form/form-radio";
 import { FormTextArea } from "./form/form-text-area";
 import { StyledNavButton } from "./nav-bar-styled";
@@ -17,7 +18,6 @@ import {
   InnerContainer,
   OuterContainer,
   QuestionContainer,
-  QuestionLabel,
   ResponseContainer,
 } from "./question-styled";
 
@@ -83,13 +83,12 @@ export const Question: FunctionComponent<QuestionProps> = ({
               name={`ql${question.id}`}
             />
           ) : (
-            <QuestionLabel
+            <FormQuestionLabel
               className="allow-click-to-scroll"
-              editMode={editing}
-              editing={editing && focused}
+              name={`ql${question.id}`}
             >
               {question.content}
-            </QuestionLabel>
+            </FormQuestionLabel>
           )}
           <ResponseContainer>
             {renderResponse(question, scrollNext)}

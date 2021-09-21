@@ -38,26 +38,11 @@ export const InnerContainer = styled.div`
   padding: 0 1rem;
 `;
 
-export const QuestionLabel = styled.div<{
-  editMode: boolean;
-  editing: boolean;
-}>`
+export const QuestionLabel = styled.div`
   // padding-bottom: 1rem;
   margin: 0 0.5rem 1rem;
   text-align: left;
   line-height: 1.5rem;
-  ${(p) => p.editMode && `cursor: text;`}
-  ${(p) =>
-    p.editing &&
-    `
-    background-color: #ffffff;
-    border: 1px solid #dee4ed;
-    border-radius: 0.3rem;
-    &:focus {
-      outline: none;
-      border-color: #6559ff;
-    }
-  `}
 `;
 
 export const ResponseContainer = styled.div`
