@@ -104,7 +104,9 @@ export const EditorPage: FunctionComponent = () => {
                           // TODO: This rebuilds the step status array on keypress
                           // and scroll which is a performance concern
                           stepStatus={getRegisteredFields().map((fieldName) =>
-                            mapFieldStateToStepStatus(getFieldState(fieldName))
+                            mapFieldStateToStepStatus(
+                              getFieldState(fieldName as never)
+                            )
                           )}
                         />
                         {/* <pre>{JSON.stringify(values)}</pre> */}

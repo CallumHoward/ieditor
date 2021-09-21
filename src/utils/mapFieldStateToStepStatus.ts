@@ -2,7 +2,7 @@ import { FieldState } from "final-form";
 import { StepStatus } from "../components/progress-bar";
 
 export const mapFieldStateToStepStatus = (
-  fieldState?: FieldState<any>
+  fieldState?: FieldState<never>
 ): StepStatus => {
   if (fieldState?.value) {
     return StepStatus.COMPLETE;
