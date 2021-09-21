@@ -1,9 +1,5 @@
 import React, { FunctionComponent } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { YProvider } from "./contexts/yjs-context";
 import styled from "styled-components";
 import { EditorPage } from "./pages/editor-page";
@@ -23,8 +19,8 @@ export const App: FunctionComponent = () => {
         <StyledAppContainer>
           <Router>
             <Switch>
-              <Route path={"/edit"}><EditorPage /></Route>
-              <Route path={"/list"}><ListPage /></Route>
+              <Route path={"/edit"} component={EditorPage} />
+              <Route path={"/list"} component={ListPage} />
               <Route path={"/"} component={LoginPage} />
             </Switch>
           </Router>
