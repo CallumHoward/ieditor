@@ -18,6 +18,7 @@ import { setValue } from "../components/form/mutatators";
 import { useYProvider } from "../contexts/yjs-context";
 import { StyledH1 } from "../components/nav-bar-styled";
 import { BottomDrawer } from "../components/bottom-drawer";
+import { useUserProvider } from "../contexts/user-context";
 
 export const QUESTION_INPUT_NAME_PREFIX = "ql";
 
@@ -44,6 +45,7 @@ export const EditorPage: FunctionComponent = () => {
   const openDrawer = React.useCallback(() => setDrawOpen(true), []);
   const closeDrawer = React.useCallback(() => setDrawOpen(false), []);
   const { ymap } = useYProvider();
+  const { setCurrentIndex: setCurrentIndexYMap } = useUserProvider();
 
   const renderInitialQuestions = () =>
     initialQuestionsData.map((question) => ({
@@ -81,6 +83,7 @@ export const EditorPage: FunctionComponent = () => {
   const handleOnChange = useCallback((newValue: ListIndexData) => {
     if (newValue.value >= 0 && newValue.value < initialQuestionsData.length) {
       setCurrentIndexState(newValue);
+      setCurrentIndexYMap(newValue.value);
     }
   }, []);
 
