@@ -5,6 +5,7 @@ import { UndoSvg } from "../assets/undo-svg";
 import { RedoSvg } from "../assets/redo-svg";
 import {
   NavBarContainer,
+  Spacer,
   StyledButtonContainer,
   StyledH1,
   StyledNavButton,
@@ -33,6 +34,9 @@ export const NavBar: FunctionComponent<Props> = ({
   const { undoManager } = useYProvider();
   return (
     <NavBarContainer>
+      <StyledH1 style={{ position: "absolute", zIndex: -1, paddingTop: "0.125rem" }}>
+        {editing ? "Edit Template" : "Conduct"}
+      </StyledH1>
       {editing ? (
         <>
           <StyledButtonContainer>
@@ -57,24 +61,28 @@ export const NavBar: FunctionComponent<Props> = ({
       ) : (
         <StyledButtonContainer>
           <StyledNavButton>
-            <Link to={"/"}>
+            <Link to={"/"} style={{ height: "16px" }}>
               <ArrowLeftSvg />
             </Link>
           </StyledNavButton>
         </StyledButtonContainer>
       )}
-      <StyledH1>{editing ? "Edit Template" : "C"}</StyledH1>
+      <Spacer />
       <AvatarStack openDrawer={openDrawer} />
-      <StyledButtonContainer style={{ flexDirection: "row-reverse" }}>
-        <StyledNavButton
-          onClick={() => {
-            setFocusMode(!focusMode);
-          }}
-        >
-          {!editing && !focusMode ? <FlashOffSvg /> : <FlashOnSvg />}
-        </StyledNavButton>
-      </StyledButtonContainer>
-      <StyledButtonContainer style={{ flexDirection: "row-reverse" }}>
+      {/* {!editing && ( */}
+      {/*   <StyledButtonContainer style={{ flexDirection: "row-reverse" }}> */}
+      {/*     <StyledNavButton */}
+      {/*       onClick={() => { */}
+      {/*         setFocusMode(!focusMode); */}
+      {/*       }} */}
+      {/*     > */}
+      {/*       {!focusMode ? <FlashOffSvg /> : <FlashOnSvg />} */}
+      {/*     </StyledNavButton> */}
+      {/*   </StyledButtonContainer> */}
+      {/* )} */}
+      <StyledButtonContainer
+        style={{ width: "1.25rem", flexDirection: "row-reverse" }}
+      >
         <StyledNavButton onClick={openDrawer}>
           <MoreSvg />
         </StyledNavButton>

@@ -55,6 +55,10 @@ const StyledOptionButton = styled(StyledButton)`
   border: none;
   width: 100%;
   justify-content: start;
+
+  &:first-child {
+    margin: 0 0 0 0.5rem;
+  }
 `;
 
 export const OuterAvatarContainer = styled.div`
@@ -112,7 +116,17 @@ const TemplateLabelGroup = styled.div`
   }
 `;
 
-export const BottomDrawer: FunctionComponent = () => {
+type Props = {
+  editing: boolean;
+  setEditing: (editing: boolean) => void;
+  closeDrawer: () => void;
+};
+
+export const BottomDrawer: FunctionComponent<Props> = ({
+  editing,
+  setEditing,
+  closeDrawer,
+}) => {
   const { allUsers, id: myId } = useUserProvider();
   return (
     <SectionContainer>
@@ -145,8 +159,16 @@ export const BottomDrawer: FunctionComponent = () => {
       </PresenceSection>
       <StyledHr />
       <OptionsSection>
-        <StyledOptionButton active={false}>
-          <ButtonLabel>Edit Template</ButtonLabel>
+        <StyledOptionButton
+          active={false}
+          onClick={() => {
+            setEditing(!editing);
+            closeDrawer();
+          }}
+        >
+          <ButtonLabel>
+            {editing ? "Conduct Inspection" : "Edit Template"}
+          </ButtonLabel>
           <EditSvg />
         </StyledOptionButton>
         <StyledOptionButton active={false}>

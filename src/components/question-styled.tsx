@@ -94,6 +94,10 @@ export const StyledButton = styled.button<{
     ${(p) => !p.active && `border: 1px solid #6559ff;`}
   }
 
+  &:first-child {
+    margin-left: 0;
+  }
+
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -122,7 +126,7 @@ export const StyledTextArea = styled.textarea`
   resize: vertical;
   box-sizing: border-box;
   width: 100%;
-  padding: 0.5rem 1rem;
+  padding: 0.1rem 0.5rem;
   background-color: #ffffff;
   border: 1px solid #dee4ed;
   border-radius: 0.3rem;

@@ -13,7 +13,7 @@ export const NavBarContainer = styled.header`
   justify-content: space-between;
   align-items: center;
 
-  background-color: #ffffff;
+  // background-color: #ffffff;
   box-shadow: 0 0px 7px rgba(66, 66, 66, 0.08), 0 3px 4px rgba(66, 66, 66, 0.1);
 `;
 
@@ -32,6 +32,10 @@ export const StyledButtonContainer = styled.div`
 `;
 
 export const StyledH1 = styled.h1`
+  width: 100%;
+  top: 0;
+  left: 0;
+
   align-items: center;
   text-align: center;
   flex-grow: 1;
@@ -39,4 +43,8 @@ export const StyledH1 = styled.h1`
   font-weight: 400;
   color: #6559ff;
   line-height: 1.5rem;
+`;
+
+export const Spacer = styled.div`
+  flex-grow: 1;
 `;

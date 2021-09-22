@@ -44,6 +44,9 @@ const Track = styled.div<{ totalSteps: number }>`
 
 const Step = styled.div<{ colour: string; isEmptyStep: boolean }>`
   height: 100%;
+  // &:last-child {
+  //   transition: width 400ms ease;
+  // }
 
   ${({ colour, isEmptyStep }) => css`
     background-color: ${colour};

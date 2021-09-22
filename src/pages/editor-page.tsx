@@ -169,7 +169,11 @@ export const EditorPage: FunctionComponent = () => {
         onClose={closeDrawer}
         className={"bottom-drawer"}
       >
-        <BottomDrawer />
+        <BottomDrawer
+          editing={editing}
+          setEditing={setEditing}
+          closeDrawer={closeDrawer}
+        />
       </StyledDrawer>
     </PageContainer>
   );
