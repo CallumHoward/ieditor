@@ -2,16 +2,22 @@ import React, { FunctionComponent } from "react";
 import { useField } from "react-final-form";
 import { QuestionLabel } from "../question-styled";
 
-const ControlledQuestionLabel: FunctionComponent<{ value: string }> = ({
-  value,
-}) => <QuestionLabel>{value}</QuestionLabel>;
-
 type Props = {
   name: string;
-} & React.HTMLProps<HTMLDivElement>;
+  value: string;
+  className?: string;
+};
 
-export const FormQuestionLabel: FunctionComponent<Props> = ({ name }) => {
+const ControlledQuestionLabel: FunctionComponent<Props> = ({
+  value,
+  ...props
+}) => <QuestionLabel {...props}>{value}</QuestionLabel>;
+
+export const FormQuestionLabel: FunctionComponent<Omit<Props, "value">> = ({
+  name,
+  ...props
+}) => {
   const { input } = useField(name, {});
 
-  return <ControlledQuestionLabel {...input} />;
+  return <ControlledQuestionLabel {...props} {...input} />;
 };

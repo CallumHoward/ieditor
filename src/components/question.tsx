@@ -95,7 +95,10 @@ export const Question: FunctionComponent<QuestionProps> = ({
           </ResponseContainer>
           {!editing && (
             <AttachmentBar>
-              <span style={{ flexGrow: 1 }} className="allow-click-to-scroll">
+              <span
+                style={{ flexGrow: 1, cursor: "pointer" }}
+                className="allow-click-to-scroll"
+              >
                 <InlineButton
                   tabIndex={index * 100 + 1}
                   className="allow-click-to-scroll"
