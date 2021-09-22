@@ -7,7 +7,7 @@ esbuild
   .build({
     entryPoints: ["src/index.tsx"],
     bundle: true,
-    outfile: "www/dist/bundle.js",
+    outfile: "docs/dist/bundle.js",
     minify: !isDevServer,
     sourcemap: true,
     incremental: isDevServer,

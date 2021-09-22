@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { MemoryRouter as Router, Switch, Route } from "react-router-dom";
 import { YProvider } from "./contexts/yjs-context";
 import styled from "styled-components";
 import { EditorPage } from "./pages/editor-page";

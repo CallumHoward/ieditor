@@ -15,7 +15,7 @@
     "lint": "esw --ext .ts,.tsx src/",
     "build": "concurrently --success --names tsc,esb -c green.bold,blue.bold tsc yarn:bundle",
     "bundle": "node ./esbuild.config.mjs",
-    "clean": "rimraf www/dist",
+    "clean": "rimraf docs/dist",
     "test": "echo 'TODO'"
   },
   "dependencies": {
