@@ -1,0 +1,29 @@
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: #fafafa;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #081833;
+  margin: 0;
+  padding: 0;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus,
+div:focus {
+  outline: none;
+}
+
+.bottom-drawer {
+  background: #f3f6fb !important;
+}
