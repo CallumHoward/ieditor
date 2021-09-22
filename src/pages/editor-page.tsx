@@ -156,7 +156,7 @@ export const EditorPage: FunctionComponent = () => {
                   onChangeIndex={handleOnChange}
                   isDragDisabled={!editing}
                   initialItems={initialItems.current}
-                  scrollAlignmentMode={focusMode ? "center" : "start"}
+                  scrollAlignmentMode={"center"}
                   meta={{ editing, focusMode }}
                 />
               </form>

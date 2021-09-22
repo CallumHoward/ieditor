@@ -43,6 +43,7 @@ export const QuestionLabel = styled.div`
   margin: 0 0.5rem 1rem;
   text-align: left;
   line-height: 1.5rem;
+  cursor: pointer;
 `;
 
 export const ResponseContainer = styled.div`
