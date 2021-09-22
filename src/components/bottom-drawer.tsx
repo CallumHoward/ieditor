@@ -57,7 +57,7 @@ const StyledOptionButton = styled(StyledButton)`
   justify-content: start;
 
   &:first-child {
-    margin: 0 0 0 0.5rem;
+    margin-left: 0.5rem;
   }
 `;
 
