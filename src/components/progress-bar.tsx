@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
+import { useUserProvider } from "../contexts/user-context";
 import { NAVBAR_HEIGHT } from "./nav-bar-styled";
 
 type ProgressBarProps = {
@@ -31,7 +32,7 @@ const ProgressBarWrapper = styled.div`
 const Track = styled.div<{ totalSteps: number }>`
   display: grid;
   background: #ddd;
-  height: 0.5rem;
+  height: 4px;
   width: 100%;
   grid-template-rows: 100%;
 
@@ -50,15 +51,16 @@ const Step = styled.div<{ colour: string; isEmptyStep: boolean }>`
   `}
 `;
 
-const MyThumb = styled.div<{ position: number }>`
-  height: 1rem;
-  width: 1rem;
-  background: #6559ff;
-  border-radius: 50%;
+const Thumb = styled.div<{ position: number; color: string }>`
+  height: 6px;
+  width: 6px;
+  background: ${({ color }) => color};
   position: absolute;
-  top: -0.25rem;
+  top: -2px;
   transition: left 400ms ease;
-  ${({ position }) => `left: calc(${position}px - 1rem)`};
+  ${({ position }) => `left: ${position}px`};
+  border: 1px solid white;
+  border-radius: 50%;
 `;
 
 export const ProgressBar: FunctionComponent<ProgressBarProps> = ({
@@ -66,17 +68,16 @@ export const ProgressBar: FunctionComponent<ProgressBarProps> = ({
   stepStatus,
   stepSize = 1,
 }) => {
+  const { allUsers } = useUserProvider();
   const trackRef = useRef<HTMLDivElement | null>(null);
-  const [thumbPosition, setThumbPosition] = useState(0);
 
-  useEffect(() => {
+  const getThumbPosition = (stepIndex: number) => {
     const trackWidth = trackRef.current?.getBoundingClientRect().width;
     if (trackWidth) {
-      setThumbPosition(
-        (((myIndex + 1) * stepSize) / stepStatus.length) * trackWidth
-      );
+      return (((stepIndex + 1) * stepSize) / stepStatus.length) * trackWidth;
     }
-  }, [myIndex, stepStatus]);
+    return 0;
+  };
 
   const getStepColour = (stepStatus: StepStatus, stepIndex: number) => {
     if (stepIndex > myIndex) {
@@ -96,7 +97,13 @@ export const ProgressBar: FunctionComponent<ProgressBarProps> = ({
         ref={trackRef}
         totalSteps={Math.floor(stepStatus.length / stepSize)}
       >
-        <MyThumb position={thumbPosition} />
+        {Object.values(allUsers).map((user) => (
+          <Thumb
+            key={user.name}
+            position={getThumbPosition(user.currentIndex)}
+            color={user.currentIndex !== myIndex ? user.color : "#6559ff"}
+          />
+        ))}
         {stepStatus.map((status, index) => (
           <Step
             key={`progress-step-${index}`}

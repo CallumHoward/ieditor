@@ -1,5 +1,3 @@
-import smoothScroll from "smoothscroll-polyfill";
-
 interface ScrollToElementArgs extends ScrollToOptions {
   element?: HTMLElement | null;
   offsetPx?: number;
@@ -21,15 +19,13 @@ const scrollToElement = ({
   offsetPx = 0,
   scrollableParent = window,
   ...scrollToOptions
-}: ScrollToElementArgs) => {
+}: ScrollToElementArgs): void => {
   if (!scrollableParent) {
     return;
   }
 
   if (element) {
-    smoothScroll.polyfill();
-
-    const positionToScroll = element.offsetTop - offsetPx;
+    const positionToScroll = element.offsetTop + offsetPx;
     scrollableParent.scrollTo({
       behavior: "smooth",
       top: positionToScroll,
