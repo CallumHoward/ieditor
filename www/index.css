@@ -23,3 +23,7 @@ button:focus,
 div:focus {
   outline: none;
 }
+
+.bottom-drawer {
+  background: #f3f6fb !important;
+}

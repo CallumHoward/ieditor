@@ -9,7 +9,9 @@ import { AvatarContainer, avatars } from "./avatar-chooser-styled";
 import { StyledH1 } from "./nav-bar-styled";
 import { StyledButton } from "./question-styled";
 
-const SectionContainer = styled.div``;
+const SectionContainer = styled.div`
+  // background: #f3f6fb;
+`;
 
 const InfoSection = styled.div`
   display: flex;
@@ -19,7 +21,10 @@ const InfoSection = styled.div`
 `;
 
 const PresenceSection = styled.div`
-  overflow: scroll;
+  background: #f3f6fb;
+  z-index: 100;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -29,9 +34,11 @@ const PresenceSection = styled.div`
 `;
 
 const OptionsSection = styled.div`
+  // background: #f3f6fb;
   min-height: 4rem;
-  margin: 2rem 0.5rem;
+  margin: 1rem;
 
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,7 +49,9 @@ const StyledHr = styled.hr`
 `;
 
 const StyledOptionButton = styled(StyledButton)`
-  margin-bottom: 0.5rem;
+  margin: 0.25rem 1rem;
+  padding: 1.2rem 1.25rem;
+  border: none;
   width: 100%;
   justify-content: start;
 `;
@@ -52,10 +61,11 @@ const OuterAvatarContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  margin: 0.5rem 0.5rem 0 0.5rem;
+  margin: 0.5rem 0.5rem 0;
 `;
 
 const AvatarLabel = styled.div`
+  text-align: center;
   margin: 0px;
   padding: 0.25rem;
   // background-color: #f3f6fb;
@@ -65,7 +75,7 @@ const AvatarLabel = styled.div`
   font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.025rem;
-  line-height: 1.25rem;
+  line-height: 1rem;
   cursor: pointer;
   outline: 0px;
   text-align: center;
@@ -82,14 +92,16 @@ const AvatarLabel = styled.div`
 const ButtonLabel = styled.div`
   flex-grow: 1;
   text-align: left;
+  color: #081833;
 `;
 
 const TemplateLogo = styled.img`
-  margin-left: 0.5rem;
+  margin-left: 1rem;
+  background: #ffffff;
   padding: 0.25rem;
-  border: solid 1px #dee4ed;
   width: 2rem;
   height: 2rem;
+  box-shadow: 0 0px 7px #E8EEF8, 0 3px 4px #E8EEF8;
 `;
 
 const TemplateLabelGroup = styled.div`
@@ -103,7 +115,7 @@ export const BottomDrawer: FunctionComponent = () => {
   // const { allUsers } = useUserProvider();
   // console.log("LOG allUsers: ", allUsers);
   const allUsers: User[] = [
-    { name: "Alice", color: "blue", avatarIndex: 13, currentIndex: 1 },
+    { name: "Alice balice", color: "blue", avatarIndex: 13, currentIndex: 1 },
     { name: "Bob", color: "green", avatarIndex: 19, currentIndex: 4 },
     { name: "Charlie", color: "green", avatarIndex: 29, currentIndex: 4 },
     { name: "Bob", color: "green", avatarIndex: 15, currentIndex: 4 },
@@ -117,19 +129,22 @@ export const BottomDrawer: FunctionComponent = () => {
     <SectionContainer>
       <InfoSection>
         <TemplateLogo src="/logo.png" alt="template-icon" />
-        <TemplateLabelGroup style={{marginLeft: "1rem"}}>
-          <p>Toolbox Talk Meeting Record</p>
-          <p style={{fontSize: "10px"}}>Toolbox Talk Meeting Record</p>
+        <TemplateLabelGroup style={{ marginLeft: "1rem" }}>
+          <p style={{fontWeight: 500}}>Toolbox Talk Meeting Record</p>
+          <p style={{ fontSize: "12px", color: "#5e6c84" }}>Toolbox Talk Meeting Record</p>
         </TemplateLabelGroup>
       </InfoSection>
       <StyledHr />
       <PresenceSection>
         {Object.values(allUsers).map(({ name, color, avatarIndex }, index) => (
           <OuterAvatarContainer key={index}>
-            <AvatarContainer style={{ borderColor: color }}>
+            <AvatarContainer
+              size={3.5}
+              style={{ border: `solid 2px ${color}` }}
+            >
               {avatars[avatarIndex]}
             </AvatarContainer>
-            <AvatarLabel>{name}</AvatarLabel>
+            <AvatarLabel style={{textAlign: "center"}}>{name}</AvatarLabel>
           </OuterAvatarContainer>
         ))}
       </PresenceSection>

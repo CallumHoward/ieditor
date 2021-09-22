@@ -28,6 +28,12 @@ const ScrollListContainer = styled.div`
   position: relative;
 `;
 
+const StyledDrawer = styled(Drawer)`
+  .bottom-drawer__content {
+    padding: 0;
+  }
+`;
+
 export const EditorPage: FunctionComponent = () => {
   const [currentIndexState, setCurrentIndexState] = useState<ListIndexData>({
     value: 0,
@@ -153,9 +159,13 @@ export const EditorPage: FunctionComponent = () => {
           }}
         </Form>
       </ScrollListContainer>
-      <Drawer isVisible={drawOpen} onClose={closeDrawer}>
+      <StyledDrawer
+        isVisible={drawOpen}
+        onClose={closeDrawer}
+        className={"bottom-drawer"}
+      >
         <BottomDrawer />
-      </Drawer>
+      </StyledDrawer>
     </PageContainer>
   );
 };
