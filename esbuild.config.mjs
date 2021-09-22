@@ -27,7 +27,7 @@ esbuild
 if (isDevServer) {
   serve.start({
     port: 5000,
-    root: "./www",
+    root: "./docs",
     live: true,
   });
 }
