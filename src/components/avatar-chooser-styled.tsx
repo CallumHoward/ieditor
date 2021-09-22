@@ -63,4 +63,4 @@ export const avatars = [
   <StyledImg src="img/avatars/avatar-38.png" key={"Avatar38"} alt="Avatar38" />,
   <StyledImg src="img/avatars/avatar-39.png" key={"Avatar39"} alt="Avatar39" />,
   <StyledImg src="img/avatars/avatar-40.png" key={"Avatar40"} alt="Avatar40" />,
-];
+].sort(() => 0.5 - Math.random());
