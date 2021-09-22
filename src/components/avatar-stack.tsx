@@ -29,26 +29,25 @@ const MAX_STACK = 3;
 
 type Props = {
   openDrawer: () => void;
-}
+};
 
-export const AvatarStack: FunctionComponent<Props> = ({openDrawer}) => {
+export const AvatarStack: FunctionComponent<Props> = ({ openDrawer }) => {
   const { allUsers, id: myId } = useUserProvider();
   const allUserEntries = Object.entries(allUsers);
   const overflowNumber = allUserEntries.length - MAX_STACK;
   return (
     <AvatarStackContainer>
       {allUserEntries
-        .sort(([id]) => (id === myId ? -1 : 0)).slice(0, MAX_STACK)
+        .sort(([id]) => (id === myId ? -1 : 0))
+        .slice(0, MAX_STACK)
         .map(([id, { color, avatarIndex }], index) => (
           <OuterAvatarContainer key={index}>
-            <CircleBackground
-              style={{ zIndex: (allUserEntries.length - index) * 2 }}
-            />
+            <CircleBackground style={{ zIndex: (MAX_STACK - index) * 2 }} />
             <AvatarContainer
               size={1}
               style={{
                 border: `solid 2px ${id === myId ? "#6559FF" : color}`,
-                zIndex: (allUserEntries.length - index) * 2 + 1,
+                zIndex: (MAX_STACK - index) * 2 + 1,
               }}
             >
               {avatars[avatarIndex]}
@@ -57,21 +56,18 @@ export const AvatarStack: FunctionComponent<Props> = ({openDrawer}) => {
         ))}
       {overflowNumber > 0 && (
         <OuterAvatarContainer onClick={openDrawer}>
-            <CircleBackground
-              style={{ zIndex: allUserEntries.length }}
-            />
-            <AvatarContainer
-              size={1}
-              style={{
-                border: "solid 2px #dee4ed",
-                zIndex: allUserEntries.length,
-              }}
-            >
+          <CircleBackground style={{ zIndex: allUserEntries.length }} />
+          <AvatarContainer
+            size={1}
+            style={{
+              border: "solid 2px #dee4ed",
+              zIndex: allUserEntries.length,
+            }}
+          >
             +{overflowNumber}
-            </AvatarContainer>
+          </AvatarContainer>
         </OuterAvatarContainer>
       )}
-
     </AvatarStackContainer>
   );
 };

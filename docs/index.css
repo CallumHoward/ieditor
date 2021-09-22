@@ -27,7 +27,3 @@ div:focus {
 .bottom-drawer {
   background: #f3f6fb !important;
 }
-
-.bottom-drawer__backdrop {
-  z-index: 11 !important;
-}
