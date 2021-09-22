@@ -4,9 +4,8 @@ import { DuplicateSvg } from "../assets/duplicate-svg";
 import { EditSvg } from "../assets/edit-svg";
 import { PdfDocumentSvg } from "../assets/pdf-document-svg";
 import { UserAddSvg } from "../assets/user-add-svg";
-import { User, useUserProvider } from "../contexts/user-context";
+import { useUserProvider } from "../contexts/user-context";
 import { AvatarContainer, avatars } from "./avatar-chooser-styled";
-import { StyledH1 } from "./nav-bar-styled";
 import { StyledButton } from "./question-styled";
 
 const SectionContainer = styled.div`
