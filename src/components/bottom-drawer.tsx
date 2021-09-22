@@ -21,7 +21,9 @@ const InfoSection = styled.div`
 `;
 
 const PresenceSection = styled.div`
-  background: #f3f6fb;
+  background: #f8fbfe;
+  border-top: solid 1px #dee4ed;
+  border-bottom: solid 1px #dee4ed;
   z-index: 100;
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
@@ -45,7 +47,7 @@ const OptionsSection = styled.div`
 `;
 
 const StyledHr = styled.hr`
-  border: solid 1px #dee4ed;
+  border: solid 0px #dee4ed;
 `;
 
 const StyledOptionButton = styled(StyledButton)`
@@ -116,7 +118,7 @@ export const BottomDrawer: FunctionComponent = () => {
   return (
     <SectionContainer>
       <InfoSection>
-        <TemplateLogo src="/logo.png" alt="template-icon" />
+        <TemplateLogo src="logo.png" alt="template-icon" />
         <TemplateLabelGroup style={{ marginLeft: "1rem" }}>
           <p style={{ fontWeight: 500 }}>Toolbox Talk Meeting Record</p>
           <p style={{ fontSize: "12px", color: "#5e6c84" }}>
@@ -126,8 +128,9 @@ export const BottomDrawer: FunctionComponent = () => {
       </InfoSection>
       <StyledHr />
       <PresenceSection>
-        {Object.entries(allUsers).sort(([id]) => id === myId ? -1 : 0).map(
-          ([id, { name, color, avatarIndex }], index) => (
+        {Object.entries(allUsers)
+          .sort(([id]) => (id === myId ? -1 : 0))
+          .map(([id, { name, color, avatarIndex }], index) => (
             <OuterAvatarContainer key={index}>
               <AvatarContainer
                 size={3.5}
@@ -139,8 +142,7 @@ export const BottomDrawer: FunctionComponent = () => {
               </AvatarContainer>
               <AvatarLabel style={{ textAlign: "center" }}>{name}</AvatarLabel>
             </OuterAvatarContainer>
-          )
-        )}
+          ))}
       </PresenceSection>
       <StyledHr />
       <OptionsSection>

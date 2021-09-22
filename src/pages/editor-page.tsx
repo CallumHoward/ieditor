@@ -16,7 +16,6 @@ import { initialQuestionsData } from "../fixtures/questions-data";
 import { FormYJSObserver } from "../components/form/form-yjs-observer";
 import { setValue } from "../components/form/mutatators";
 import { useYProvider } from "../contexts/yjs-context";
-import { StyledH1 } from "../components/nav-bar-styled";
 import { BottomDrawer } from "../components/bottom-drawer";
 import { useUserProvider } from "../contexts/user-context";
 
@@ -41,7 +40,7 @@ export const EditorPage: FunctionComponent = () => {
   });
   const [editing, setEditing] = useState<boolean>(false);
   const [focusMode, setFocusMode] = useState<boolean>(false);
-  const [drawOpen, setDrawOpen] = useState<boolean>(true);
+  const [drawOpen, setDrawOpen] = useState<boolean>(false);
   const openDrawer = React.useCallback(() => setDrawOpen(true), []);
   const closeDrawer = React.useCallback(() => setDrawOpen(false), []);
   const { ymap } = useYProvider();

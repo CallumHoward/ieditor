@@ -21,7 +21,7 @@ export const YProvider: FunctionComponent = ({ children }) => {
   const instanceName = "ieditor01";
   const ydoc = useRef(new Y.Doc());
   const provider = useRef(
-    new WebsocketProvider(`wss:yjs-demos.now.sh`, instanceName, ydoc.current)
+    new WebsocketProvider(`wss://demos.yjs.dev`, instanceName, ydoc.current)
   );
   const ymap = useRef(ydoc.current.getMap(instanceName));
   const users = useRef(ydoc.current.getMap(`${instanceName}_users`));
