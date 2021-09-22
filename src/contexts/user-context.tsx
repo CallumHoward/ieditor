@@ -16,7 +16,7 @@ export type User = {
   phone?: string;
   avatarIndex: number;
   currentIndex: number;
-}
+};
 
 export type UserContextProps = {
   id: string;
@@ -27,7 +27,7 @@ export type UserContextProps = {
   setCurrentIndex: (currentIndex: number) => void;
 } & User;
 
-const colors = ["4740D4", "0098E3", "098E56", "FFAE00", "CC0007"];
+const colors = ["#0098E3", "#098E56", "#FFAE00", "#CC0007"];
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 
@@ -70,14 +70,23 @@ export const UserProvider: FunctionComponent = ({ children }) => {
   };
 
   useEffect(() => {
-    users.observe(() => {
+    users.observe((event) => {
+      event.keysChanged;
+      console.log("LOG keysChanged: ", event.keysChanged);
       setAllUsers(users.toJSON());
       console.log("LOG: ", users.toJSON());
     });
 
     // Take user offline when they disconnect
-    return () => {
+    const cleanup = () => {
       users.delete(id.current);
+    };
+
+    window.addEventListener("beforeunload", cleanup);
+
+    return () => {
+      cleanup();
+      window.removeEventListener("beforeunload", cleanup);
     };
   }, []);
 

@@ -9,7 +9,7 @@ export const PageContainerWrapper = styled.div`
 `;
 
 export const PageBody = styled.div`
-  padding: 1rem;
+  padding: 0 1rem 0;
   box-sizing: border-box;
   width: 100%;
   height: calc(100% - ${NAVBAR_HEIGHT});

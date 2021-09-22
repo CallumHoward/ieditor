@@ -101,7 +101,7 @@ const TemplateLogo = styled.img`
   padding: 0.25rem;
   width: 2rem;
   height: 2rem;
-  box-shadow: 0 0px 7px #E8EEF8, 0 3px 4px #E8EEF8;
+  box-shadow: 0 0px 7px #e8eef8, 0 3px 4px #e8eef8;
 `;
 
 const TemplateLabelGroup = styled.div`
@@ -112,41 +112,35 @@ const TemplateLabelGroup = styled.div`
 `;
 
 export const BottomDrawer: FunctionComponent = () => {
-  // const { allUsers } = useUserProvider();
-  // console.log("LOG allUsers: ", allUsers);
-  const allUsers: User[] = [
-    { name: "Alice balice", color: "blue", avatarIndex: 13, currentIndex: 1 },
-    { name: "Bob", color: "green", avatarIndex: 19, currentIndex: 4 },
-    { name: "Charlie", color: "green", avatarIndex: 29, currentIndex: 4 },
-    { name: "Bob", color: "green", avatarIndex: 15, currentIndex: 4 },
-    { name: "Bob", color: "green", avatarIndex: 12, currentIndex: 4 },
-    { name: "Bob", color: "green", avatarIndex: 11, currentIndex: 4 },
-    { name: "Bob", color: "green", avatarIndex: 18, currentIndex: 4 },
-    { name: "Bob", color: "green", avatarIndex: 10, currentIndex: 4 },
-  ];
-
+  const { allUsers, id: myId } = useUserProvider();
   return (
     <SectionContainer>
       <InfoSection>
         <TemplateLogo src="/logo.png" alt="template-icon" />
         <TemplateLabelGroup style={{ marginLeft: "1rem" }}>
-          <p style={{fontWeight: 500}}>Toolbox Talk Meeting Record</p>
-          <p style={{ fontSize: "12px", color: "#5e6c84" }}>Toolbox Talk Meeting Record</p>
+          <p style={{ fontWeight: 500 }}>Toolbox Talk Meeting Record</p>
+          <p style={{ fontSize: "12px", color: "#5e6c84" }}>
+            Toolbox Talk Meeting Record
+          </p>
         </TemplateLabelGroup>
       </InfoSection>
       <StyledHr />
       <PresenceSection>
-        {Object.values(allUsers).map(({ name, color, avatarIndex }, index) => (
-          <OuterAvatarContainer key={index}>
-            <AvatarContainer
-              size={3.5}
-              style={{ border: `solid 2px ${color}` }}
-            >
-              {avatars[avatarIndex]}
-            </AvatarContainer>
-            <AvatarLabel style={{textAlign: "center"}}>{name}</AvatarLabel>
-          </OuterAvatarContainer>
-        ))}
+        {Object.entries(allUsers).sort(([id]) => id === myId ? -1 : 0).map(
+          ([id, { name, color, avatarIndex }], index) => (
+            <OuterAvatarContainer key={index}>
+              <AvatarContainer
+                size={3.5}
+                style={{
+                  border: `solid 2px ${id === myId ? "#6559FF" : color}`,
+                }}
+              >
+                {avatars[avatarIndex]}
+              </AvatarContainer>
+              <AvatarLabel style={{ textAlign: "center" }}>{name}</AvatarLabel>
+            </OuterAvatarContainer>
+          )
+        )}
       </PresenceSection>
       <StyledHr />
       <OptionsSection>
