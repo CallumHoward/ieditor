@@ -1,11 +1,13 @@
 {
-  "name": "iEditor",
+  "name": "iEditor by SafetyCulture",
   "short_name": "iEditor",
-  "start_url": "http://192.168.20.18:5000/",
+  "start_url": "/?source=pwa",
   "display": "standalone",
+  "scope": "/",
+  "theme_color": "#6559FF",
   "icons": [
     {
-      "src": "www/logo.png",
+      "src": "www/app-icon.png",
       "sizes": "512x512",
       "type": "image/png"
     }
