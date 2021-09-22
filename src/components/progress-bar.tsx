@@ -1,5 +1,6 @@
-import React, { FunctionComponent, useEffect, useRef, useState } from "react";
+import React, { FunctionComponent, useRef } from "react";
 import styled, { css } from "styled-components";
+import { User, useUserProvider } from "../contexts/user-context";
 import { NAVBAR_HEIGHT } from "./nav-bar-styled";
 
 type ProgressBarProps = {
@@ -15,12 +16,6 @@ export enum StepStatus {
   UNSEEN = "unseen",
 }
 
-const StepStatusColours = {
-  COMPLETE: "#6559ff",
-  PENDING: "#a39ef0",
-  EMPTY: "transparent",
-};
-
 const ProgressBarWrapper = styled.div`
   position: fixed;
   width: 100%;
@@ -30,8 +25,8 @@ const ProgressBarWrapper = styled.div`
 
 const Track = styled.div<{ totalSteps: number }>`
   display: grid;
-  background: #ddd;
-  height: 0.5rem;
+  background: #fff;
+  height: 4px;
   width: 100%;
   grid-template-rows: 100%;
 
@@ -41,24 +36,14 @@ const Track = styled.div<{ totalSteps: number }>`
     `}
 `;
 
-const Step = styled.div<{ colour: string; isEmptyStep: boolean }>`
+const Step = styled.div<{ colour: string; opacity: number }>`
   height: 100%;
 
-  ${({ colour, isEmptyStep }) => css`
+  transition: background-color 700ms ease;
+  ${({ colour, opacity }) => css`
     background-color: ${colour};
-    width: ${isEmptyStep ? "0" : "100%"};
+    opacity: ${opacity};
   `}
-`;
-
-const MyThumb = styled.div<{ position: number }>`
-  height: 1rem;
-  width: 1rem;
-  background: #6559ff;
-  border-radius: 50%;
-  position: absolute;
-  top: -0.25rem;
-  transition: left 400ms ease;
-  ${({ position }) => `left: calc(${position}px - 1rem)`};
 `;
 
 export const ProgressBar: FunctionComponent<ProgressBarProps> = ({
@@ -66,44 +51,91 @@ export const ProgressBar: FunctionComponent<ProgressBarProps> = ({
   stepStatus,
   stepSize = 1,
 }) => {
-  const trackRef = useRef<HTMLDivElement | null>(null);
-  const [thumbPosition, setThumbPosition] = useState(0);
+  const { allUsers } = useUserProvider();
+  const userColourMapCounter = useRef(0);
 
-  useEffect(() => {
-    const trackWidth = trackRef.current?.getBoundingClientRect().width;
-    if (trackWidth) {
-      setThumbPosition(
-        (((myIndex + 1) * stepSize) / stepStatus.length) * trackWidth
-      );
-    }
-  }, [myIndex, stepStatus]);
+  /**
+   *
+   * Get a list of users sorted by the current step index they are at,
+   * but no more than one user per step
+   */
+  const getUserColourMap = (): User[] => {
+    const colourMap = new Map();
+    Object.values(allUsers).forEach((user) => {
+      colourMap.set(user.currentIndex, user);
+    });
+
+    const usersSortedByStepIndex = Array.from(colourMap.values()).sort(
+      (u1, u2) => u1.currentIndex - u2.currentIndex
+    );
+    return usersSortedByStepIndex;
+  };
 
   const getStepColour = (stepStatus: StepStatus, stepIndex: number) => {
+    const userColourMap = getUserColourMap();
+    if (stepIndex === 0) {
+      userColourMapCounter.current = 0;
+    }
+
+    const currentUserForThisStep = userColourMap[userColourMapCounter.current];
+    // TODO: why can user colour be undefined???
+    if (!currentUserForThisStep?.color) {
+      return {
+        hex: "#FFF",
+        opacity: 0,
+      };
+    }
+
+    let stepColour = "";
+
+    if (currentUserForThisStep.currentIndex === myIndex) {
+      stepColour = "#6559ff";
+    } else {
+      stepColour = currentUserForThisStep.color;
+    }
+
+    if (
+      userColourMapCounter.current < userColourMap.length - 1 &&
+      currentUserForThisStep.currentIndex === stepIndex
+    ) {
+      userColourMapCounter.current++;
+    }
+
+    // return stepColour;
+
     if (stepIndex > myIndex) {
-      return StepStatusColours.EMPTY;
+      return {
+        hex: stepColour,
+        opacity: 0.2,
+      };
     }
 
     if (stepStatus === StepStatus.COMPLETE) {
-      return StepStatusColours.COMPLETE;
+      return {
+        hex: stepColour,
+        opacity: 1,
+      };
     }
 
-    return StepStatusColours.PENDING;
+    return {
+      hex: stepColour,
+      opacity: 1,
+    };
   };
 
   return (
     <ProgressBarWrapper>
-      <Track
-        ref={trackRef}
-        totalSteps={Math.floor(stepStatus.length / stepSize)}
-      >
-        <MyThumb position={thumbPosition} />
-        {stepStatus.map((status, index) => (
-          <Step
-            key={`progress-step-${index}`}
-            colour={getStepColour(status, index)}
-            isEmptyStep={index > myIndex}
-          />
-        ))}
+      <Track totalSteps={Math.floor(stepStatus.length / stepSize)}>
+        {stepStatus.map((status, index) => {
+          const colour = getStepColour(status, index);
+          return (
+            <Step
+              key={`progress-step-${index}`}
+              colour={colour.hex}
+              opacity={colour.opacity}
+            />
+          );
+        })}
       </Track>
     </ProgressBarWrapper>
   );
