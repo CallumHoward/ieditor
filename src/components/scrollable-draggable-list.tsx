@@ -95,6 +95,10 @@ const ScrollableItems = styled.div<{ hasStartBuffer: boolean }>`
     content: "";
     ${({ hasStartBuffer }) => (hasStartBuffer ? "height: 25vh" : "height: 0")};
   }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const SnapScrollContainer = styled.div<{
