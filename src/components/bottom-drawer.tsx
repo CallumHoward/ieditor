@@ -116,7 +116,7 @@ export const BottomDrawer: FunctionComponent = () => {
   return (
     <SectionContainer>
       <InfoSection>
-        <TemplateLogo src="/logo.png" alt="template-icon" />
+        <TemplateLogo src="logo.png" alt="template-icon" />
         <TemplateLabelGroup style={{ marginLeft: "1rem" }}>
           <p style={{ fontWeight: 500 }}>Toolbox Talk Meeting Record</p>
           <p style={{ fontSize: "12px", color: "#5e6c84" }}>
@@ -126,8 +126,9 @@ export const BottomDrawer: FunctionComponent = () => {
       </InfoSection>
       <StyledHr />
       <PresenceSection>
-        {Object.entries(allUsers).sort(([id]) => id === myId ? -1 : 0).map(
-          ([id, { name, color, avatarIndex }], index) => (
+        {Object.entries(allUsers)
+          .sort(([id]) => (id === myId ? -1 : 0))
+          .map(([id, { name, color, avatarIndex }], index) => (
             <OuterAvatarContainer key={index}>
               <AvatarContainer
                 size={3.5}
@@ -139,8 +140,7 @@ export const BottomDrawer: FunctionComponent = () => {
               </AvatarContainer>
               <AvatarLabel style={{ textAlign: "center" }}>{name}</AvatarLabel>
             </OuterAvatarContainer>
-          )
-        )}
+          ))}
       </PresenceSection>
       <StyledHr />
       <OptionsSection>

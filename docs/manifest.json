@@ -1,9 +1,9 @@
 {
   "name": "iEditor by SafetyCulture",
   "short_name": "iEditor",
-  "start_url": "/?source=pwa",
+  "start_url": "/ieditor?source=pwa",
   "display": "standalone",
-  "scope": "/",
+  "scope": "/ieditor",
   "theme_color": "#6559FF",
   "icons": [
     {
