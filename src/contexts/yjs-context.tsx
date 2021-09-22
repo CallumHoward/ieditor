@@ -24,7 +24,7 @@ export const YProvider: FunctionComponent = ({ children }) => {
     new WebsocketProvider(`wss:yjs-demos.now.sh`, instanceName, ydoc.current)
   );
   const ymap = useRef(ydoc.current.getMap(instanceName));
-  const users = useRef(ydoc.current.getMap(instanceName));
+  const users = useRef(ydoc.current.getMap(`${instanceName}_users`));
   const undoManager = useRef(new Y.UndoManager(ymap.current));
   return (
     <YContext.Provider
