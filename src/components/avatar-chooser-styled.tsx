@@ -5,6 +5,14 @@ const defaultSize = 2.5;
 export const AvatarContainer = styled.div<{ size?: number }>`
   // clip-path: circle(${(p) => p.size || defaultSize}rem at center);
   border-radius: 50%;
+  background: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 9px;
+  color: #949FB2;
 
   width: ${(p) => p.size || defaultSize}rem;
   height: ${(p) => p.size || defaultSize}rem;

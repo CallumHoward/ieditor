@@ -35,7 +35,7 @@ export const StyledH1 = styled.h1`
 `;
 
 export const LoginPage: FunctionComponent = () => {
-  const { setName, setPhone, avatarIndex, setAvatarIndex } = useUserProvider();
+  const { setName, setPhone, avatarIndex, setAvatarIndex, clearAllData } = useUserProvider();
   return (
     <PageContainerWrapper>
       <PageBody>
@@ -58,7 +58,12 @@ export const LoginPage: FunctionComponent = () => {
           <StyledH1>Name</StyledH1>
           <StyledInput
             onBlur={(e) => {
-              setName(e.target.value);
+              if (e.target.value === "clearalldata123") {
+                clearAllData();
+                console.info("Cleared all data from YJS server");
+              } else {
+                setName(e.target.value);
+              }
             }}
           />
           <StyledH1>Phone</StyledH1>

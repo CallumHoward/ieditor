@@ -31,6 +31,9 @@ const StyledDrawer = styled(Drawer)`
   .bottom-drawer__content {
     padding: 0;
   }
+  .bottom-drawer__backdrop {
+    z-index: 11;
+  }
 `;
 
 export const EditorPage: FunctionComponent = () => {

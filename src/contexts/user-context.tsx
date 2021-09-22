@@ -25,6 +25,7 @@ export type UserContextProps = {
   setPhone: (phone: string) => void;
   setAvatarIndex: (avatarIndex: number) => void;
   setCurrentIndex: (currentIndex: number) => void;
+  clearAllData: () => void;
 } & User;
 
 const colors = ["#0098E3", "#098E56", "#FFAE00", "#CC0007"];
@@ -42,7 +43,7 @@ export const UserProvider: FunctionComponent = ({ children }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [allUsers, setAllUsers] = useState<Record<string, User>>({});
 
-  const { users } = useYProvider();
+  const { users, ymap } = useYProvider();
 
   const value: User = {
     color,
@@ -68,14 +69,16 @@ export const UserProvider: FunctionComponent = ({ children }) => {
     setCurrentIndex(currentIndex);
     users.set(id.current, { ...value, currentIndex });
   };
+  const clearAllData = () => {
+    users.clear();
+    ymap.clear();
+  };
 
   useEffect(() => {
     users.observe((event) => {
-      event.keysChanged;
-      console.log("LOG keysChanged: ", event.keysChanged);
       setAllUsers(users.toJSON());
-      console.log("LOG: ", users.toJSON());
     });
+    users.set(id.current, value);
 
     // Take user offline when they disconnect
     const cleanup = () => {
@@ -100,6 +103,7 @@ export const UserProvider: FunctionComponent = ({ children }) => {
         setPhone: syncPhone,
         setAvatarIndex: syncAvatarIndex,
         setCurrentIndex: syncCurrentIndex,
+        clearAllData,
       }}
     >
       {children}

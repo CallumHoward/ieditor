@@ -57,7 +57,7 @@ const StyledOptionButton = styled(StyledButton)`
   justify-content: start;
 `;
 
-const OuterAvatarContainer = styled.div`
+export const OuterAvatarContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -13,6 +13,7 @@ import { useYProvider } from "../contexts/yjs-context";
 import { Link } from "react-router-dom";
 import { FlashOffSvg } from "../assets/flash-off";
 import { FlashOnSvg } from "../assets/flash-on";
+import { AvatarStack } from "./avatar-stack";
 
 type Props = {
   editing: boolean;
@@ -62,26 +63,17 @@ export const NavBar: FunctionComponent<Props> = ({
           </StyledNavButton>
         </StyledButtonContainer>
       )}
-      <StyledH1>{editing ? "Edit Template" : "Conduct Inspection"}</StyledH1>
+      <StyledH1>{editing ? "Edit Template" : "C"}</StyledH1>
+      <AvatarStack openDrawer={openDrawer} />
       <StyledButtonContainer style={{ flexDirection: "row-reverse" }}>
         <StyledNavButton
           onClick={() => {
             setFocusMode(!focusMode);
           }}
         >
-          {(!editing && !focusMode) ? <FlashOffSvg /> : <FlashOnSvg />}
+          {!editing && !focusMode ? <FlashOffSvg /> : <FlashOnSvg />}
         </StyledNavButton>
       </StyledButtonContainer>
-      {/* <StyledButtonContainer style={{ flexDirection: "row-reverse" }}> */}
-      {/*   <StyledNavButton */}
-      {/*     onClick={() => { */}
-      {/*       setEditing(!editing && !focusMode); */}
-      {/*       setFocusMode(false); */}
-      {/*     }} */}
-      {/*   > */}
-      {/*     {editing || focusMode ? "Done" : <MoreSvg />} */}
-      {/*   </StyledNavButton> */}
-      {/* </StyledButtonContainer> */}
       <StyledButtonContainer style={{ flexDirection: "row-reverse" }}>
         <StyledNavButton onClick={openDrawer}>
           <MoreSvg />
