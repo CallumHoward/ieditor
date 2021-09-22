@@ -25,7 +25,7 @@ export const CircleBackground = styled.div`
   position: absolute;
 `;
 
-const MAX_STACK = 3;
+const MAX_STACK = 3; // Max is 8 before z-index breaks
 
 type Props = {
   openDrawer: () => void;
@@ -56,12 +56,12 @@ export const AvatarStack: FunctionComponent<Props> = ({ openDrawer }) => {
         ))}
       {overflowNumber > 0 && (
         <OuterAvatarContainer onClick={openDrawer}>
-          <CircleBackground style={{ zIndex: allUserEntries.length }} />
+          <CircleBackground style={{ zIndex: MAX_STACK }} />
           <AvatarContainer
             size={1}
             style={{
               border: "solid 2px #dee4ed",
-              zIndex: allUserEntries.length,
+              zIndex: MAX_STACK + 1,
             }}
           >
             +{overflowNumber}
