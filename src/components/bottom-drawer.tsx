@@ -21,7 +21,9 @@ const InfoSection = styled.div`
 `;
 
 const PresenceSection = styled.div`
-  background: #f3f6fb;
+  background: #f8fbfe;
+  border-top: solid 1px #dee4ed;
+  border-bottom: solid 1px #dee4ed;
   z-index: 100;
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
@@ -45,7 +47,7 @@ const OptionsSection = styled.div`
 `;
 
 const StyledHr = styled.hr`
-  border: solid 1px #dee4ed;
+  border: solid 0px #dee4ed;
 `;
 
 const StyledOptionButton = styled(StyledButton)`
