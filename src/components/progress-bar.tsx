@@ -97,9 +97,9 @@ export const ProgressBar: FunctionComponent<ProgressBarProps> = ({
         ref={trackRef}
         totalSteps={Math.floor(stepStatus.length / stepSize)}
       >
-        {Object.values(allUsers).map((user) => (
+        {Object.entries(allUsers).map(([id, user]) => (
           <Thumb
-            key={user.name}
+            key={id}
             position={getThumbPosition(user.currentIndex)}
             color={user.currentIndex !== myIndex ? user.color : "#6559ff"}
           />
