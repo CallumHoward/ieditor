@@ -194,6 +194,7 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
 
     const scrollToIndex = (newIndex: number, centerAlign: boolean) => {
       if (
+        !listContainerRef.current ||
         !itemRefs.current ||
         newIndex >= itemRefs.current.length ||
         newIndex < 0
@@ -207,7 +208,8 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
         scrollableParent: listContainerRef.current,
         behavior: "smooth",
         offsetPx: centerAlign
-          ? currentItemRef.getBoundingClientRect().height / 2
+          ? -listContainerRef.current.getBoundingClientRect().height / 2 +
+            currentItemRef.getBoundingClientRect().height / 2
           : 0,
       });
       onChangeIndex({ value: newIndex });

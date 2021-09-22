@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { MemoryRouter as Router, Switch, Route } from "react-router-dom";
 import { YProvider } from "./contexts/yjs-context";
 import styled from "styled-components";
@@ -6,6 +6,7 @@ import { EditorPage } from "./pages/editor-page";
 import { ListPage } from "./pages/list-page";
 import { LoginPage } from "./pages/login-page";
 import { UserProvider } from "./contexts/user-context";
+import smoothScroll from "smoothscroll-polyfill";
 
 const StyledAppContainer = styled.div`
   width: 100%;
@@ -13,6 +14,10 @@ const StyledAppContainer = styled.div`
 `;
 
 export const App: FunctionComponent = () => {
+  useEffect(() => {
+    smoothScroll.polyfill();
+  }, []);
+
   return (
     <YProvider>
       <UserProvider>
