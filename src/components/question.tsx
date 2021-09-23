@@ -4,6 +4,7 @@ import { ActionBoxSvg } from "../assets/action-box-svg";
 import { ArrowDownSvg } from "../assets/arrow-down-svg";
 import { ArrowUpSvg } from "../assets/arrow-up-svg";
 import { MediaSvg } from "../assets/media-svg";
+import { useUserProvider } from "../contexts/user-context";
 import { QUESTION_INPUT_NAME_PREFIX } from "../pages/editor-page";
 import { QuestionT, ResponseType } from "../types/question";
 import { FormInput } from "./form/form-input";
@@ -26,7 +27,7 @@ const renderResponse = (
   scrollNext: () => void,
   scrollToMe: () => void,
   focusMode: boolean,
-  focused: boolean,
+  focused: boolean
 ) => {
   switch (question.type) {
     case ResponseType.Radio:
@@ -77,13 +78,27 @@ export const Question: FunctionComponent<QuestionProps> = ({
   scrollToMe,
   isDragging = false,
 }) => {
+  const { allUsers, id: myUserId } = useUserProvider();
   let clickTimeout: NodeJS.Timeout | null = null;
+
+  const getBorderColour = () => {
+    if (!focused) {
+      return "#dee4ed";
+    }
+
+    const otherUser = Object.entries(allUsers).find(
+      ([id, u]) => u.currentIndex === index && id !== myUserId
+    );
+
+    return otherUser?.[1].color || "#6559ff";
+  };
+
   return (
     <OuterContainer focusMode={focusMode}>
       <QuestionContainer
         isDragging={isDragging}
         mandatory={true}
-        focused={focused}
+        borderColour={getBorderColour()}
       >
         <InnerContainer
           onClick={(e) => {
@@ -134,7 +149,13 @@ export const Question: FunctionComponent<QuestionProps> = ({
             </FormQuestionLabel>
           )}
           <ResponseContainer>
-            {renderResponse(question, scrollNext, scrollToMe, focusMode, focused)}
+            {renderResponse(
+              question,
+              scrollNext,
+              scrollToMe,
+              focusMode,
+              focused
+            )}
           </ResponseContainer>
           {!editing && (
             <AttachmentBar>
