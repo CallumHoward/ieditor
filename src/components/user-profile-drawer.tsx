@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { PhoneSvg } from "../assets/phone-svg";
 import { useUserProvider } from "../contexts/user-context";
 import { AvatarContainer, avatars } from "./avatar-chooser-styled";
-import { Track } from "./progress-bar";
 import { InlineButton, StyledButton } from "./question-styled";
 
 const SectionContainer = styled.div`
@@ -15,7 +14,7 @@ const ProfileSection = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 4rem;
-  padding: 2rem;
+  padding: 2rem 2rem 0;
 `;
 
 const PresenceSection = styled.div`
@@ -48,6 +47,7 @@ const PerformanceSection = styled.div`
   // background: #f3f6fb;
   min-height: 4rem;
   margin: 1rem;
+  padding: 0 0.75rem;
 
   box-sizing: border-box;
   display: flex;
@@ -144,7 +144,8 @@ const AvatarLabel = styled.div`
 
 const ProgressLabel = styled(AvatarLabel)`
   text-align: left;
-  margin-bottom: 0.5rem;
+  margin: 0.75rem 0 0.25rem;
+  line-height: 1.25rem;
 `;
 
 const ProgressBarTrack = styled.div`
@@ -246,7 +247,6 @@ export const UserProfileDrawer: FunctionComponent<Props> = ({
           Jump to position
         </InlineButton>
       </ProfileSection>
-      <StyledHr />
       <PerformanceSection>
         <ProgressLabel>
           Today's completed scheduled Inspections (4 / 9)
