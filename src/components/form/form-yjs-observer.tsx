@@ -8,7 +8,10 @@ const FormYJSObserver = (): null => {
 
   const updateFormValuesFromYJS = (keysChanged: Set<string>) => {
     keysChanged.forEach((key) => {
-      form.mutators.setValue(key, ymap.get(key));
+      //FIXME hack to stop undo to blank state
+      if (ymap.get(key)) {
+        form.mutators.setValue(key, ymap.get(key));
+      }
     });
   };
 

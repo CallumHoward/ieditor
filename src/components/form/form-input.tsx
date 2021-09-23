@@ -13,8 +13,10 @@ export const FormInput: FunctionComponent<Props> = ({ name }) => {
 
   const handleOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const newValue = e.target.value;
-    input.onChange(newValue);
-    ymap.set(name, newValue);
+    if (newValue) {
+      input.onChange(newValue);
+      ymap.set(name, newValue);
+    }
   };
 
   return <StyledInput {...input} onChange={handleOnChange} />;
