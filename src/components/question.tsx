@@ -82,15 +82,15 @@ export const Question: FunctionComponent<QuestionProps> = ({
   let clickTimeout: NodeJS.Timeout | null = null;
 
   const getBorderColour = () => {
-    if (!focused) {
-      return "#dee4ed";
-    }
-
     const otherUser = Object.entries(allUsers).find(
       ([id, u]) => u.currentIndex === index && id !== myUserId
     );
 
-    return otherUser?.[1].color || "#6559ff";
+    if (otherUser) {
+      return otherUser?.[1].color;
+    }
+
+    return focused ? "#6559ff" : "#dee4ed";
   };
 
   return (
