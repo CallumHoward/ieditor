@@ -89,10 +89,16 @@ const ScrollableItems = styled.div<{ hasStartBuffer: boolean }>`
   }
 
   &::before {
-    display: inline-block;
+    display: flex;
+    align-items: end;
+    box-sizing: border-box;
+    padding: 3rem 1.5rem;
+    font-weight: 500;
+    font-size: 20px;
+
     transition: height 500ms ease;
     width: 100%;
-    content: "";
+    content: "Toolbox Talk Meeting Record";
     ${({ hasStartBuffer }) => (hasStartBuffer ? "height: 25vh" : "height: 0")};
   }
 
