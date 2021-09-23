@@ -7,6 +7,7 @@ import { InlineButton, StyledButton } from "./question-styled";
 
 const SectionContainer = styled.div`
   // background: #f3f6fb;
+  margin-bottom: 1rem;
 `;
 
 const ProfileSection = styled.div`
