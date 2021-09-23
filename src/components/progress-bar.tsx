@@ -60,8 +60,8 @@ const Thumb = styled.div<{ position: number; color: string }>`
   background: ${({ color }) => color};
   position: absolute;
   top: -2px;
-  transition: left 400ms ease;
-  ${({ position }) => `left: ${position}px`};
+  transition: left 150ms ease;
+  ${({ position }) => `left: calc(${position}px - 8px)`};
   border: 1px solid white;
   border-radius: 50%;
 `;
