@@ -56,6 +56,18 @@ const StyledOptionButton = styled(StyledButton)`
   width: 100%;
   justify-content: start;
 
+  &:active {
+    border: none;
+  }
+
+  &:focus {
+    border: none;
+  }
+
+  &:hover {
+    border: none;
+  }
+
   &:first-child {
     margin-left: 0.5rem;
   }
