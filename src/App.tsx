@@ -26,7 +26,7 @@ export const App: FunctionComponent = () => {
             <Switch>
               <Route path={"/edit"} component={EditorPage} />
               <Route path={"/list"} component={ListPage} />
-              <Route path={"/"} component={EditorPage} />
+              <Route path={"/"} component={LoginPage} />
             </Switch>
           </Router>
         </StyledAppContainer>
