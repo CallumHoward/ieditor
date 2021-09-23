@@ -5,6 +5,7 @@ import { Option } from "./form-radio";
 type Props = {
   value: string;
   onChange: (value: string) => void;
+  onClick?: () => void;
   active?: boolean;
   option: Option;
 };
@@ -12,6 +13,7 @@ type Props = {
 export const Button: FunctionComponent<Props> = ({
   value,
   onChange,
+  onClick = () => {},
   active = false,
   option,
 }) => {
@@ -19,6 +21,7 @@ export const Button: FunctionComponent<Props> = ({
     <StyledButton
       onClick={() => {
         onChange(value);
+        onClick();
       }}
       active={active}
       activeColor={option?.meta?.color}
