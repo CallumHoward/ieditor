@@ -22,6 +22,7 @@ type Props = {
   focusMode: boolean;
   setFocusMode: (value: boolean) => void;
   openDrawer: () => void;
+  setCurrentIndex: (newIndex: number) => void;
 };
 
 export const PageContainer: FunctionComponent<Props> = ({
@@ -30,6 +31,7 @@ export const PageContainer: FunctionComponent<Props> = ({
   focusMode,
   setFocusMode,
   openDrawer,
+  setCurrentIndex,
   children,
 }) => {
   return (
@@ -40,6 +42,7 @@ export const PageContainer: FunctionComponent<Props> = ({
         focusMode={focusMode}
         setFocusMode={setFocusMode}
         openDrawer={openDrawer}
+        setCurrentIndex={setCurrentIndex}
       />
       <PageBody>{children}</PageBody>
     </PageContainerWrapper>

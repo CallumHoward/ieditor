@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 export const QuestionContainer = styled.div<{
   isDragging: boolean;
   mandatory: boolean;
-  focused: boolean;
+  borderColour?: string;
 }>`
   padding: 1rem 0 1rem;
   border: 1px solid #dee4ed;
@@ -14,7 +14,7 @@ export const QuestionContainer = styled.div<{
     border-color: #6559ff;
   }
 
-  ${(p) => p.focused && `border-color: #6559ff;`}
+  ${({ borderColour }) => borderColour && `border-color: ${borderColour};`}
 
   box-shadow: ${(p) =>
     p.isDragging

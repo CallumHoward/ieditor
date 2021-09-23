@@ -4,6 +4,7 @@ import { ActionBoxSvg } from "../assets/action-box-svg";
 import { ArrowDownSvg } from "../assets/arrow-down-svg";
 import { ArrowUpSvg } from "../assets/arrow-up-svg";
 import { MediaSvg } from "../assets/media-svg";
+import { useUserProvider } from "../contexts/user-context";
 import { QUESTION_INPUT_NAME_PREFIX } from "../pages/editor-page";
 import { QuestionT, ResponseType } from "../types/question";
 import { FormInput } from "./form/form-input";
@@ -77,13 +78,27 @@ export const Question: FunctionComponent<QuestionProps> = ({
   scrollToMe,
   isDragging = false,
 }) => {
+  const { allUsers, id: myUserId } = useUserProvider();
   let clickTimeout: NodeJS.Timeout | null = null;
+
+  const getBorderColour = () => {
+    const otherUser = Object.entries(allUsers).find(
+      ([id, u]) => u.currentIndex === index && id !== myUserId
+    );
+
+    if (otherUser) {
+      return otherUser?.[1].color;
+    }
+
+    return focused ? "#6559ff" : "#dee4ed";
+  };
+
   return (
     <OuterContainer focusMode={focusMode}>
       <QuestionContainer
         isDragging={isDragging}
         mandatory={true}
-        focused={focused}
+        borderColour={getBorderColour()}
       >
         <InnerContainer
           onClick={(e) => {

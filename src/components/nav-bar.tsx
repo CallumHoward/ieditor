@@ -22,6 +22,7 @@ type Props = {
   focusMode: boolean;
   setFocusMode: (value: boolean) => void;
   openDrawer: () => void;
+  setCurrentIndex: (newIndex: number) => void;
 };
 
 export const NavBar: FunctionComponent<Props> = ({
@@ -30,11 +31,14 @@ export const NavBar: FunctionComponent<Props> = ({
   focusMode,
   setFocusMode,
   openDrawer,
+  setCurrentIndex,
 }) => {
   const { undoManager } = useYProvider();
   return (
     <NavBarContainer>
-      <StyledH1 style={{ position: "absolute", zIndex: -1, paddingTop: "0.125rem" }}>
+      <StyledH1
+        style={{ position: "absolute", zIndex: -1, paddingTop: "0.125rem" }}
+      >
         {editing ? "Edit Template" : "Conduct"}
       </StyledH1>
       {editing ? (
@@ -68,7 +72,7 @@ export const NavBar: FunctionComponent<Props> = ({
         </StyledButtonContainer>
       )}
       <Spacer />
-      <AvatarStack openDrawer={openDrawer} />
+      <AvatarStack openDrawer={openDrawer} setCurrentIndex={setCurrentIndex} />
       {/* {!editing && ( */}
       {/*   <StyledButtonContainer style={{ flexDirection: "row-reverse" }}> */}
       {/*     <StyledNavButton */}
