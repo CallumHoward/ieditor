@@ -148,11 +148,19 @@ const ProgressLabel = styled(AvatarLabel)`
 `;
 
 const ProgressBarTrack = styled.div`
-  margin: 0 0.5rem;
+  margin: 0 0.25rem;
   background: #dee4ed;
   height: 4px;
-  width: 100%;
+  width: calc(100% - 0.25rem);
   box-sizing: border-box;
+  position: relative;
+`;
+
+const ProgressBarInner = styled.div<{ percentage: number }>`
+  position: absolute;
+  height: 100%;
+  background-color: #6559ff;
+  width: ${({ percentage }) => `${percentage}%`};
 `;
 
 const ButtonLabel = styled.div`
@@ -243,11 +251,15 @@ export const UserProfileDrawer: FunctionComponent<Props> = ({
         <ProgressLabel>
           Today's completed scheduled Inspections (4 / 9)
         </ProgressLabel>
-        <ProgressBarTrack />
+        <ProgressBarTrack>
+          <ProgressBarInner percentage={50} />
+        </ProgressBarTrack>
         <ProgressLabel>
           Scheduled Inspections completed this week (17 / 28)
         </ProgressLabel>
-        <ProgressBarTrack />
+        <ProgressBarTrack>
+          <ProgressBarInner percentage={75} />
+        </ProgressBarTrack>
       </PerformanceSection>
       <StyledHr />
       <PresenceSection>
