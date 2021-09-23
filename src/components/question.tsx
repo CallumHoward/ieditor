@@ -35,7 +35,7 @@ const renderResponse = (
         <FormRadio
           name={`qr${question.id}`}
           onChange={focusMode ? scrollNext : undefined}
-          onClick={scrollToMe}
+          onClick={focusMode && focused ? scrollNext : scrollToMe}
         />
       );
     case ResponseType.Input:

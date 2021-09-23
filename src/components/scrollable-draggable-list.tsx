@@ -93,9 +93,9 @@ const ScrollableItems = styled.div<{
 
   &::before {
     display: flex;
-    align-items: end;
+    // align-items: end;
     box-sizing: border-box;
-    padding: 3rem 1.25rem;
+    padding: 6rem 1.25rem;
     font-weight: 500;
     font-size: 20px;
 
