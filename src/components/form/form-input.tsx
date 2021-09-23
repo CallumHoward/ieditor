@@ -5,9 +5,10 @@ import { StyledInput } from "../question-styled";
 
 type Props = {
   name: string;
+  onBlur?: () => void;
 } & React.HTMLProps<HTMLInputElement>;
 
-export const FormInput: FunctionComponent<Props> = ({ name }) => {
+export const FormInput: FunctionComponent<Props> = ({ name, onBlur }) => {
   const { input } = useField(name, {});
   const { ymap } = useYProvider();
 
@@ -19,5 +20,5 @@ export const FormInput: FunctionComponent<Props> = ({ name }) => {
     }
   };
 
-  return <StyledInput {...input} onChange={handleOnChange} />;
+  return <StyledInput {...input} onChange={handleOnChange} onBlur={onBlur} />;
 };

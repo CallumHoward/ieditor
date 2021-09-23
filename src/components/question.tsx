@@ -21,12 +21,26 @@ import {
   ResponseContainer,
 } from "./question-styled";
 
-const renderResponse = (question: QuestionT, scrollNext: () => void) => {
+const renderResponse = (
+  question: QuestionT,
+  scrollNext: () => void,
+  focusMode: boolean
+) => {
   switch (question.type) {
     case ResponseType.Radio:
-      return <FormRadio name={`qr${question.id}`} onChange={scrollNext} />;
+      return (
+        <FormRadio
+          name={`qr${question.id}`}
+          onChange={focusMode ? scrollNext : undefined}
+        />
+      );
     case ResponseType.Input:
-      return <FormInput name={`qi${question.id}`} />;
+      return (
+        <FormInput
+          name={`qi${question.id}`}
+          onBlur={focusMode ? scrollNext : undefined}
+        />
+      );
   }
 };
 
@@ -114,7 +128,7 @@ export const Question: FunctionComponent<QuestionProps> = ({
             </FormQuestionLabel>
           )}
           <ResponseContainer>
-            {renderResponse(question, scrollNext)}
+            {renderResponse(question, scrollNext, focusMode)}
           </ResponseContainer>
           {!editing && (
             <AttachmentBar>
