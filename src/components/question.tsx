@@ -24,7 +24,9 @@ import {
 const renderResponse = (
   question: QuestionT,
   scrollNext: () => void,
-  focusMode: boolean
+  scrollToMe: () => void,
+  focusMode: boolean,
+  focused: boolean,
 ) => {
   switch (question.type) {
     case ResponseType.Radio:
@@ -39,6 +41,9 @@ const renderResponse = (
         <FormInput
           name={`qi${question.id}`}
           onBlur={focusMode ? scrollNext : undefined}
+          onFocus={scrollToMe}
+          focusMode={focusMode}
+          focused={focused}
         />
       );
   }
@@ -128,7 +133,7 @@ export const Question: FunctionComponent<QuestionProps> = ({
             </FormQuestionLabel>
           )}
           <ResponseContainer>
-            {renderResponse(question, scrollNext, focusMode)}
+            {renderResponse(question, scrollNext, scrollToMe, focusMode, focused)}
           </ResponseContainer>
           {!editing && (
             <AttachmentBar>

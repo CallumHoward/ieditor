@@ -22,7 +22,7 @@ export const initialQuestionsData = [
   {
     id: "3",
     content: "Should be profiled and have current day and time.",
-    type: ResponseType.Radio,
+    type: ResponseType.Input,
     answer: { content: "unanswered" },
   },
   {
@@ -33,19 +33,19 @@ export const initialQuestionsData = [
   },
   {
     id: "5",
-    content: `Have you selected "Abercrombie Caves" for sites`,
-    type: ResponseType.Input,
-    answer: { content: "unanswered" },
-  },
-  {
-    id: "6",
     content: "Should be profiled and have current day and time.",
     type: ResponseType.Radio,
     answer: { content: "unanswered" },
   },
   {
-    id: "7",
+    id: "6",
     content: "Should be profiled and have current day and time.",
+    type: ResponseType.Input,
+    answer: { content: "unanswered" },
+  },
+  {
+    id: "7",
+    content: `Have you selected "Abercrombie Caves" for sites`,
     type: ResponseType.Input,
     answer: { content: "unanswered" },
   },
@@ -57,6 +57,18 @@ export const initialQuestionsData = [
   },
   {
     id: "9",
+    content: "Should be profiled and have current day and time.",
+    type: ResponseType.Input,
+    answer: { content: "unanswered" },
+  },
+  {
+    id: "10",
+    content: "Should be profiled and have current day and time.",
+    type: ResponseType.Radio,
+    answer: { content: "unanswered" },
+  },
+  {
+    id: "11",
     content: "Should be profiled and have current day and time.",
     type: ResponseType.Input,
     answer: { content: "unanswered" },
