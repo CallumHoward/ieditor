@@ -132,12 +132,14 @@ type Props = {
   editing: boolean;
   setEditing: (editing: boolean) => void;
   closeDrawer: () => void;
+  setSelectedUser: (id: string) => void;
 };
 
 export const BottomDrawer: FunctionComponent<Props> = ({
   editing,
   setEditing,
   closeDrawer,
+  setSelectedUser,
 }) => {
   const { allUsers, id: myId } = useUserProvider();
   return (
@@ -161,6 +163,9 @@ export const BottomDrawer: FunctionComponent<Props> = ({
                 size={3.5}
                 style={{
                   border: `solid 2px ${id === myId ? "#6559FF" : color}`,
+                }}
+                onClick={() => {
+                  setSelectedUser(id);
                 }}
               >
                 {avatars[avatarIndex]}

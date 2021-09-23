@@ -44,6 +44,8 @@ const StyledDrawer = styled(Drawer)`
   }
 `;
 
+const NO_ID = "noid";
+
 export const EditorPage: FunctionComponent = () => {
   const [currentIndexState, setCurrentIndexState] = useState<ListIndexData>({
     value: 0,
@@ -52,7 +54,10 @@ export const EditorPage: FunctionComponent = () => {
   const [focusMode, setFocusMode] = useState<boolean>(false);
   const [drawOpen, setDrawOpen] = useState<boolean>(true);
   const openDrawer = React.useCallback(() => setDrawOpen(true), []);
-  const closeDrawer = React.useCallback(() => setDrawOpen(false), []);
+  const closeDrawer = React.useCallback(() => {
+    setDrawOpen(false);
+    setSelectedUser(NO_ID);
+  }, []);
   const { ymap } = useYProvider();
   const { setCurrentIndex: setCurrentIndexYMap } = useUserProvider();
 
@@ -187,17 +192,21 @@ export const EditorPage: FunctionComponent = () => {
         onClose={closeDrawer}
         className={"bottom-drawer"}
       >
-        {/* <BottomDrawer */}
-        {/*   editing={editing} */}
-        {/*   setEditing={setEditing} */}
-        {/*   closeDrawer={closeDrawer} */}
-        {/* setSelectedUser={setSelectedUser} */}
-        {/* /> */}
-        <UserProfileDrawer
-          closeDrawer={closeDrawer}
-          userId={selectedUser}
-          setSelectedUser={setSelectedUser}
-        />
+        {selectedUser === NO_ID ? (
+          <BottomDrawer
+            editing={editing}
+            setEditing={setEditing}
+            closeDrawer={closeDrawer}
+            setSelectedUser={setSelectedUser}
+          />
+        ) : (
+          <UserProfileDrawer
+            closeDrawer={closeDrawer}
+            userId={selectedUser}
+            setSelectedUser={setSelectedUser}
+            handleOnChange={(value) => { handleOnChange({value, shouldAutoScroll: true}) }}
+          />
+        )}
       </StyledDrawer>
     </PageContainer>
   );

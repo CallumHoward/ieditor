@@ -4,7 +4,7 @@ import { PhoneSvg } from "../assets/phone-svg";
 import { useUserProvider } from "../contexts/user-context";
 import { AvatarContainer, avatars } from "./avatar-chooser-styled";
 import { Track } from "./progress-bar";
-import { StyledButton } from "./question-styled";
+import { InlineButton, StyledButton } from "./question-styled";
 
 const SectionContainer = styled.div`
   // background: #f3f6fb;
@@ -149,7 +149,7 @@ const ProgressLabel = styled(AvatarLabel)`
 
 const ProgressBarTrack = styled.div`
   margin: 0 0.5rem;
-  background: #ddd;
+  background: #dee4ed;
   height: 4px;
   width: 100%;
   box-sizing: border-box;
@@ -181,25 +181,31 @@ type Props = {
   userId: string;
   closeDrawer: () => void;
   setSelectedUser: (id: string) => void;
+  handleOnChange: (value: number) => void;
 };
 
 export const UserProfileDrawer: FunctionComponent<Props> = ({
   userId,
   closeDrawer,
   setSelectedUser,
+  handleOnChange,
 }) => {
   const { allUsers, id: myId } = useUserProvider();
   if (!allUsers[userId]) {
     return null;
   }
-  const { name, phone, avatarIndex } = allUsers[userId];
+  const { name, phone, avatarIndex, color, currentIndex } = allUsers[userId];
   return (
     <SectionContainer>
       <ProfileSection>
         <AvatarContainer
           size={5}
+          onClick={() => {
+            handleOnChange(currentIndex);
+            closeDrawer();
+          }}
           style={{
-            borderColor: "#6559ff",
+            borderColor: `${userId === myId ? "#6559FF" : color}`,
             boxShadow: "0 0px 7px #dee4ed, 0 3px 4px #dee4ed",
           }}
         >
@@ -215,10 +221,22 @@ export const UserProfileDrawer: FunctionComponent<Props> = ({
           }}
         >
           <PhoneSvg />
-          <a href="tel:0466680027" style={{ marginLeft: "0.5rem", marginBottom: "0.2rem" }}>
-            {phone || "0448378744"}
+          <a
+            href={`tel:{phone}`}
+            style={{ marginLeft: "0.5rem", marginBottom: "0.2rem" }}
+          >
+            {phone || "0448398744"}
           </a>
         </AvatarLabel>
+        <InlineButton
+          onClick={() => {
+            handleOnChange(currentIndex);
+            closeDrawer();
+          }}
+          style={{ background: "#dee4ed", marginTop: "1rem" }}
+        >
+          Jump to position
+        </InlineButton>
       </ProfileSection>
       <StyledHr />
       <PerformanceSection>

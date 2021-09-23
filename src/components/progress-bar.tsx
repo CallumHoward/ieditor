@@ -31,7 +31,7 @@ const ProgressBarWrapper = styled.div`
 
 export const Track = styled.div<{ totalSteps: number }>`
   display: grid;
-  background: #ddd;
+  background: #dee4ed;
   height: 4px;
   width: 100%;
   grid-template-rows: 100%;
