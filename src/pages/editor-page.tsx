@@ -1,4 +1,10 @@
-import React, { FunctionComponent, useCallback, useRef, useState } from "react";
+import React, {
+  FunctionComponent,
+  useEffect,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
 import { Form, FormSpy } from "react-final-form";
 import styled from "styled-components";
 import Drawer from "react-bottom-drawer";
@@ -48,6 +54,10 @@ export const EditorPage: FunctionComponent = () => {
   const closeDrawer = React.useCallback(() => setDrawOpen(false), []);
   const { ymap } = useYProvider();
   const { setCurrentIndex: setCurrentIndexYMap } = useUserProvider();
+
+  useEffect(() => {
+    setFocusMode(false);
+  }, [editing]);
 
   const renderInitialQuestions = () =>
     initialQuestionsData.map((question) => ({
