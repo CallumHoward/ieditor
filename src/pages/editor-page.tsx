@@ -24,6 +24,7 @@ import { setValue } from "../components/form/mutatators";
 import { useYProvider } from "../contexts/yjs-context";
 import { BottomDrawer } from "../components/bottom-drawer";
 import { useUserProvider } from "../contexts/user-context";
+import { UserProfileDrawer } from "../components/user-profile-drawer";
 
 export const QUESTION_INPUT_NAME_PREFIX = "ql";
 
@@ -49,11 +50,14 @@ export const EditorPage: FunctionComponent = () => {
   });
   const [editing, setEditing] = useState<boolean>(false);
   const [focusMode, setFocusMode] = useState<boolean>(false);
-  const [drawOpen, setDrawOpen] = useState<boolean>(false);
+  const [drawOpen, setDrawOpen] = useState<boolean>(true);
   const openDrawer = React.useCallback(() => setDrawOpen(true), []);
   const closeDrawer = React.useCallback(() => setDrawOpen(false), []);
   const { ymap } = useYProvider();
   const { setCurrentIndex: setCurrentIndexYMap } = useUserProvider();
+
+  const { id: myId } = useUserProvider();
+  const [selectedUser, setSelectedUser] = useState<string>(myId);
 
   useEffect(() => {
     setFocusMode(false);
@@ -180,10 +184,16 @@ export const EditorPage: FunctionComponent = () => {
         onClose={closeDrawer}
         className={"bottom-drawer"}
       >
-        <BottomDrawer
-          editing={editing}
-          setEditing={setEditing}
+        {/* <BottomDrawer */}
+        {/*   editing={editing} */}
+        {/*   setEditing={setEditing} */}
+        {/*   closeDrawer={closeDrawer} */}
+        {/* setSelectedUser={setSelectedUser} */}
+        {/* /> */}
+        <UserProfileDrawer
           closeDrawer={closeDrawer}
+          userId={selectedUser}
+          setSelectedUser={setSelectedUser}
         />
       </StyledDrawer>
     </PageContainer>
