@@ -74,10 +74,13 @@ const ComponentContainer = styled.div<{ $height?: number }>`
         `}
 `;
 
-const ScrollableItems = styled.div<{ hasStartBuffer: boolean }>`
+const ScrollableItems = styled.div<{
+  hasStartBuffer: boolean;
+  editing: boolean;
+}>`
   height: 100%;
   overflow: scroll;
-  scroll-snap-type: y mandatory;
+  ${(p) => !p.editing && `scroll-snap-type: y mandatory;`}
 
   // add empty space at the end so that the last item has room to scroll up
   &::after {
@@ -92,7 +95,7 @@ const ScrollableItems = styled.div<{ hasStartBuffer: boolean }>`
     display: flex;
     align-items: end;
     box-sizing: border-box;
-    padding: 3rem 1.5rem;
+    padding: 3rem 1.25rem;
     font-weight: 500;
     font-size: 20px;
 
@@ -242,6 +245,7 @@ const ScrollableDraggableListBase: FunctionComponent<ScrollableDraggableListProp
         <ScrollableItems
           ref={listContainerRef}
           hasStartBuffer={scrollAlignmentMode === "center"}
+          editing={meta.editing}
         >
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId={DROPPABLE_CONTAINER_ID}>
