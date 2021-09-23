@@ -35,6 +35,7 @@ type QuestionProps = {
   question: QuestionT;
   focused: boolean;
   focusMode: boolean;
+  setFocusMode: (value: boolean) => void;
   editing?: boolean;
   isLast: boolean;
   scrollPrev: () => void;
@@ -48,6 +49,7 @@ export const Question: FunctionComponent<QuestionProps> = ({
   question,
   focused,
   focusMode = false,
+  setFocusMode,
   editing = false,
   isLast,
   scrollPrev,
@@ -55,6 +57,7 @@ export const Question: FunctionComponent<QuestionProps> = ({
   scrollToMe,
   isDragging = false,
 }) => {
+  let clickTimeout: NodeJS.Timeout | null = null;
   return (
     <OuterContainer focusMode={focusMode}>
       <QuestionContainer
@@ -63,16 +66,49 @@ export const Question: FunctionComponent<QuestionProps> = ({
         focused={focused}
       >
         <InnerContainer
-          onClick={(e) => {
-            const target = e.target as Element;
+          // onDoubleClick={(e) => {
+          //   const target = e.target as Element;
 
-            // To prevent this click event being triggered by the buttons as well,
-            // restrict the event to elements that contain question-clickable
-            if (
-              !editing &&
-              target.classList.contains("allow-click-to-scroll")
-            ) {
-              scrollToMe();
+          //   // To prevent this click event being triggered by the buttons as well,
+          //   // restrict the event to elements that contain question-clickable
+          //   if (
+          //     !editing &&
+          //     target.classList.contains("allow-click-to-scroll")
+          //   ) {
+          //     setFocusMode(!focusMode);
+          //     console.log("LOG: ", !focusMode);
+          //   }
+          // }}
+          onClick={(e) => {
+            if (clickTimeout !== null) {
+              console.log("double click executes");
+              setFocusMode(!focusMode);
+
+              // cleanup
+              clearTimeout(clickTimeout);
+              clickTimeout = null;
+            } else {
+              console.log("single click");
+              clickTimeout = setTimeout(() => {
+                console.log("first click executes ");
+
+                const target = e.target as Element;
+
+                // To prevent this click event being triggered by the buttons as well,
+                // restrict the event to elements that contain question-clickable
+                if (
+                  !editing &&
+                  target.classList.contains("allow-click-to-scroll")
+                ) {
+                  scrollToMe();
+                }
+
+                // cleanup
+                if (clickTimeout !== null) {
+                  clearTimeout(clickTimeout);
+                  clickTimeout = null;
+                }
+              }, 200);
             }
           }}
         >

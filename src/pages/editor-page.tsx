@@ -74,6 +74,7 @@ export const EditorPage: FunctionComponent = () => {
           question={question}
           focused={index === currentIndex}
           focusMode={meta.focusMode}
+          setFocusMode={setFocusMode}
           isDragging={isDragging}
           editing={meta.editing}
         />
