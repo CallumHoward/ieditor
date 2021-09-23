@@ -66,31 +66,18 @@ export const Question: FunctionComponent<QuestionProps> = ({
         focused={focused}
       >
         <InnerContainer
-          // onDoubleClick={(e) => {
-          //   const target = e.target as Element;
-
-          //   // To prevent this click event being triggered by the buttons as well,
-          //   // restrict the event to elements that contain question-clickable
-          //   if (
-          //     !editing &&
-          //     target.classList.contains("allow-click-to-scroll")
-          //   ) {
-          //     setFocusMode(!focusMode);
-          //     console.log("LOG: ", !focusMode);
-          //   }
-          // }}
           onClick={(e) => {
             if (clickTimeout !== null) {
-              console.log("double click executes");
+              // console.log("double click executes");
               setFocusMode(!focusMode);
 
-              // cleanup
+              // Cleanup
               clearTimeout(clickTimeout);
               clickTimeout = null;
             } else {
-              console.log("single click");
+              // console.log("single click");
               clickTimeout = setTimeout(() => {
-                console.log("first click executes ");
+                // console.log("first click executes ");
 
                 const target = e.target as Element;
 
@@ -103,12 +90,12 @@ export const Question: FunctionComponent<QuestionProps> = ({
                   scrollToMe();
                 }
 
-                // cleanup
+                // Cleanup
                 if (clickTimeout !== null) {
                   clearTimeout(clickTimeout);
                   clickTimeout = null;
                 }
-              }, 200);
+              }, 150);
             }
           }}
         >
