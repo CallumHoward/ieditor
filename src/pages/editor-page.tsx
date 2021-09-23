@@ -117,6 +117,9 @@ export const EditorPage: FunctionComponent = () => {
       focusMode={focusMode}
       setFocusMode={setFocusMode}
       openDrawer={openDrawer}
+      setCurrentIndex={(newValue) =>
+        handleOnChange({ value: newValue, shouldAutoScroll: true })
+      }
     >
       <ScrollListContainer>
         <Form

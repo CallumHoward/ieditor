@@ -29,9 +29,13 @@ const MAX_STACK = 3; // Max is 8 before z-index breaks
 
 type Props = {
   openDrawer: () => void;
+  setCurrentIndex: (newIndex: number) => void;
 };
 
-export const AvatarStack: FunctionComponent<Props> = ({ openDrawer }) => {
+export const AvatarStack: FunctionComponent<Props> = ({
+  openDrawer,
+  setCurrentIndex,
+}) => {
   const { allUsers, id: myId } = useUserProvider();
   const allUserEntries = Object.entries(allUsers);
   const overflowNumber = allUserEntries.length - MAX_STACK;
@@ -40,8 +44,14 @@ export const AvatarStack: FunctionComponent<Props> = ({ openDrawer }) => {
       {allUserEntries
         .sort(([id]) => (id === myId ? -1 : 0))
         .slice(0, MAX_STACK)
-        .map(([id, { color, avatarIndex }], index) => (
-          <OuterAvatarContainer key={index}>
+        .map(([id, { color, avatarIndex, currentIndex }], index) => (
+          <OuterAvatarContainer
+            key={index}
+            onClick={() => {
+              console.log(currentIndex);
+              setCurrentIndex(currentIndex);
+            }}
+          >
             <CircleBackground style={{ zIndex: (MAX_STACK - index) * 2 }} />
             <AvatarContainer
               size={1}
