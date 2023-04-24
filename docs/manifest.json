@@ -1,5 +1,5 @@
 {
-  "name": "iEditor by SafetyCulture",
+  "name": "iEditor",
   "short_name": "iEditor",
   "start_url": "/ieditor?source=pwa",
   "display": "standalone",
