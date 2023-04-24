@@ -8,8 +8,7 @@
   "license": "MIT",
   "keywords": [
     "audit",
-    "checklist",
-    "SafetyCulture"
+    "checklist"
   ],
   "scripts": {
     "start": "concurrently --names tsc,esb -c green.bold,blue.bold --kill-others \"yarn:bundle --dev\" \"tsc --watch\" ",
